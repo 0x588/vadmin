@@ -6,7 +6,7 @@ import type {
 import type { SystemDictDataApi } from '#/api/system/dict-data';
 import type { SystemDictTypeApi } from '#/api/system/dict-type';
 
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 
 import { Page, useVbenModal } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -15,10 +15,7 @@ import { Button, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteDictData, getDictDataPage } from '#/api/system/dict-data';
-import {
-  deleteDictType,
-  getDictTypePage,
-} from '#/api/system/dict-type';
+import { deleteDictType, getDictTypePage } from '#/api/system/dict-type';
 import { $t } from '#/locales';
 
 import { useColumns as useDataColumns } from './data/data';
@@ -70,12 +67,18 @@ const [TypeGrid, typeGridApi] = useVbenVxeGrid({
         refreshDataGrid();
       }
     },
+    async proxyQuery() {
+      await nextTick();
+      const grid = typeGridApi.grid;
+      const data = grid.getData();
+      if (data.length > 0 && !selectedDictType.value) {
+        grid.setCurrentRow(data[0]);
+      }
+    },
   },
 });
 
-function onTypeActionClick(
-  e: OnActionClickParams<SystemDictTypeApi.DictType>,
-) {
+function onTypeActionClick(e: OnActionClickParams<SystemDictTypeApi.DictType>) {
   switch (e.code) {
     case 'delete': {
       onDeleteType(e.row);
@@ -158,9 +161,7 @@ const [DataGrid, dataGridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemDictDataApi.DictData>,
 });
 
-function onDataActionClick(
-  e: OnActionClickParams<SystemDictDataApi.DictData>,
-) {
+function onDataActionClick(e: OnActionClickParams<SystemDictDataApi.DictData>) {
   switch (e.code) {
     case 'delete': {
       onDeleteData(e.row);
@@ -197,9 +198,7 @@ function onDeleteData(row: SystemDictDataApi.DictData) {
 }
 
 function onCreateData() {
-  dataFormModalApi
-    .setData({ dictType: selectedDictType.value })
-    .open();
+  dataFormModalApi.setData({ dictType: selectedDictType.value }).open();
 }
 
 function refreshDataGrid() {
