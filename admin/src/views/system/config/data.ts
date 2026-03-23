@@ -5,6 +5,46 @@ import type { SystemConfigApi } from '#/api/system/config';
 import { getConfigCateSimpleTree } from '#/api/system/config';
 import { $t } from '#/locales';
 
+export function useCateColumns<T = SystemConfigApi.ConfigCate>(
+  onActionClick: OnActionClickFn<T>,
+): VxeTableGridOptions<T>['columns'] {
+  return [
+    {
+      align: 'left',
+      field: 'title',
+      title: $t('system.config.cateTitle'),
+      treeNode: true,
+      width: 150,
+    },
+    {
+      field: 'name',
+      title: $t('system.config.cateName'),
+      width: 100,
+    },
+    {
+      cellRender: { name: 'CellTag' },
+      field: 'status',
+      title: $t('system.config.cateStatus'),
+      width: 80,
+    },
+    {
+      align: 'center',
+      cellRender: {
+        attrs: {
+          nameField: 'title',
+          nameTitle: $t('system.config.cateTitle'),
+          onClick: onActionClick,
+        },
+        name: 'CellOperation',
+      },
+      field: 'operation',
+      fixed: 'right',
+      title: $t('system.config.operation'),
+      width: 130,
+    },
+  ];
+}
+
 export function useCateFormSchema(): VbenFormSchema[] {
   return [
     {
