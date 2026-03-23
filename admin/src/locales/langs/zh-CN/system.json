@@ -1,5 +1,22 @@
 {
   "title": "系统管理",
+  "config": {
+    "title": "参数配置",
+    "name": "配置",
+    "list": "配置列表",
+    "cateTitle": "配置分类",
+    "cateName": "分类标识",
+    "cateStatus": "分类状态",
+    "configTitle": "配置标题",
+    "configName": "配置标识",
+    "type": "类型",
+    "defaultValue": "默认值",
+    "remark": "备注",
+    "status": "状态",
+    "sort": "排序",
+    "createdAt": "创建时间",
+    "operation": "操作"
+  },
   "dept": {
     "list": "部门列表",
     "createTime": "创建时间",
@@ -10,6 +27,44 @@
     "remark": "备注",
     "status": "状态",
     "title": "部门管理"
+  },
+  "dictData": {
+    "title": "字典数据",
+    "name": "字典数据",
+    "list": "字典数据列表",
+    "label": "标签",
+    "value": "键值",
+    "dictType": "字典类型",
+    "colorType": "颜色类型",
+    "cssClass": "CSS类名",
+    "status": "状态",
+    "sort": "排序",
+    "remark": "备注",
+    "createdAt": "创建时间",
+    "operation": "操作"
+  },
+  "dictType": {
+    "title": "字典类型",
+    "name": "字典类型",
+    "list": "字典类型列表",
+    "dictName": "字典名称",
+    "type": "字典类型",
+    "status": "状态",
+    "remark": "备注",
+    "createdAt": "创建时间",
+    "operation": "操作"
+  },
+  "loginLog": {
+    "title": "登录日志",
+    "name": "登录日志",
+    "list": "登录日志",
+    "userName": "用户名",
+    "userIp": "登录IP",
+    "userAgent": "浏览器",
+    "result": "结果",
+    "resultSuccess": "成功",
+    "resultFail": "失败",
+    "createdAt": "登录时间"
   },
   "menu": {
     "list": "菜单列表",
@@ -51,17 +106,60 @@
     "typeLink": "外链",
     "typeMenu": "菜单"
   },
+  "notice": {
+    "title": "通知公告",
+    "name": "通知",
+    "list": "通知列表",
+    "noticeTitle": "标题",
+    "type": "类型",
+    "typeNotice": "通知",
+    "typeAnnouncement": "公告",
+    "status": "状态",
+    "content": "内容",
+    "createdAt": "创建时间",
+    "operation": "操作"
+  },
+  "notifyMessage": {
+    "title": "站内信",
+    "name": "站内信",
+    "list": "站内信列表",
+    "templateNickname": "发送人",
+    "templateContent": "内容",
+    "templateCode": "模板编码",
+    "templateType": "消息类型",
+    "readStatus": "阅读状态",
+    "createdAt": "发送时间",
+    "operation": "操作"
+  },
   "role": {
     "title": "角色管理",
     "list": "角色列表",
     "name": "角色",
     "roleName": "角色名称",
+    "roleCode": "角色编码",
     "id": "角色ID",
     "status": "状态",
     "remark": "备注",
     "createTime": "创建时间",
     "operation": "操作",
     "permissions": "权限",
-    "setPermissions": "授权"
+    "setPermissions": "授权",
+    "assignPermission": "分配权限"
+  },
+  "user": {
+    "title": "用户管理",
+    "name": "用户",
+    "list": "用户列表",
+    "username": "用户名",
+    "password": "密码",
+    "nickname": "昵称",
+    "mobile": "手机号",
+    "email": "邮箱",
+    "deptId": "所属部门",
+    "deptName": "部门",
+    "status": "状态",
+    "remark": "备注",
+    "createdAt": "创建时间",
+    "operation": "操作"
   }
 }

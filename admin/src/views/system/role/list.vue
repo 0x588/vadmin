@@ -18,9 +18,15 @@ import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+import Permission from './modules/permission.vue';
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
+  destroyOnClose: true,
+});
+
+const [PermissionDrawer, permissionDrawerApi] = useVbenDrawer({
+  connectedComponent: Permission,
   destroyOnClose: true,
 });
 
@@ -69,6 +75,10 @@ function onActionClick(e: OnActionClickParams<SystemRoleApi.Role>) {
       onEdit(e.row);
       break;
     }
+    case 'permission': {
+      permissionDrawerApi.setData(e.row).open();
+      break;
+    }
   }
 }
 
@@ -98,10 +108,7 @@ function confirm(content: string, title: string) {
  * @param row 行数据
  * @returns 返回false则中止改变，返回其他值（undefined、true）则允许改变
  */
-async function onStatusChange(
-  newStatus: number,
-  row: SystemRoleApi.Role,
-) {
+async function onStatusChange(newStatus: number, row: SystemRoleApi.Role) {
   const status: Recordable<string> = {
     0: '禁用',
     1: '启用',
@@ -152,6 +159,7 @@ function onCreate() {
 <template>
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />
+    <PermissionDrawer @success="onRefresh" />
     <Grid :table-title="$t('system.role.list')">
       <template #toolbar-tools>
         <Button type="primary" @click="onCreate">

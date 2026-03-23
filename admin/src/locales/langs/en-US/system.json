@@ -1,5 +1,22 @@
 {
   "title": "System Management",
+  "config": {
+    "title": "Configuration",
+    "name": "Config",
+    "list": "Config List",
+    "cateTitle": "Categories",
+    "cateName": "Category Key",
+    "cateStatus": "Category Status",
+    "configTitle": "Config Title",
+    "configName": "Config Key",
+    "type": "Type",
+    "defaultValue": "Default Value",
+    "remark": "Remark",
+    "status": "Status",
+    "sort": "Sort",
+    "createdAt": "Created At",
+    "operation": "Operation"
+  },
   "dept": {
     "name": "Department",
     "title": "Department Management",
@@ -9,6 +26,44 @@
     "remark": "Remark",
     "operation": "Operation",
     "parentDept": "Parent Department"
+  },
+  "dictData": {
+    "title": "Dict Data",
+    "name": "Dict Data",
+    "list": "Dict Data List",
+    "label": "Label",
+    "value": "Value",
+    "dictType": "Dict Type",
+    "colorType": "Color Type",
+    "cssClass": "CSS Class",
+    "status": "Status",
+    "sort": "Sort",
+    "remark": "Remark",
+    "createdAt": "Created At",
+    "operation": "Operation"
+  },
+  "dictType": {
+    "title": "Dict Types",
+    "name": "Dict Type",
+    "list": "Dict Type List",
+    "dictName": "Dict Name",
+    "type": "Dict Type",
+    "status": "Status",
+    "remark": "Remark",
+    "createdAt": "Created At",
+    "operation": "Operation"
+  },
+  "loginLog": {
+    "title": "Login Logs",
+    "name": "Login Log",
+    "list": "Login Logs",
+    "userName": "Username",
+    "userIp": "Login IP",
+    "userAgent": "User Agent",
+    "result": "Result",
+    "resultSuccess": "Success",
+    "resultFail": "Failed",
+    "createdAt": "Login Time"
   },
   "menu": {
     "title": "Menu Management",
@@ -49,17 +104,60 @@
     },
     "badgeVariants": "Badge Style"
   },
+  "notice": {
+    "title": "Notices",
+    "name": "Notice",
+    "list": "Notice List",
+    "noticeTitle": "Title",
+    "type": "Type",
+    "typeNotice": "Notice",
+    "typeAnnouncement": "Announcement",
+    "status": "Status",
+    "content": "Content",
+    "createdAt": "Created At",
+    "operation": "Operation"
+  },
+  "notifyMessage": {
+    "title": "Notifications",
+    "name": "Notification",
+    "list": "Notification List",
+    "templateNickname": "Sender",
+    "templateContent": "Content",
+    "templateCode": "Template Code",
+    "templateType": "Message Type",
+    "readStatus": "Read Status",
+    "createdAt": "Sent At",
+    "operation": "Operation"
+  },
   "role": {
     "title": "Role Management",
     "list": "Role List",
     "name": "Role",
     "roleName": "Role Name",
+    "roleCode": "Role Code",
     "id": "Role ID",
     "status": "Status",
     "remark": "Remark",
     "createTime": "Creation Time",
     "operation": "Operation",
     "permissions": "Permissions",
-    "setPermissions": "Permissions"
+    "setPermissions": "Permissions",
+    "assignPermission": "Assign Permissions"
+  },
+  "user": {
+    "title": "User Management",
+    "name": "User",
+    "list": "User List",
+    "username": "Username",
+    "password": "Password",
+    "nickname": "Nickname",
+    "mobile": "Mobile",
+    "email": "Email",
+    "deptId": "Department",
+    "deptName": "Department",
+    "status": "Status",
+    "remark": "Remark",
+    "createdAt": "Created At",
+    "operation": "Operation"
   }
 }

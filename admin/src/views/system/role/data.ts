@@ -47,7 +47,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
       fieldName: 'name',
       label: $t('system.role.roleName'),
     },
-    { component: 'Input', fieldName: 'code', label: $t('system.role.roleCode') },
+    {
+      component: 'Input',
+      fieldName: 'code',
+      label: $t('system.role.roleCode'),
+    },
     {
       component: 'Select',
       componentProps: {
@@ -109,13 +113,21 @@ export function useColumns<T = SystemRoleApi.Role>(
           nameField: 'name',
           nameTitle: $t('system.role.name'),
           onClick: onActionClick,
+          options: [
+            {
+              code: 'permission',
+              text: $t('system.role.assignPermission'),
+            },
+            'edit',
+            'delete',
+          ],
         },
         name: 'CellOperation',
       },
       field: 'operation',
       fixed: 'right',
       title: $t('system.role.operation'),
-      width: 130,
+      width: 200,
     },
   ];
 }
