@@ -41,10 +41,20 @@ const [TypeGrid, typeGridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }) => {
-          return await getDictTypePage({
+          const result = await getDictTypePage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
           });
+          if (result.list.length > 0 && !selectedDictType.value) {
+            const first = result.list[0] as SystemDictTypeApi.DictType;
+            selectedDictType.value = first.type;
+            selectedTypeName.value = first.name;
+            nextTick(() => {
+              typeGridApi.grid?.setCurrentRow(first);
+              refreshDataGrid();
+            });
+          }
+          return result;
         },
       },
     },
@@ -65,14 +75,6 @@ const [TypeGrid, typeGridApi] = useVbenVxeGrid({
         selectedDictType.value = row.type;
         selectedTypeName.value = row.name;
         refreshDataGrid();
-      }
-    },
-    async proxyQuery() {
-      await nextTick();
-      const grid = typeGridApi.grid;
-      const data = grid.getData();
-      if (data.length > 0 && !selectedDictType.value) {
-        grid.setCurrentRow(data[0]);
       }
     },
   },
