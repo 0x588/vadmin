@@ -5,7 +5,7 @@ import type { OnActionClickFn } from '#/adapter/vxe-table';
 import type { SystemDeptApi } from '#/api/system/dept';
 
 import { z } from '#/adapter/form';
-import { getDeptList } from '#/api/system/dept';
+import { getDeptSimpleTree } from '#/api/system/dept';
 import { $t } from '#/locales';
 
 /**
@@ -29,13 +29,13 @@ export function useSchema(): VbenFormSchema[] {
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
-        api: getDeptList,
+        api: getDeptSimpleTree,
         class: 'w-full',
         labelField: 'name',
         valueField: 'id',
         childrenField: 'children',
       },
-      fieldName: 'pid',
+      fieldName: 'parentId',
       label: $t('system.dept.parentDept'),
     },
     {
@@ -75,8 +75,8 @@ export function useSchema(): VbenFormSchema[] {
  * @param onActionClick 表格操作按钮点击事件
  */
 export function useColumns(
-  onActionClick?: OnActionClickFn<SystemDeptApi.SystemDept>,
-): VxeTableGridOptions<SystemDeptApi.SystemDept>['columns'] {
+  onActionClick?: OnActionClickFn<SystemDeptApi.Dept>,
+): VxeTableGridOptions<SystemDeptApi.Dept>['columns'] {
   return [
     {
       align: 'left',
@@ -118,7 +118,7 @@ export function useColumns(
           'edit', // 默认的编辑按钮
           {
             code: 'delete', // 默认的删除按钮
-            disabled: (row: SystemDeptApi.SystemDept) => {
+            disabled: (row: SystemDeptApi.Dept) => {
               return !!(row.children && row.children.length > 0);
             },
           },

@@ -12,8 +12,10 @@ import { MenuBadge } from '@vben-core/menu-ui';
 
 import { Button, message } from 'ant-design-vue';
 
+import type { SystemMenuApi } from '#/api/system/menu';
+
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteMenu, getMenuList, SystemMenuApi } from '#/api/system/menu';
+import { deleteMenu, getMenuList } from '#/api/system/menu';
 
 import { useColumns } from './data';
 import Form from './modules/form.vue';
@@ -48,7 +50,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       zoom: true,
     },
     treeConfig: {
-      parentField: 'pid',
+      parentField: 'parentId',
       rowField: 'id',
       transform: false,
     },
@@ -58,7 +60,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 function onActionClick({
   code,
   row,
-}: OnActionClickParams<SystemMenuApi.SystemMenu>) {
+}: OnActionClickParams<SystemMenuApi.Menu>) {
   switch (code) {
     case 'append': {
       onAppend(row);
@@ -81,17 +83,17 @@ function onActionClick({
 function onRefresh() {
   gridApi.query();
 }
-function onEdit(row: SystemMenuApi.SystemMenu) {
+function onEdit(row: SystemMenuApi.Menu) {
   formDrawerApi.setData(row).open();
 }
 function onCreate() {
   formDrawerApi.setData({}).open();
 }
-function onAppend(row: SystemMenuApi.SystemMenu) {
-  formDrawerApi.setData({ pid: row.id }).open();
+function onAppend(row: SystemMenuApi.Menu) {
+  formDrawerApi.setData({ parentId: row.id }).open();
 }
 
-function onDelete(row: SystemMenuApi.SystemMenu) {
+function onDelete(row: SystemMenuApi.Menu) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
@@ -124,7 +126,7 @@ function onDelete(row: SystemMenuApi.SystemMenu) {
         <div class="flex w-full items-center gap-1">
           <div class="size-5 shrink-0">
             <IconifyIcon
-              v-if="row.type === 'button'"
+              v-if="row.type === 3"
               icon="carbon:security"
               class="size-full"
             />

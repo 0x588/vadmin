@@ -13,7 +13,7 @@ import { Plus } from '@vben/icons';
 import { Button, message, Modal } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteRole, getRoleList, updateRole } from '#/api';
+import { deleteRole, getRolePage, updateRole } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
@@ -37,8 +37,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
-          return await getRoleList({
-            page: page.currentPage,
+          return await getRolePage({
+            pageNo: page.currentPage,
             pageSize: page.pageSize,
             ...formValues,
           });
@@ -56,10 +56,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions<SystemRoleApi.SystemRole>,
+  } as VxeTableGridOptions<SystemRoleApi.Role>,
 });
 
-function onActionClick(e: OnActionClickParams<SystemRoleApi.SystemRole>) {
+function onActionClick(e: OnActionClickParams<SystemRoleApi.Role>) {
   switch (e.code) {
     case 'delete': {
       onDelete(e.row);
@@ -100,7 +100,7 @@ function confirm(content: string, title: string) {
  */
 async function onStatusChange(
   newStatus: number,
-  row: SystemRoleApi.SystemRole,
+  row: SystemRoleApi.Role,
 ) {
   const status: Recordable<string> = {
     0: '禁用',
@@ -111,18 +111,18 @@ async function onStatusChange(
       `你要将${row.name}的状态切换为 【${status[newStatus.toString()]}】 吗？`,
       `切换状态`,
     );
-    await updateRole(row.id, { status: newStatus });
+    await updateRole({ id: row.id, status: newStatus });
     return true;
   } catch {
     return false;
   }
 }
 
-function onEdit(row: SystemRoleApi.SystemRole) {
+function onEdit(row: SystemRoleApi.Role) {
   formDrawerApi.setData(row).open();
 }
 
-function onDelete(row: SystemRoleApi.SystemRole) {
+function onDelete(row: SystemRoleApi.Role) {
   const hideLoading = message.loading({
     content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,

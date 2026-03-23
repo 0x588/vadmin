@@ -8,22 +8,16 @@ export function getMenuTypeOptions() {
     {
       color: 'processing',
       label: $t('system.menu.typeCatalog'),
-      value: 'catalog',
+      value: 1,
     },
-    { color: 'default', label: $t('system.menu.typeMenu'), value: 'menu' },
-    { color: 'error', label: $t('system.menu.typeButton'), value: 'button' },
-    {
-      color: 'success',
-      label: $t('system.menu.typeEmbedded'),
-      value: 'embedded',
-    },
-    { color: 'warning', label: $t('system.menu.typeLink'), value: 'link' },
+    { color: 'default', label: $t('system.menu.typeMenu'), value: 2 },
+    { color: 'error', label: $t('system.menu.typeButton'), value: 3 },
   ];
 }
 
 export function useColumns(
-  onActionClick: OnActionClickFn<SystemMenuApi.SystemMenu>,
-): VxeTableGridOptions<SystemMenuApi.SystemMenu>['columns'] {
+  onActionClick: OnActionClickFn<SystemMenuApi.Menu>,
+): VxeTableGridOptions<SystemMenuApi.Menu>['columns'] {
   return [
     {
       align: 'left',
@@ -42,7 +36,7 @@ export function useColumns(
       width: 100,
     },
     {
-      field: 'authCode',
+      field: 'permission',
       title: $t('system.menu.authCode'),
       width: 200,
     },
@@ -58,15 +52,9 @@ export function useColumns(
       field: 'component',
       formatter: ({ row }) => {
         switch (row.type) {
-          case 'catalog':
-          case 'menu': {
+          case 1:
+          case 2: {
             return row.component ?? '';
-          }
-          case 'embedded': {
-            return row.meta?.iframeSrc ?? '';
-          }
-          case 'link': {
-            return row.meta?.link ?? '';
           }
         }
         return '';
