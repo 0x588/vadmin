@@ -68,6 +68,11 @@ export function useColumns(
       title: $t('system.menu.status'),
       width: 100,
     },
+    {
+      field: 'sort',
+      title: $t('system.menu.sort'),
+      width: 80,
+    },
 
     {
       align: 'right',

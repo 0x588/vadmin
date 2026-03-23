@@ -84,9 +84,7 @@ const [CateGrid, cateGridApi] = useVbenVxeGrid({
   },
 });
 
-function onCateActionClick(
-  e: OnActionClickParams<SystemConfigApi.ConfigCate>,
-) {
+function onCateActionClick(e: OnActionClickParams<SystemConfigApi.ConfigCate>) {
   switch (e.code) {
     case 'delete': {
       onDeleteCate(e.row);
@@ -169,9 +167,7 @@ const [ConfigGrid, configGridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions<SystemConfigApi.Config>,
 });
 
-function onConfigActionClick(
-  e: OnActionClickParams<SystemConfigApi.Config>,
-) {
+function onConfigActionClick(e: OnActionClickParams<SystemConfigApi.Config>) {
   switch (e.code) {
     case 'delete': {
       onDeleteConfig(e.row);
