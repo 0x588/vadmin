@@ -21,7 +21,7 @@ export function useColumns(
   return [
     {
       align: 'left',
-      field: 'meta.title',
+      field: 'name',
       fixed: 'left',
       slots: { default: 'title' },
       title: $t('system.menu.menuTitle'),
