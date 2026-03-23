@@ -1,55 +1,68 @@
-import type { Recordable } from '@vben/types';
+import type { PageFetchParams } from '#/api/request';
 
 import { requestClient } from '#/api/request';
 
 export namespace SystemRoleApi {
-  export interface SystemRole {
+  export interface Role {
     [key: string]: any;
-    id: string;
+    code: string;
+    createdAt?: string;
+    dataScope?: number;
+    dataScopeDeptIds?: string;
+    id: number;
     name: string;
-    permissions: string[];
     remark?: string;
-    status: 0 | 1;
+    sort?: number;
+    status: number;
+    type?: number;
+  }
+
+  export interface RoleSimple {
+    id: number;
+    name: string;
+  }
+
+  export interface PageResult {
+    list: Role[];
+    total: number;
   }
 }
 
-/**
- * 获取角色列表数据
- */
-async function getRoleList(params: Recordable<any>) {
-  return requestClient.get<Array<SystemRoleApi.SystemRole>>(
-    '/system/role/list',
-    { params },
+async function getRolePage(params?: PageFetchParams) {
+  return requestClient.get<SystemRoleApi.PageResult>('/system/role/page', {
+    params,
+  });
+}
+
+async function getRole(id: number) {
+  return requestClient.get<SystemRoleApi.Role>('/system/role/get', {
+    params: { id },
+  });
+}
+
+async function getRoleSimpleList() {
+  return requestClient.get<SystemRoleApi.RoleSimple[]>(
+    '/system/role/list-all-simple',
   );
 }
 
-/**
- * 创建角色
- * @param data 角色数据
- */
-async function createRole(data: Omit<SystemRoleApi.SystemRole, 'id'>) {
-  return requestClient.post('/system/role', data);
+async function createRole(data: Partial<SystemRoleApi.Role>) {
+  return requestClient.post('/system/role/create', data);
 }
 
-/**
- * 更新角色
- *
- * @param id 角色 ID
- * @param data 角色数据
- */
-async function updateRole(
-  id: string,
-  data: Omit<SystemRoleApi.SystemRole, 'id'>,
-) {
-  return requestClient.put(`/system/role/${id}`, data);
+async function updateRole(data: Partial<SystemRoleApi.Role>) {
+  return requestClient.put('/system/role/update', data);
 }
 
-/**
- * 删除角色
- * @param id 角色 ID
- */
-async function deleteRole(id: string) {
-  return requestClient.delete(`/system/role/${id}`);
+async function deleteRole(id: number) {
+  return requestClient.delete('/system/role/delete', { params: { id } });
 }
 
-export { createRole, deleteRole, getRoleList, updateRole };
+export {
+  createRole,
+  deleteRole,
+  getRole,
+  getRolePage,
+  getRoleSimpleList,
+  updateRole,
+};

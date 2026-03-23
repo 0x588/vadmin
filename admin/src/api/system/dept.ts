@@ -1,54 +1,62 @@
 import { requestClient } from '#/api/request';
 
 export namespace SystemDeptApi {
-  export interface SystemDept {
+  export interface Dept {
     [key: string]: any;
-    children?: SystemDept[];
-    id: string;
+    children?: Dept[];
+    createdAt?: string;
+    email?: string;
+    id: number;
+    leaderUserId?: number;
     name: string;
-    remark?: string;
-    status: 0 | 1;
+    parentId?: number;
+    phone?: string;
+    sort?: number;
+    status: number;
+  }
+
+  export interface DeptSimple {
+    id: number;
+    name: string;
+    parentId: number;
+    sort: number;
+    children?: DeptSimple[];
   }
 }
 
-/**
- * 获取部门列表数据
- */
 async function getDeptList() {
-  return requestClient.get<Array<SystemDeptApi.SystemDept>>(
-    '/system/dept/list',
+  return requestClient.get<SystemDeptApi.Dept[]>('/system/dept/list');
+}
+
+async function getDept(id: number) {
+  return requestClient.get<SystemDeptApi.Dept>('/system/dept/get', {
+    params: { id },
+  });
+}
+
+async function getDeptSimpleTree() {
+  return requestClient.get<SystemDeptApi.DeptSimple[]>(
+    '/system/dept/tree-simple',
   );
 }
 
-/**
- * 创建部门
- * @param data 部门数据
- */
-async function createDept(
-  data: Omit<SystemDeptApi.SystemDept, 'children' | 'id'>,
-) {
-  return requestClient.post('/system/dept', data);
+async function createDept(data: Partial<SystemDeptApi.Dept>) {
+  return requestClient.post('/system/dept/create', data);
 }
 
-/**
- * 更新部门
- *
- * @param id 部门 ID
- * @param data 部门数据
- */
-async function updateDept(
-  id: string,
-  data: Omit<SystemDeptApi.SystemDept, 'children' | 'id'>,
-) {
-  return requestClient.put(`/system/dept/${id}`, data);
+async function updateDept(data: Partial<SystemDeptApi.Dept>) {
+  return requestClient.put('/system/dept/update', data);
 }
 
-/**
- * 删除部门
- * @param id 部门 ID
- */
-async function deleteDept(id: string) {
-  return requestClient.delete(`/system/dept/${id}`);
+async function deleteDept(id: number) {
+  return requestClient.delete('/system/dept/delete', { params: { id } });
 }
 
-export { createDept, deleteDept, getDeptList, updateDept };
+export {
+  createDept,
+  deleteDept,
+  getDept,
+  getDeptList,
+  getDeptSimpleTree,
+  updateDept,
+};
