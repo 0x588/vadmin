@@ -20,10 +20,9 @@ export namespace SystemNoticeApi {
 }
 
 async function getNoticePage(params?: PageFetchParams) {
-  return requestClient.get<SystemNoticeApi.PageResult>(
-    '/system/notice/page',
-    { params },
-  );
+  return requestClient.get<SystemNoticeApi.PageResult>('/system/notice/page', {
+    params,
+  });
 }
 
 async function getNotice(id: number) {
@@ -44,10 +43,4 @@ async function deleteNotice(id: number) {
   return requestClient.delete('/system/notice/delete', { params: { id } });
 }
 
-export {
-  createNotice,
-  deleteNotice,
-  getNotice,
-  getNoticePage,
-  updateNotice,
-};
+export { createNotice, deleteNotice, getNotice, getNoticePage, updateNotice };

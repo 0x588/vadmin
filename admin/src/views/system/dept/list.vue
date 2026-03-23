@@ -71,10 +71,7 @@ function onDelete(row: SystemDeptApi.Dept) {
 /**
  * 表格操作按钮的回调函数
  */
-function onActionClick({
-  code,
-  row,
-}: OnActionClickParams<SystemDeptApi.Dept>) {
+function onActionClick({ code, row }: OnActionClickParams<SystemDeptApi.Dept>) {
   switch (code) {
     case 'append': {
       onAppend(row);

@@ -189,11 +189,11 @@ onMounted(() => {
         </div>
         <Tree
           v-if="cateTree.length > 0"
-          :tree-data="cateTree"
+          :tree-data="(cateTree as any)"
           :field-names="{ title: 'title', key: 'id', children: 'children' }"
           :selected-keys="selectedCateKeys"
           default-expand-all
-          @select="onCateSelect"
+          @select="(keys: any[]) => onCateSelect(keys)"
         >
           <template #title="{ id, title }">
             <div class="group flex items-center justify-between">

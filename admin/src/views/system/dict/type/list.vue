@@ -70,7 +70,10 @@ function onActionClick(e: OnActionClickParams<SystemDictTypeApi.DictType>) {
       break;
     }
     case 'viewData': {
-      router.push({ path: '/system/dict/data', query: { dictType: e.row.type } });
+      router.push({
+        path: '/system/dict/data',
+        query: { dictType: e.row.type },
+      });
       break;
     }
   }

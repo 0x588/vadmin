@@ -46,9 +46,7 @@ async function deleteNotifyMessage(id: number) {
 }
 
 async function getUnreadNotifyMessageCount() {
-  return requestClient.get<number>(
-    '/system/notify-message/get-unread-count',
-  );
+  return requestClient.get<number>('/system/notify-message/get-unread-count');
 }
 
 export {

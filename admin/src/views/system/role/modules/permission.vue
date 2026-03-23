@@ -58,8 +58,9 @@ async function loadData() {
   }
 }
 
-const drawerTitle = computed(() =>
-  $t('system.role.assignPermission') +
+const drawerTitle = computed(
+  () =>
+    $t('system.role.assignPermission') +
     (roleName.value ? ` - ${roleName.value}` : ''),
 );
 </script>
@@ -69,7 +70,7 @@ const drawerTitle = computed(() =>
     <Spin :spinning="loading">
       <Tree
         v-model:checked-keys="checkedKeys"
-        :tree-data="menuTree"
+        :tree-data="(menuTree as any)"
         :field-names="{ title: 'name', key: 'id', children: 'children' }"
         checkable
         check-strictly

@@ -3,6 +3,7 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
+import type { SystemMenuApi } from '#/api/system/menu';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { IconifyIcon, Plus } from '@vben/icons';
@@ -11,8 +12,6 @@ import { $t } from '@vben/locales';
 import { MenuBadge } from '@vben-core/menu-ui';
 
 import { Button, message } from 'ant-design-vue';
-
-import type { SystemMenuApi } from '#/api/system/menu';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteMenu, getMenuList } from '#/api/system/menu';
@@ -57,10 +56,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
   } as VxeTableGridOptions,
 });
 
-function onActionClick({
-  code,
-  row,
-}: OnActionClickParams<SystemMenuApi.Menu>) {
+function onActionClick({ code, row }: OnActionClickParams<SystemMenuApi.Menu>) {
   switch (code) {
     case 'append': {
       onAppend(row);

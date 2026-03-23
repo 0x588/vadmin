@@ -85,8 +85,16 @@ export function useColumns(
       cellRender: {
         name: 'CellTag',
         options: [
-          { color: 'processing', label: $t('system.notice.typeNotice'), value: 1 },
-          { color: 'success', label: $t('system.notice.typeAnnouncement'), value: 2 },
+          {
+            color: 'processing',
+            label: $t('system.notice.typeNotice'),
+            value: 1,
+          },
+          {
+            color: 'success',
+            label: $t('system.notice.typeAnnouncement'),
+            value: 2,
+          },
         ],
       },
       field: 'type',

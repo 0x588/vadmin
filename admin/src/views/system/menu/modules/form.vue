@@ -4,6 +4,7 @@ import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface';
 import type { Recordable } from '@vben/types';
 
 import type { VbenFormSchema } from '#/adapter/form';
+import type { SystemMenuApi } from '#/api/system/menu';
 
 import { computed, h, ref } from 'vue';
 
@@ -14,14 +15,8 @@ import { getPopupContainer } from '@vben/utils';
 
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
 
-import type { SystemMenuApi } from '#/api/system/menu';
-
 import { useVbenForm, z } from '#/adapter/form';
-import {
-  createMenu,
-  getMenuList,
-  updateMenu,
-} from '#/api/system/menu';
+import { createMenu, getMenuList, updateMenu } from '#/api/system/menu';
 import { $t } from '#/locales';
 import { componentKeys } from '#/router/routes';
 
@@ -407,9 +402,7 @@ async function onSubmit() {
   if (valid) {
     drawerApi.lock();
     const data =
-      await formApi.getValues<
-        Omit<SystemMenuApi.Menu, 'children' | 'id'>
-      >();
+      await formApi.getValues<Omit<SystemMenuApi.Menu, 'children' | 'id'>>();
     try {
       await (formData.value?.id
         ? updateMenu({ id: formData.value.id, ...data })

@@ -16,11 +16,11 @@ export namespace SystemDeptApi {
   }
 
   export interface DeptSimple {
+    children?: DeptSimple[];
     id: number;
     name: string;
     parentId: number;
     sort: number;
-    children?: DeptSimple[];
   }
 }
 

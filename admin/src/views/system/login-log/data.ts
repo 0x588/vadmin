@@ -51,7 +51,11 @@ export function useColumns(): VxeTableGridOptions['columns'] {
       cellRender: {
         name: 'CellTag',
         options: [
-          { color: 'success', label: $t('system.loginLog.resultSuccess'), value: 0 },
+          {
+            color: 'success',
+            label: $t('system.loginLog.resultSuccess'),
+            value: 0,
+          },
           { color: 'error', label: $t('system.loginLog.resultFail'), value: 1 },
         ],
       },
