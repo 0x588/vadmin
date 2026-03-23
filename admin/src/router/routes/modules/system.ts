@@ -67,22 +67,13 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/system/login-log/list.vue'),
       },
       {
-        path: '/system/dict/type',
-        name: 'SystemDictType',
+        path: '/system/dict',
+        name: 'SystemDict',
         meta: {
           icon: 'mdi:book-alphabet',
           title: $t('system.dictType.title'),
         },
-        component: () => import('#/views/system/dict/type/list.vue'),
-      },
-      {
-        path: '/system/dict/data',
-        name: 'SystemDictData',
-        meta: {
-          hideInMenu: true,
-          title: $t('system.dictData.title'),
-        },
-        component: () => import('#/views/system/dict/data/list.vue'),
+        component: () => import('#/views/system/dict/list.vue'),
       },
       {
         path: '/system/notify-message',

@@ -110,19 +110,11 @@ export function useColumns<T = SystemDictTypeApi.DictType>(
           onClick: onActionClick,
         },
         name: 'CellOperation',
-        options: [
-          'edit',
-          'delete',
-          {
-            code: 'viewData',
-            text: '字典数据',
-          },
-        ],
       },
       field: 'operation',
       fixed: 'right',
       title: $t('system.dictType.operation'),
-      width: 200,
+      width: 130,
     },
   ];
 }
