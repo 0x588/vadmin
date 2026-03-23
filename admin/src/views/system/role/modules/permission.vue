@@ -70,7 +70,7 @@ const drawerTitle = computed(
     <Spin :spinning="loading">
       <Tree
         v-model:checked-keys="checkedKeys"
-        :tree-data="(menuTree as any)"
+        :tree-data="menuTree as any"
         :field-names="{ title: 'name', key: 'id', children: 'children' }"
         checkable
         check-strictly

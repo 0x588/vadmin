@@ -189,7 +189,7 @@ onMounted(() => {
         </div>
         <Tree
           v-if="cateTree.length > 0"
-          :tree-data="(cateTree as any)"
+          :tree-data="cateTree as any"
           :field-names="{ title: 'title', key: 'id', children: 'children' }"
           :selected-keys="selectedCateKeys"
           default-expand-all

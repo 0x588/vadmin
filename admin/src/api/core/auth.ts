@@ -48,10 +48,9 @@ export async function loginApi(data: AuthApi.LoginParams) {
  */
 export async function refreshTokenApi() {
   const refreshToken = localStorage.getItem('refresh_token') || '';
-  const res = await baseRequestClient.post<any>(
-    '/system/auth/refresh-token',
-    { refreshToken },
-  );
+  const res = await baseRequestClient.post<any>('/system/auth/refresh-token', {
+    refreshToken,
+  });
   // baseRequestClient returns full axios response
   // Backend wraps in { code: 200, data: { accessToken, ... } }
   return (res.data?.data || res.data) as AuthApi.LoginResult;

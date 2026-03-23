@@ -93,7 +93,11 @@ export function useColumns<T = SystemDictTypeApi.DictType>(
       title: $t('system.dictType.remark'),
     },
     {
-      field: 'createdAt',
+      field: 'created_at',
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '';
+        return new Date(cellValue * 1000).toLocaleString('zh-CN');
+      },
       title: $t('system.dictType.createdAt'),
       width: 180,
     },

@@ -19,6 +19,7 @@ const [Grid] = useVbenVxeGrid({
     columns: useColumns(),
     height: 'auto',
     keepSource: true,
+    pagerConfig: {},
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {

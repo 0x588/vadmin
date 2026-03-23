@@ -21,7 +21,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
         allowClear: true,
         options: [
           { label: $t('system.loginLog.resultSuccess'), value: 0 },
-          { label: $t('system.loginLog.resultFail'), value: 1 },
+          { label: $t('system.loginLog.resultFail'), value: 10 },
         ],
       },
       fieldName: 'result',
@@ -33,7 +33,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
 export function useColumns(): VxeTableGridOptions['columns'] {
   return [
     {
-      field: 'userName',
+      field: 'username',
       title: $t('system.loginLog.userName'),
       width: 120,
     },
@@ -56,7 +56,11 @@ export function useColumns(): VxeTableGridOptions['columns'] {
             label: $t('system.loginLog.resultSuccess'),
             value: 0,
           },
-          { color: 'error', label: $t('system.loginLog.resultFail'), value: 1 },
+          {
+            color: 'error',
+            label: $t('system.loginLog.resultFail'),
+            value: 10,
+          },
         ],
       },
       field: 'result',
@@ -64,7 +68,11 @@ export function useColumns(): VxeTableGridOptions['columns'] {
       width: 100,
     },
     {
-      field: 'createdAt',
+      field: 'created_at',
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '';
+        return new Date(cellValue * 1000).toLocaleString('zh-CN');
+      },
       title: $t('system.loginLog.createdAt'),
       width: 180,
     },

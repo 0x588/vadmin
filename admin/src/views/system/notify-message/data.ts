@@ -79,7 +79,11 @@ export function useColumns(
       width: 100,
     },
     {
-      field: 'createdAt',
+      field: 'created_at',
+      formatter: ({ cellValue }) => {
+        if (!cellValue) return '';
+        return new Date(cellValue * 1000).toLocaleString('zh-CN');
+      },
       title: $t('system.notifyMessage.createdAt'),
       width: 180,
     },
