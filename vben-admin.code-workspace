@@ -9,10 +9,6 @@
       "path": "apps/backend-mock"
     },
     {
-      "name": "@vben/web-antd",
-      "path": "apps/web-antd"
-    },
-    {
       "name": "@vben/commitlint-config",
       "path": "internal/lint-configs/commitlint-config"
     },
