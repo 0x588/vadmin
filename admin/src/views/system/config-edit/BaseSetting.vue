@@ -77,12 +77,9 @@ function fileListToUrls(list: UploadFile[]): string[] {
 }
 
 function handleFileChange(info: UploadChangeParam, key: string) {
-  fileListMap[key] = info.fileList.filter((f) => f.status !== 'removed');
-  formState[key] = fileListToUrls(fileListMap[key]);
-}
-
-function makeChangeHandler(key: string) {
-  return (info: UploadChangeParam) => handleFileChange(info, key);
+  formState[key] = fileListToUrls(
+    info.fileList.filter((f) => f.status !== 'removed'),
+  );
 }
 
 function handlePreview(file: UploadFile) {
@@ -91,7 +88,12 @@ function handlePreview(file: UploadFile) {
 }
 
 /** Custom upload handler — avoids requestClient interceptor stripping url field */
-async function handleCustomUpload({ file, onError, onProgress, onSuccess }: any) {
+async function handleCustomUpload({
+  file,
+  onError,
+  onProgress,
+  onSuccess,
+}: any) {
   try {
     onProgress?.({ percent: 0 });
     const accessStore = useAccessStore();
@@ -266,7 +268,9 @@ async function handleSubmit() {
               list-type="picture-card"
               :custom-request="handleCustomUpload"
               accept=".png,.jpg,.jpeg,.gif,.webp"
-              @change="makeChangeHandler(`${cate.name}.${cfg.name}`)"
+              @change="
+                handleFileChange($event, `${cate.name}.${cfg.name}`)
+              "
               @preview="handlePreview"
             >
               <div
@@ -283,7 +287,9 @@ async function handleSubmit() {
               v-else-if="cfg.type === 'Upload'"
               v-model:file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               :custom-request="handleCustomUpload"
-              @change="makeChangeHandler(`${cate.name}.${cfg.name}`)"
+              @change="
+                handleFileChange($event, `${cate.name}.${cfg.name}`)
+              "
             >
               <Button>上传文件</Button>
             </Upload>
