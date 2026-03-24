@@ -24,8 +24,8 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  appName: '',
-  copyright: true,
+  appName: '后台管理系统',
+  copyright: false,
   logo: '',
   logoDark: '',
   pageDescription: '',
