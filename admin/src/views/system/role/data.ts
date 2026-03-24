@@ -118,6 +118,10 @@ export function useColumns<T = SystemRoleApi.Role>(
               code: 'permission',
               text: $t('system.role.assignPermission'),
             },
+            {
+              code: 'dataScope',
+              text: $t('system.role.dataScope'),
+            },
             'edit',
             'delete',
           ],
@@ -127,7 +131,7 @@ export function useColumns<T = SystemRoleApi.Role>(
       field: 'operation',
       fixed: 'right',
       title: $t('system.role.operation'),
-      width: 200,
+      width: 260,
     },
   ];
 }

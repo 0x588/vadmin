@@ -17,6 +17,7 @@ import { deleteRole, getRolePage, updateRole } from '#/api';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
+import DataScope from './modules/data-scope.vue';
 import Form from './modules/form.vue';
 import Permission from './modules/permission.vue';
 
@@ -27,6 +28,11 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
 
 const [PermissionDrawer, permissionDrawerApi] = useVbenDrawer({
   connectedComponent: Permission,
+  destroyOnClose: true,
+});
+
+const [DataScopeDrawer, dataScopeDrawerApi] = useVbenDrawer({
+  connectedComponent: DataScope,
   destroyOnClose: true,
 });
 
@@ -77,6 +83,10 @@ function onActionClick(e: OnActionClickParams<SystemRoleApi.Role>) {
     }
     case 'permission': {
       permissionDrawerApi.setData(e.row).open();
+      break;
+    }
+    case 'dataScope': {
+      dataScopeDrawerApi.setData(e.row).open();
       break;
     }
   }
@@ -160,6 +170,7 @@ function onCreate() {
   <Page auto-content-height>
     <FormDrawer @success="onRefresh" />
     <PermissionDrawer @success="onRefresh" />
+    <DataScopeDrawer @success="onRefresh" />
     <Grid :table-title="$t('system.role.list')">
       <template #toolbar-tools>
         <Button type="primary" @click="onCreate">

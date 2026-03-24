@@ -148,7 +148,9 @@
     "operation": "Operation",
     "permissions": "Permissions",
     "setPermissions": "Permissions",
-    "assignPermission": "Assign Permissions"
+    "assignPermission": "Assign Permissions",
+    "dataScope": "Data Scope",
+    "dataScopeDept": "Department Scope"
   },
   "user": {
     "title": "User Management",

@@ -150,7 +150,9 @@
     "operation": "操作",
     "permissions": "权限",
     "setPermissions": "授权",
-    "assignPermission": "分配权限"
+    "assignPermission": "分配权限",
+    "dataScope": "数据权限",
+    "dataScopeDept": "权限部门"
   },
   "user": {
     "title": "用户管理",
