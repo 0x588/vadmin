@@ -97,6 +97,23 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     }),
   );
 
+  // 处理后端以 HTTP 200 返回业务码 401 的情况，
+  // 将其转换为类似 HTTP 401 的错误，以便 authenticateResponseInterceptor 能识别
+  client.addResponseInterceptor({
+    rejected: async (error) => {
+      const responseData = error?.data ?? error?.response?.data;
+      if (responseData?.code === 401) {
+        // 构造一个带 response.status=401 的错误，让 auth 拦截器处理
+        const authError = Object.assign({}, error, {
+          config: error.config ?? error?.response?.config,
+          response: { ...error.response, status: 401 },
+        });
+        throw authError;
+      }
+      throw error;
+    },
+  });
+
   // token过期的处理
   client.addResponseInterceptor(
     authenticateResponseInterceptor({

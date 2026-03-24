@@ -90,7 +90,21 @@ function setupAccessGuard(router: Router) {
 
     // 生成路由表
     // 当前登录用户拥有的角色标识列表
-    const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());
+    let userInfo;
+    try {
+      userInfo = userStore.userInfo || (await authStore.fetchUserInfo());
+    } catch {
+      // token 过期或无效，清除 token 防止循环重定向，通过 guard 返回值跳转登录页
+      accessStore.setAccessToken(null);
+      return {
+        path: LOGIN_PATH,
+        query:
+          to.fullPath === preferences.app.defaultHomePath
+            ? {}
+            : { redirect: encodeURIComponent(to.fullPath) },
+        replace: true,
+      };
+    }
     const userRoles = userInfo.roles ?? [];
 
     // 生成菜单和路由
