@@ -1,20 +1,20 @@
 import { setTimezoneHandler } from '@vben/stores';
 
-import { getTimezoneApi, getTimezoneOptionsApi, setTimezoneApi } from '#/api';
-
 /**
- * 初始化时区处理，通过API保存时区设置
+ * 初始化时区处理，固定为 Asia/Shanghai (北京时间)，不走后端 API
  */
 export function initTimezone() {
   setTimezoneHandler({
     getTimezone() {
-      return getTimezoneApi();
+      return Promise.resolve('Asia/Shanghai');
     },
-    setTimezone(timezone: string) {
-      return setTimezoneApi(timezone);
+    setTimezone(_timezone: string) {
+      return Promise.resolve();
     },
     getTimezoneOptions() {
-      return getTimezoneOptionsApi();
+      return Promise.resolve([
+        { label: '(UTC+08:00) 中国标准时间 - 北京', value: 'Asia/Shanghai' },
+      ]);
     },
   });
 }
