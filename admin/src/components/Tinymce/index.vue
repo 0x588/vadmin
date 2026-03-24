@@ -61,5 +61,10 @@ const initOptions = computed(() => ({
 </script>
 
 <template>
-  <Editor v-model="content" :init="initOptions" :disabled="disabled" license-key="gpl" />
+  <Editor
+    v-model="content"
+    :init="initOptions"
+    :disabled="disabled"
+    license-key="gpl"
+  />
 </template>

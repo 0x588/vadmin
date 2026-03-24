@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { UploadChangeParam, UploadFile } from 'ant-design-vue';
 import type { SystemConfigApi } from '#/api/system/config';
 
 import { onMounted, reactive, ref } from 'vue';
@@ -17,9 +18,11 @@ import {
   Select,
   Switch,
   TimePicker,
+  Upload,
 } from 'ant-design-vue';
 
 import { saveConfigEdit } from '#/api/system/config';
+import { upload_file } from '#/api/examples/upload';
 import Tinymce from '#/components/Tinymce/index.vue';
 
 const props = defineProps<{
@@ -28,7 +31,10 @@ const props = defineProps<{
 }>();
 
 const formState = reactive<Record<string, any>>({});
+const fileListMap = reactive<Record<string, UploadFile[]>>({});
 const saving = ref(false);
+const previewVisible = ref(false);
+const previewImage = ref('');
 
 function parseOptions(optionsStr?: string) {
   if (!optionsStr) return [];
@@ -37,6 +43,44 @@ function parseOptions(optionsStr?: string) {
   } catch {
     return [];
   }
+}
+
+/** Extract URL from an upload response (handles string or object with url field) */
+function extractUrl(response: any): string {
+  if (!response) return '';
+  if (typeof response === 'string') return response;
+  return response.url || response.path || '';
+}
+
+/** Convert URL array to UploadFile[] for ant-design-vue Upload */
+function urlsToFileList(urls: string[], isImage: boolean): UploadFile[] {
+  return urls
+    .filter((u) => typeof u === 'string' && u)
+    .map((url, i) => ({
+      uid: `-init-${i}`,
+      name: url.split('/').pop() || `file-${i}`,
+      status: 'done' as const,
+      url,
+      thumbUrl: isImage ? url : undefined,
+    }));
+}
+
+/** Extract URL array from UploadFile[] (only done files) */
+function fileListToUrls(list: UploadFile[]): string[] {
+  return list
+    .filter((f) => f.status === 'done')
+    .map((f) => f.url || extractUrl(f.response))
+    .filter(Boolean);
+}
+
+function handleFileChange(info: UploadChangeParam, key: string) {
+  fileListMap[key] = info.fileList.filter((f) => f.status !== 'removed');
+  formState[key] = fileListToUrls(fileListMap[key]);
+}
+
+function handlePreview(file: UploadFile) {
+  previewImage.value = file.url || extractUrl(file.response) || '';
+  previewVisible.value = true;
 }
 
 function initValue(cfg: SystemConfigApi.ConfigWithValue) {
@@ -86,6 +130,11 @@ onMounted(() => {
     for (const cfg of cate.config || []) {
       const key = `${cate.name}.${cfg.name}`;
       formState[key] = initValue(cfg);
+      // Initialize file lists for upload types
+      if (cfg.type === 'ImageUpload' || cfg.type === 'Upload') {
+        const urls = Array.isArray(formState[key]) ? formState[key] : [];
+        fileListMap[key] = urlsToFileList(urls, cfg.type === 'ImageUpload');
+      }
     }
   }
 });
@@ -128,7 +177,9 @@ async function handleSubmit() {
             />
             <!-- Textarea -->
             <Input.TextArea
-              v-else-if="cfg.type === 'Textarea' || cfg.type === 'InputTextArea'"
+              v-else-if="
+                cfg.type === 'Textarea' || cfg.type === 'InputTextArea'
+              "
               v-model:value="formState[`${cate.name}.${cfg.name}`]"
               :rows="4"
             />
@@ -174,6 +225,40 @@ async function handleSubmit() {
               v-else-if="cfg.type === 'Tinymce'"
               v-model="formState[`${cate.name}.${cfg.name}`]"
             />
+            <!-- ImageUpload -->
+            <Upload
+              v-else-if="cfg.type === 'ImageUpload'"
+              :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
+              list-type="picture-card"
+              :custom-request="upload_file"
+              accept=".png,.jpg,.jpeg,.gif,.webp"
+              @change="
+                (info: UploadChangeParam) =>
+                  handleFileChange(info, `${cate.name}.${cfg.name}`)
+              "
+              @preview="handlePreview"
+            >
+              <div
+                v-if="
+                  (fileListMap[`${cate.name}.${cfg.name}`] || []).length < 1
+                "
+              >
+                <div style="font-size: 24px; color: #999">+</div>
+                <div style="margin-top: 4px">上传图片</div>
+              </div>
+            </Upload>
+            <!-- Upload (file) -->
+            <Upload
+              v-else-if="cfg.type === 'Upload'"
+              :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
+              :custom-request="upload_file"
+              @change="
+                (info: UploadChangeParam) =>
+                  handleFileChange(info, `${cate.name}.${cfg.name}`)
+              "
+            >
+              <Button>上传文件</Button>
+            </Upload>
             <!-- UEditor: fallback to Textarea until UEditorPlus CDN issues resolved -->
             <Input.TextArea
               v-else-if="cfg.type === 'UEditor'"
@@ -195,5 +280,13 @@ async function handleSubmit() {
         </Button>
       </FormItem>
     </Form>
+    <!-- Image preview modal -->
+    <a-modal
+      :open="previewVisible"
+      :footer="null"
+      @cancel="previewVisible = false"
+    >
+      <img :src="previewImage" style="width: 100%" />
+    </a-modal>
   </div>
 </template>
