@@ -21,7 +21,7 @@ import { useColumns, useGridFormSchema } from './data';
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
-    submitOnChange: true,
+    submitOnChange: false,
   },
   gridOptions: {
     columns: useColumns(onActionClick),

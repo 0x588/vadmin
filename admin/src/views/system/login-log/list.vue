@@ -13,7 +13,7 @@ import { useColumns, useGridFormSchema } from './data';
 const [Grid] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
-    submitOnChange: true,
+    submitOnChange: false,
   },
   gridOptions: {
     columns: useColumns(),
