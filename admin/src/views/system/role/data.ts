@@ -113,20 +113,20 @@ export function useColumns<T = SystemRoleApi.Role>(
           nameField: 'name',
           nameTitle: $t('system.role.name'),
           onClick: onActionClick,
-          options: [
-            {
-              code: 'permission',
-              text: $t('system.role.assignPermission'),
-            },
-            {
-              code: 'dataScope',
-              text: $t('system.role.dataScope'),
-            },
-            'edit',
-            'delete',
-          ],
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'permission',
+            text: $t('system.role.assignPermission'),
+          },
+          {
+            code: 'dataScope',
+            text: $t('system.role.dataScope'),
+          },
+          'edit',
+          'delete',
+        ],
       },
       field: 'operation',
       fixed: 'right',
