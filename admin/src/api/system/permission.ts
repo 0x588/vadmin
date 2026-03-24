@@ -20,4 +20,21 @@ async function assignUserRole(userId: number, roleId: number) {
   });
 }
 
-export { assignRoleMenu, assignUserRole, listRoleMenuIds };
+async function assignRoleDataScope(
+  roleId: number,
+  dataScope: number,
+  dataScopeDeptIds: number[],
+) {
+  return requestClient.post('/system/permission/assign-role-data-scope', {
+    dataScope,
+    dataScopeDeptIds,
+    roleId,
+  });
+}
+
+export {
+  assignRoleDataScope,
+  assignRoleMenu,
+  assignUserRole,
+  listRoleMenuIds,
+};

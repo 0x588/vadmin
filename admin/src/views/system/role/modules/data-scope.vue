@@ -8,7 +8,8 @@ import { useVbenDrawer } from '@vben/common-ui';
 import { message, Select, Spin, Tree } from 'ant-design-vue';
 
 import { getDeptSimpleTree } from '#/api/system/dept';
-import { updateRole } from '#/api/system/role';
+import { getRole } from '#/api/system/role';
+import { assignRoleDataScope } from '#/api/system/permission';
 import { $t } from '#/locales';
 
 const emit = defineEmits(['success']);
@@ -35,12 +36,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!roleId.value) return;
     drawerApi.lock();
     try {
-      await updateRole({
-        dataScope: dataScope.value,
-        dataScopeDeptIds:
-          dataScope.value === 2 ? checkedDeptIds.value.join(',') : '',
-        id: roleId.value,
-      });
+      await assignRoleDataScope(
+        roleId.value,
+        dataScope.value,
+        dataScope.value === 2 ? checkedDeptIds.value : [],
+      );
       message.success($t('ui.actionMessage.operationSuccess'));
       emit('success');
       drawerApi.close();
@@ -50,22 +50,18 @@ const [Drawer, drawerApi] = useVbenDrawer({
   },
   async onOpenChange(isOpen) {
     if (isOpen) {
-      const data =
-        drawerApi.getData<{
-          dataScope?: number;
-          dataScopeDeptIds?: string;
-          id: number;
-          name: string;
-        }>();
+      const data = drawerApi.getData<{ id: number; name: string }>();
       if (data) {
         roleId.value = data.id;
         roleName.value = data.name;
-        dataScope.value = data.dataScope || 1;
-        checkedDeptIds.value = data.dataScopeDeptIds
-          ? data.dataScopeDeptIds
+        // Fetch latest role data from API
+        const role = await getRole(data.id);
+        dataScope.value = role.dataScope || 1;
+        checkedDeptIds.value = role.dataScopeDeptIds
+          ? role.dataScopeDeptIds
               .split(',')
               .filter(Boolean)
-              .map((id) => Number(id))
+              .map((id: string) => Number(id))
           : [];
       }
       await loadDeptTree();
