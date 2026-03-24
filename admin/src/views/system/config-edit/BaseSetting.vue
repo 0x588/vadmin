@@ -14,6 +14,7 @@ import {
   Input,
   InputNumber,
   message,
+  Modal,
   Radio,
   Select,
   Switch,
@@ -22,8 +23,9 @@ import {
 } from 'ant-design-vue';
 
 import { saveConfigEdit } from '#/api/system/config';
-import { upload_file } from '#/api/examples/upload';
 import Tinymce from '#/components/Tinymce/index.vue';
+
+import { useAccessStore } from '@vben/stores';
 
 const props = defineProps<{
   catId: number;
@@ -81,6 +83,32 @@ function handleFileChange(info: UploadChangeParam, key: string) {
 function handlePreview(file: UploadFile) {
   previewImage.value = file.url || extractUrl(file.response) || '';
   previewVisible.value = true;
+}
+
+/** Custom upload handler — avoids requestClient interceptor stripping url field */
+async function handleCustomUpload({ file, onError, onProgress, onSuccess }: any) {
+  try {
+    onProgress?.({ percent: 0 });
+    const accessStore = useAccessStore();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const resp = await fetch('/admin-api/upload', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessStore.accessToken}` },
+      body: formData,
+    });
+    const result = await resp.json();
+    onProgress?.({ percent: 100 });
+
+    if (result.code === 200 && result.url) {
+      onSuccess?.(result, file);
+    } else {
+      onError?.(new Error(result.message || '上传失败'));
+    }
+  } catch (error) {
+    onError?.(error instanceof Error ? error : new Error(String(error)));
+  }
 }
 
 function initValue(cfg: SystemConfigApi.ConfigWithValue) {
@@ -230,7 +258,7 @@ async function handleSubmit() {
               v-else-if="cfg.type === 'ImageUpload'"
               :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               list-type="picture-card"
-              :custom-request="upload_file"
+              :custom-request="handleCustomUpload"
               accept=".png,.jpg,.jpeg,.gif,.webp"
               @change="
                 (info: UploadChangeParam) =>
@@ -251,7 +279,7 @@ async function handleSubmit() {
             <Upload
               v-else-if="cfg.type === 'Upload'"
               :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
-              :custom-request="upload_file"
+              :custom-request="handleCustomUpload"
               @change="
                 (info: UploadChangeParam) =>
                   handleFileChange(info, `${cate.name}.${cfg.name}`)
@@ -281,12 +309,12 @@ async function handleSubmit() {
       </FormItem>
     </Form>
     <!-- Image preview modal -->
-    <a-modal
+    <Modal
       :open="previewVisible"
       :footer="null"
       @cancel="previewVisible = false"
     >
       <img :src="previewImage" style="width: 100%" />
-    </a-modal>
+    </Modal>
   </div>
 </template>
