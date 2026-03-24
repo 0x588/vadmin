@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { UploadChangeParam, UploadFile } from 'ant-design-vue';
+
 import type { SystemConfigApi } from '#/api/system/config';
 
 import { onMounted, reactive, ref } from 'vue';
+
+import { useAccessStore } from '@vben/stores';
 
 import {
   Button,
@@ -24,8 +27,6 @@ import {
 
 import { saveConfigEdit } from '#/api/system/config';
 import Tinymce from '#/components/Tinymce/index.vue';
-
-import { useAccessStore } from '@vben/stores';
 
 const props = defineProps<{
   catId: number;
@@ -170,11 +171,12 @@ onMounted(() => {
 async function handleSubmit() {
   saving.value = true;
   try {
-    const values: Record<string, any> = {};
+    const values: Record<string, Record<string, any>> = {};
     for (const cate of props.cats) {
+      if (!values[cate.name]) values[cate.name] = {};
       for (const cfg of cate.config || []) {
         const key = `${cate.name}.${cfg.name}`;
-        values[key] = serializeValue(cfg, formState[key]);
+        values[cate.name][cfg.name] = serializeValue(cfg, formState[key]);
       }
     }
     await saveConfigEdit({ cateId: props.catId, data: JSON.stringify(values) });
@@ -268,7 +270,7 @@ async function handleSubmit() {
             >
               <div
                 v-if="
-                  (fileListMap[`${cate.name}.${cfg.name}`] || []).length < 1
+                  (fileListMap[`${cate.name}.${cfg.name}`] || []).length === 0
                 "
               >
                 <div style="font-size: 24px; color: #999">+</div>
@@ -278,6 +280,8 @@ async function handleSubmit() {
             <!-- Upload (file) -->
             <Upload
               v-else-if="cfg.type === 'Upload'"
+              :max-count="1"
+              :max-size="100 * 1024 * 1024"
               :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               :custom-request="handleCustomUpload"
               @change="
