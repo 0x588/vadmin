@@ -43,11 +43,17 @@ const singlePanel = computed(() => {
       <BaseSetting :cats="settingList" :cat-id="0" />
     </template>
     <template v-else>
-      <Tabs tab-position="left" :tab-bar-style="{ width: '220px' }">
-        <TabPane v-for="item in settingList" :key="item.id" :tab="item.title">
-          <BaseSetting :cats="item.children || [item]" :cat-id="item.id" />
-        </TabPane>
-      </Tabs>
+      <div class="h-full rounded-md bg-card p-4">
+        <Tabs tab-position="left" :tab-bar-style="{ width: '220px' }">
+          <TabPane
+            v-for="item in settingList"
+            :key="item.id"
+            :tab="item.title"
+          >
+            <BaseSetting :cats="item.children || [item]" :cat-id="item.id" />
+          </TabPane>
+        </Tabs>
+      </div>
     </template>
   </Page>
 </template>
