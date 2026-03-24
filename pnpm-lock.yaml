@@ -663,9 +663,6 @@ importers:
       vue-router:
         specifier: 'catalog:'
         version: 5.0.3(@vue/compiler-sfc@3.5.30)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.30(typescript@5.9.3)))(vue@3.5.30(typescript@5.9.3))
-      vue-ueditor-wrap:
-        specifier: ^3.0.8
-        version: 3.0.8(vue@3.5.30(typescript@5.9.3))
     devDependencies:
       '@types/json-bigint':
         specifier: 'catalog:'
@@ -9468,11 +9465,6 @@ packages:
     peerDependencies:
       vue: ^3.5.30
 
-  vue-ueditor-wrap@3.0.8:
-    resolution: {integrity: sha512-U1s30pKcz8rr6v2F2ivnomOf1vF1N+n+aNClas4jXfiEf4E5FEtNwkFJBugcyf2VTRFK0UVpx5WspX5nwmImYw==}
-    peerDependencies:
-      vue: ^3.5.30
-
   vue@3.5.30:
     resolution: {integrity: sha512-hTHLc6VNZyzzEH/l7PFGjpcTvUgiaPK5mdLkbjrTeWSRcEfxFrv56g/XckIYlE9ckuobsdwqd5mk2g1sBkMewg==}
     peerDependencies:
@@ -17961,11 +17953,6 @@ snapshots:
   vue-types@3.0.2(vue@3.5.30(typescript@5.9.3)):
     dependencies:
       is-plain-object: 3.0.1
-      vue: 3.5.30(typescript@5.9.3)
-
-  vue-ueditor-wrap@3.0.8(vue@3.5.30(typescript@5.9.3)):
-    dependencies:
-      '@babel/runtime': 7.29.2
       vue: 3.5.30(typescript@5.9.3)
 
   vue@3.5.30(typescript@5.9.3):

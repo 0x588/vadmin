@@ -55,8 +55,7 @@
     "pinia": "catalog:",
     "tinymce": "^8.3.2",
     "vue": "catalog:",
-    "vue-router": "catalog:",
-    "vue-ueditor-wrap": "^3.0.8"
+    "vue-router": "catalog:"
   },
   "devDependencies": {
     "@types/json-bigint": "catalog:"

@@ -27,6 +27,7 @@ import {
 
 import { saveConfigEdit } from '#/api/system/config';
 import Tinymce from '#/components/Tinymce/index.vue';
+import UEditor from '#/components/UEditor/index.vue';
 
 const props = defineProps<{
   catId: number;
@@ -268,9 +269,7 @@ async function handleSubmit() {
               list-type="picture-card"
               :custom-request="handleCustomUpload"
               accept=".png,.jpg,.jpeg,.gif,.webp"
-              @change="
-                handleFileChange($event, `${cate.name}.${cfg.name}`)
-              "
+              @change="handleFileChange($event, `${cate.name}.${cfg.name}`)"
               @preview="handlePreview"
             >
               <div
@@ -287,18 +286,16 @@ async function handleSubmit() {
               v-else-if="cfg.type === 'Upload'"
               v-model:file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               :custom-request="handleCustomUpload"
-              @change="
-                handleFileChange($event, `${cate.name}.${cfg.name}`)
-              "
+              @change="handleFileChange($event, `${cate.name}.${cfg.name}`)"
             >
               <Button>上传文件</Button>
             </Upload>
-            <!-- UEditor: fallback to Textarea until UEditorPlus CDN issues resolved -->
-            <Input.TextArea
+            <!-- UEditor -->
+            <UEditor
               v-else-if="cfg.type === 'UEditor'"
-              v-model:value="formState[`${cate.name}.${cfg.name}`]"
-              :rows="8"
-              placeholder="富文本编辑 (UEditor)"
+              v-model="formState[`${cate.name}.${cfg.name}`]"
+              :editor-id="`editor-${cate.name}-${cfg.name}`"
+              :height="400"
             />
             <!-- Fallback: Input -->
             <Input
