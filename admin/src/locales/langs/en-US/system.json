@@ -17,6 +17,11 @@
     "createdAt": "Created At",
     "operation": "Operation"
   },
+  "configEdit": {
+    "title": "Config Editor",
+    "save": "Save",
+    "saveSuccess": "Save Success"
+  },
   "dept": {
     "name": "Department",
     "title": "Department Management",

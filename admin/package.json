@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "catalog:",
+    "@tinymce/tinymce-vue": "^6.3.0",
     "@vben-core/design": "workspace:*",
     "@vben-core/menu-ui": "workspace:*",
     "@vben-core/shadcn-ui": "workspace:*",
@@ -52,8 +53,10 @@
     "dayjs": "catalog:",
     "json-bigint": "catalog:",
     "pinia": "catalog:",
+    "tinymce": "^8.3.2",
     "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue-router": "catalog:",
+    "vue-ueditor-wrap": "^2.5.6"
   },
   "devDependencies": {
     "@types/json-bigint": "catalog:"

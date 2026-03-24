@@ -17,6 +17,11 @@
     "createdAt": "创建时间",
     "operation": "操作"
   },
+  "configEdit": {
+    "title": "配置编辑",
+    "save": "保存",
+    "saveSuccess": "保存成功"
+  },
   "dept": {
     "list": "部门列表",
     "createTime": "创建时间",

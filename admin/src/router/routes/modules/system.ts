@@ -93,6 +93,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('#/views/system/config/list.vue'),
       },
+      {
+        path: '/system/config-edit',
+        name: 'SystemConfigEdit',
+        meta: {
+          icon: 'mdi:pencil-box-outline',
+          title: $t('system.configEdit.title'),
+        },
+        component: () => import('#/views/system/config-edit/index.vue'),
+      },
     ],
   },
 ];
