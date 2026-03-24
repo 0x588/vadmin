@@ -17,6 +17,7 @@ const roleId = ref<number>();
 const roleName = ref<string>('');
 const menuTree = ref<SystemMenuApi.MenuSimple[]>([]);
 const checkedKeys = ref<number[]>([]);
+const halfCheckedKeys = ref<number[]>([]);
 const loading = ref(false);
 
 const [Drawer, drawerApi] = useVbenDrawer({
@@ -24,7 +25,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!roleId.value) return;
     drawerApi.lock();
     try {
-      await assignRoleMenu(roleId.value, checkedKeys.value);
+      await assignRoleMenu(roleId.value, [
+        ...checkedKeys.value,
+        ...halfCheckedKeys.value,
+      ]);
       message.success($t('ui.actionMessage.operationSuccess'));
       emit('success');
       drawerApi.close();
@@ -52,9 +56,37 @@ async function loadData() {
       roleId.value ? listRoleMenuIds(roleId.value) : Promise.resolve([]),
     ]);
     menuTree.value = tree;
-    checkedKeys.value = menuIds;
+    // Exclude parent IDs so cascade check doesn't auto-select all children
+    const parentIds = collectParentIds(tree);
+    checkedKeys.value = menuIds.filter((id) => !parentIds.has(id));
+    halfCheckedKeys.value = [];
   } finally {
     loading.value = false;
+  }
+}
+
+function collectParentIds(
+  nodes: SystemMenuApi.MenuSimple[],
+): Set<number> {
+  const parentIds = new Set<number>();
+  for (const node of nodes) {
+    if (node.children && node.children.length > 0) {
+      parentIds.add(node.id);
+      for (const id of collectParentIds(node.children)) {
+        parentIds.add(id);
+      }
+    }
+  }
+  return parentIds;
+}
+
+function onCheck(
+  checked: number[] | { checked: number[]; halfChecked: number[] },
+  e: any,
+) {
+  if (Array.isArray(checked)) {
+    checkedKeys.value = checked;
+    halfCheckedKeys.value = (e.halfCheckedKeys as number[]) || [];
   }
 }
 
@@ -69,12 +101,12 @@ const drawerTitle = computed(
   <Drawer :title="drawerTitle">
     <Spin :spinning="loading">
       <Tree
-        v-model:checked-keys="checkedKeys"
+        :checked-keys="checkedKeys"
         :tree-data="menuTree as any"
         :field-names="{ title: 'name', key: 'id', children: 'children' }"
         checkable
-        check-strictly
         default-expand-all
+        @check="onCheck"
       />
     </Spin>
   </Drawer>
