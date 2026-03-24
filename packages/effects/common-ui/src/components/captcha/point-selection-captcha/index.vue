@@ -159,12 +159,17 @@ function handleConfirm() {
       {{ index + 1 }}
     </div>
     <template #footer>
-      <img
+      <div
         v-if="hintImage"
-        :alt="$t('ui.captcha.alt')"
-        :src="hintImage"
-        class="h-10 w-full rounded-sm border border-border"
-      />
+        class="flex-center h-10 w-full gap-2 rounded-sm border border-border"
+      >
+        <span class="shrink-0 text-sm">{{ $t('ui.captcha.clickInOrder') }}</span>
+        <img
+          :alt="$t('ui.captcha.alt')"
+          :src="hintImage"
+          class="h-8"
+        />
+      </div>
       <div
         v-else-if="hintText"
         class="flex-center h-10 w-full rounded-sm border border-border"
