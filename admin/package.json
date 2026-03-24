@@ -50,6 +50,7 @@
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
     "ant-design-vue": "catalog:",
+    "crypto-js": "^4.2.0",
     "dayjs": "catalog:",
     "json-bigint": "catalog:",
     "pinia": "catalog:",
@@ -58,6 +59,7 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/json-bigint": "catalog:"
   }
 }

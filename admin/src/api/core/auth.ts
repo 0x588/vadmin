@@ -37,10 +37,7 @@ export namespace AuthApi {
  * 登录
  */
 export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/system/auth/login', {
-    ...data,
-    captchaVerification: data.captchaVerification || 'skip',
-  });
+  return requestClient.post<AuthApi.LoginResult>('/system/auth/login', data);
 }
 
 /**
