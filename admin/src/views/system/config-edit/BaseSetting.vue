@@ -81,6 +81,10 @@ function handleFileChange(info: UploadChangeParam, key: string) {
   formState[key] = fileListToUrls(fileListMap[key]);
 }
 
+function makeChangeHandler(key: string) {
+  return (info: UploadChangeParam) => handleFileChange(info, key);
+}
+
 function handlePreview(file: UploadFile) {
   previewImage.value = file.url || extractUrl(file.response) || '';
   previewVisible.value = true;
@@ -258,14 +262,11 @@ async function handleSubmit() {
             <!-- ImageUpload -->
             <Upload
               v-else-if="cfg.type === 'ImageUpload'"
-              :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
+              v-model:file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               list-type="picture-card"
               :custom-request="handleCustomUpload"
               accept=".png,.jpg,.jpeg,.gif,.webp"
-              @change="
-                (info: UploadChangeParam) =>
-                  handleFileChange(info, `${cate.name}.${cfg.name}`)
-              "
+              @change="makeChangeHandler(`${cate.name}.${cfg.name}`)"
               @preview="handlePreview"
             >
               <div
@@ -280,14 +281,9 @@ async function handleSubmit() {
             <!-- Upload (file) -->
             <Upload
               v-else-if="cfg.type === 'Upload'"
-              :max-count="1"
-              :max-size="100 * 1024 * 1024"
-              :file-list="fileListMap[`${cate.name}.${cfg.name}`]"
+              v-model:file-list="fileListMap[`${cate.name}.${cfg.name}`]"
               :custom-request="handleCustomUpload"
-              @change="
-                (info: UploadChangeParam) =>
-                  handleFileChange(info, `${cate.name}.${cfg.name}`)
-              "
+              @change="makeChangeHandler(`${cate.name}.${cfg.name}`)"
             >
               <Button>上传文件</Button>
             </Upload>
