@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SystemConfigApi } from '#/api/system/config';
+
 import { onMounted, reactive, ref } from 'vue';
 
 import {
@@ -18,9 +20,7 @@ import {
 } from 'ant-design-vue';
 
 import { saveConfigEdit } from '#/api/system/config';
-import type { SystemConfigApi } from '#/api/system/config';
 import Tinymce from '#/components/Tinymce/index.vue';
-import UEditor from '#/components/UEditor/index.vue';
 
 const props = defineProps<{
   catId: number;
@@ -128,7 +128,7 @@ async function handleSubmit() {
             />
             <!-- Textarea -->
             <Input.TextArea
-              v-else-if="cfg.type === 'Textarea'"
+              v-else-if="cfg.type === 'Textarea' || cfg.type === 'InputTextArea'"
               v-model:value="formState[`${cate.name}.${cfg.name}`]"
               :rows="4"
             />
@@ -174,11 +174,12 @@ async function handleSubmit() {
               v-else-if="cfg.type === 'Tinymce'"
               v-model="formState[`${cate.name}.${cfg.name}`]"
             />
-            <!-- UEditor -->
-            <UEditor
+            <!-- UEditor: fallback to Textarea until UEditorPlus CDN issues resolved -->
+            <Input.TextArea
               v-else-if="cfg.type === 'UEditor'"
-              v-model="formState[`${cate.name}.${cfg.name}`]"
-              :editor-id="`editor-${cate.name}-${cfg.name}`"
+              v-model:value="formState[`${cate.name}.${cfg.name}`]"
+              :rows="8"
+              placeholder="富文本编辑 (UEditor)"
             />
             <!-- Fallback: Input -->
             <Input

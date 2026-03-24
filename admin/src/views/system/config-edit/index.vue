@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SystemConfigApi } from '#/api/system/config';
+
 import { computed, onMounted, ref } from 'vue';
 
 import { Page } from '@vben/common-ui';
@@ -6,7 +8,6 @@ import { Page } from '@vben/common-ui';
 import { Spin, Tabs } from 'ant-design-vue';
 
 import { getConfigEditAll } from '#/api/system/config';
-import type { SystemConfigApi } from '#/api/system/config';
 
 import BaseSetting from './BaseSetting.vue';
 
@@ -43,11 +44,7 @@ const singlePanel = computed(() => {
     </template>
     <template v-else>
       <Tabs tab-position="left" :tab-bar-style="{ width: '220px' }">
-        <TabPane
-          v-for="item in settingList"
-          :key="item.id"
-          :tab="item.title"
-        >
+        <TabPane v-for="item in settingList" :key="item.id" :tab="item.title">
           <BaseSetting :cats="item.children || [item]" :cat-id="item.id" />
         </TabPane>
       </Tabs>

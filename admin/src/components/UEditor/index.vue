@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-
 import VueUeditorWrap from 'vue-ueditor-wrap';
 
 const props = withDefaults(

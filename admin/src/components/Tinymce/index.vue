@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
+import Editor from '@tinymce/tinymce-vue';
+
 import 'tinymce/tinymce';
 import 'tinymce/themes/silver';
 import 'tinymce/icons/default';
@@ -15,12 +19,9 @@ import 'tinymce/plugins/media';
 import 'tinymce/plugins/preview';
 import 'tinymce/plugins/table';
 import 'tinymce/plugins/wordcount';
+
 import 'tinymce/skins/ui/oxide/skin.min.css';
 import 'tinymce/skins/content/default/content.min.css';
-
-import { computed } from 'vue';
-
-import Editor from '@tinymce/tinymce-vue';
 
 const props = withDefaults(
   defineProps<{
@@ -60,5 +61,5 @@ const initOptions = computed(() => ({
 </script>
 
 <template>
-  <Editor v-model="content" :init="initOptions" :disabled="disabled" />
+  <Editor v-model="content" :init="initOptions" :disabled="disabled" license-key="gpl" />
 </template>
