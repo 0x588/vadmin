@@ -14,7 +14,6 @@ import { defineStore } from 'pinia';
 
 import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
 import { $t } from '#/locales';
-import { useDictStore } from '#/store/dict';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
@@ -53,10 +52,6 @@ export const useAuthStore = defineStore('auth', () => {
           fetchUserInfo(),
           getAccessCodesApi(),
         ]);
-
-        // 加载字典数据
-        const dictStore = useDictStore();
-        dictStore.setDictMap();
 
         userInfo = fetchUserInfoResult;
 

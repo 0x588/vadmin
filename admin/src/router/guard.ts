@@ -6,7 +6,7 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
 import { accessRoutes, coreRouteNames } from '#/router/routes';
-import { useAuthStore } from '#/store';
+import { useAuthStore, useDictStore } from '#/store';
 
 import { generateAccess } from './access';
 
@@ -86,6 +86,12 @@ function setupAccessGuard(router: Router) {
     // 是否已经生成过动态路由
     if (accessStore.isAccessChecked) {
       return true;
+    }
+
+    // 加载字典数据（仅首次）
+    const dictStore = useDictStore();
+    if (!dictStore.isSetDict) {
+      await dictStore.setDictMap();
     }
 
     // 生成路由表
