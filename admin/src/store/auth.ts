@@ -12,7 +12,7 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { clearPermissionInfoCache, getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -98,6 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
     } finally {
       isLoggingOut.value = false; // 重置 标识
 
+      clearPermissionInfoCache();
       resetAllStores();
       localStorage.removeItem('refresh_token');
       accessStore.setLoginExpired(false);

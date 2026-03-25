@@ -7,6 +7,7 @@ import { startProgress, stopProgress } from '@vben/utils';
 
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore, useDictStore } from '#/store';
+import { getAccessCodesApi } from '#/api';
 
 import { generateAccess } from './access';
 
@@ -112,6 +113,10 @@ function setupAccessGuard(router: Router) {
       };
     }
     const userRoles = userInfo.roles ?? [];
+
+    // 加载权限码（从缓存读取，不会重复请求API）
+    const accessCodes = await getAccessCodesApi();
+    accessStore.setAccessCodes(accessCodes);
 
     // 生成菜单和路由
     const { accessibleMenus, accessibleRoutes } = await generateAccess({
