@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
@@ -19,10 +20,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: [
-          { label: $t('system.loginLog.resultSuccess'), value: 0 },
-          { label: $t('system.loginLog.resultFail'), value: 10 },
-        ],
+        options: getDictOptions(DICT_TYPE.SYSTEM_LOGIN_RESULT),
       },
       fieldName: 'result',
       label: $t('system.loginLog.result'),

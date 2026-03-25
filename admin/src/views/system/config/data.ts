@@ -4,6 +4,7 @@ import type { SystemConfigApi } from '#/api/system/config';
 
 import { getConfigCateSimpleTree } from '#/api/system/config';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export function useCateColumns<T = SystemConfigApi.ConfigCate>(
   onActionClick: OnActionClickFn<T>,
@@ -76,10 +77,7 @@ export function useCateFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
         optionType: 'button',
       },
       defaultValue: 1,
@@ -112,14 +110,8 @@ export function useConfigFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: [
-          { label: '文本', value: 'text' },
-          { label: '数字', value: 'number' },
-          { label: '布尔', value: 'boolean' },
-          { label: 'JSON', value: 'json' },
-          { label: '图片', value: 'image' },
-          { label: '富文本', value: 'richtext' },
-        ],
+        options: getDictOptions(DICT_TYPE.COMMON_CONFIG_TYPE, 'string'),
+        class: 'w-full',
       },
       fieldName: 'type',
       label: $t('system.config.type'),
@@ -131,6 +123,11 @@ export function useConfigFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'Textarea',
+      fieldName: 'options',
+      label: $t('system.config.options'),
+    },
+    {
+      component: 'Textarea',
       fieldName: 'remark',
       label: $t('system.config.remark'),
     },
@@ -138,10 +135,7 @@ export function useConfigFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
         optionType: 'button',
       },
       defaultValue: 1,

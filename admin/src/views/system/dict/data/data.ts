@@ -3,6 +3,39 @@ import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemDictDataApi } from '#/api/system/dict-data';
 
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
+
+const options = [
+  {
+    value: '',
+    label: '无',
+  },
+  {
+    value: 'processing',
+    color: 'processing',
+    label: '主要',
+  },
+  {
+    value: 'success',
+    color: 'success',
+    label: '成功',
+  },
+  {
+    value: 'default',
+    color: 'default',
+    label: '默认',
+  },
+  {
+    value: 'warning',
+    color: 'warning',
+    label: '警告',
+  },
+  {
+    value: 'error',
+    color: 'error',
+    label: '危险',
+  },
+]
 
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
@@ -23,10 +56,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
       },
       fieldName: 'status',
       label: $t('system.dictData.status'),
@@ -54,7 +84,11 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('system.dictData.dictType'),
     },
     {
-      component: 'Input',
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options,
+      },
       fieldName: 'colorType',
       label: $t('system.dictData.colorType'),
     },
@@ -67,10 +101,7 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
         optionType: 'button',
       },
       defaultValue: 1,
@@ -112,6 +143,7 @@ export function useColumns<T = SystemDictDataApi.DictData>(
     },
     {
       field: 'colorType',
+      cellRender: { name: 'CellTag', options: options },
       title: $t('system.dictData.colorType'),
       width: 100,
     },

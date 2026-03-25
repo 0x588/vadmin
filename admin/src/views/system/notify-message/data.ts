@@ -3,6 +3,7 @@ import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemNotifyMessageApi } from '#/api/system/notify-message';
 
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
@@ -15,11 +16,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: [
-          { label: '站内信', value: 1 },
-          { label: '短信', value: 2 },
-          { label: '邮件', value: 3 },
-        ],
+        options: getDictOptions(DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE),
       },
       fieldName: 'templateType',
       label: $t('system.notifyMessage.templateType'),

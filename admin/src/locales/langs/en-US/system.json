@@ -11,6 +11,7 @@
     "configName": "Config Key",
     "type": "Type",
     "defaultValue": "Default Value",
+    "options": "Config Options",
     "remark": "Remark",
     "status": "Status",
     "sort": "Sort",

@@ -11,6 +11,7 @@ import { getDeptSimpleTree } from '#/api/system/dept';
 import { getRole } from '#/api/system/role';
 import { assignRoleDataScope } from '#/api/system/permission';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 const emit = defineEmits(['success']);
 
@@ -21,13 +22,7 @@ const checkedDeptIds = ref<number[]>([]);
 const deptTree = ref<SystemDeptApi.DeptSimple[]>([]);
 const loading = ref(false);
 
-const dataScopeOptions = [
-  { label: '全部数据权限', value: 1 },
-  { label: '自定数据权限', value: 2 },
-  { label: '本部门数据权限', value: 3 },
-  { label: '本部门及以下数据权限', value: 4 },
-  { label: '仅本人数据权限', value: 5 },
-];
+const dataScopeOptions = getDictOptions(DICT_TYPE.SYSTEM_DATA_SCOPE);
 
 const showDeptTree = computed(() => dataScope.value === 2);
 

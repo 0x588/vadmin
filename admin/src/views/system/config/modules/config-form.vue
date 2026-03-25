@@ -40,7 +40,7 @@ const [Modal, modalApi] = useVbenModal({
       const data = await formApi.getValues();
       try {
         await (formData.value?.id
-          ? updateConfig({ id: formData.value.id, ...data })
+          ? updateConfig({ id: formData.value.id, cateId: formData.value.cateId, ...data })
           : createConfig({ ...data, cateId: formData.value?.cateId }));
         modalApi.close();
         emit('success');

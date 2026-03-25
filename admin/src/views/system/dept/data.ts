@@ -7,6 +7,7 @@ import type { SystemDeptApi } from '#/api/system/dept';
 import { z } from '#/adapter/form';
 import { getDeptSimpleTree } from '#/api/system/dept';
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 /**
  * 获取编辑表单的字段配置。如果没有使用多语言，可以直接export一个数组常量
@@ -42,11 +43,7 @@ export function useSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: [
-          { label: $t('common.enabled'), value: 1 },
-          { label: $t('common.disabled'), value: 0 },
-        ],
-        optionType: 'button',
+        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
       },
       defaultValue: 1,
       fieldName: 'status',

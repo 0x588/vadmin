@@ -19,8 +19,7 @@ import { useVbenForm, z } from '#/adapter/form';
 import { createMenu, getMenuList, updateMenu } from '#/api/system/menu';
 import { $t } from '#/locales';
 import { componentKeys } from '#/router/routes';
-
-import { getMenuTypeOptions } from '../data';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 const emit = defineEmits<{
   success: [];
@@ -32,7 +31,7 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     componentProps: {
       buttonStyle: 'solid',
-      options: getMenuTypeOptions(),
+      options: getDictOptions(DICT_TYPE.SYSTEM_MENU_TYPE),
       optionType: 'button',
     },
     defaultValue: 2,
@@ -189,10 +188,7 @@ const schema: VbenFormSchema[] = [
     component: 'RadioGroup',
     componentProps: {
       buttonStyle: 'solid',
-      options: [
-        { label: $t('common.enabled'), value: 1 },
-        { label: $t('common.disabled'), value: 0 },
-      ],
+      options: getDictOptions(DICT_TYPE.COMMON_STATUS),
       optionType: 'button',
     },
     defaultValue: 1,
