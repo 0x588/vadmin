@@ -53,10 +53,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
         const role = await getRole(data.id);
         dataScope.value = role.dataScope || 1;
         checkedDeptIds.value = role.dataScopeDeptIds
-          ? role.dataScopeDeptIds
-              .split(',')
-              .filter(Boolean)
-              .map(Number)
+          ? role.dataScopeDeptIds.split(',').filter(Boolean).map(Number)
           : [];
       }
       await loadDeptTree();
