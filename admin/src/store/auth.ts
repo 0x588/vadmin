@@ -12,7 +12,13 @@ import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { clearPermissionInfoCache, getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import {
+  clearPermissionInfoCache,
+  getAccessCodesApi,
+  getUserInfoApi,
+  loginApi,
+  logoutApi,
+} from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {

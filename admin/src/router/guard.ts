@@ -5,9 +5,9 @@ import { preferences } from '@vben/preferences';
 import { useAccessStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
+import { getAccessCodesApi } from '#/api';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore, useDictStore } from '#/store';
-import { getAccessCodesApi } from '#/api';
 
 import { generateAccess } from './access';
 

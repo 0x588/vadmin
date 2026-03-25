@@ -73,6 +73,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 function onActionClick(e: OnActionClickParams<SystemRoleApi.Role>) {
   switch (e.code) {
+    case 'dataScope': {
+      dataScopeDrawerApi.setData(e.row).open();
+      break;
+    }
     case 'delete': {
       onDelete(e.row);
       break;
@@ -83,10 +87,6 @@ function onActionClick(e: OnActionClickParams<SystemRoleApi.Role>) {
     }
     case 'permission': {
       permissionDrawerApi.setData(e.row).open();
-      break;
-    }
-    case 'dataScope': {
-      dataScopeDrawerApi.setData(e.row).open();
       break;
     }
   }

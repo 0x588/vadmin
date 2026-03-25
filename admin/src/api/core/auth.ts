@@ -73,7 +73,7 @@ export async function getPermissionInfoApi() {
 
 // ========== 权限信息缓存（避免重复请求） ==========
 
-let _permissionInfoPromise: Promise<AuthApi.PermissionInfo> | null = null;
+let _permissionInfoPromise: null | Promise<AuthApi.PermissionInfo> = null;
 
 /**
  * 获取缓存的权限信息（同一会话只请求一次API）
