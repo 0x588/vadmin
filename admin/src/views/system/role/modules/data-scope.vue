@@ -8,8 +8,8 @@ import { useVbenDrawer } from '@vben/common-ui';
 import { message, Select, Spin, Tree } from 'ant-design-vue';
 
 import { getDeptSimpleTree } from '#/api/system/dept';
-import { getRole } from '#/api/system/role';
 import { assignRoleDataScope } from '#/api/system/permission';
+import { getRole } from '#/api/system/role';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
@@ -56,7 +56,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
           ? role.dataScopeDeptIds
               .split(',')
               .filter(Boolean)
-              .map((id: string) => Number(id))
+              .map(Number)
           : [];
       }
       await loadDeptTree();

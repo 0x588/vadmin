@@ -35,7 +35,7 @@ const options = [
     color: 'error',
     label: '危险',
   },
-]
+];
 
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
