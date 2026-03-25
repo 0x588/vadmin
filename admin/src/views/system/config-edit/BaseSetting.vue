@@ -180,10 +180,13 @@ async function handleSubmit() {
   try {
     const values: Record<string, Record<string, any>> = {};
     for (const cate of props.cats) {
-      if (!values[cate.name]) values[cate.name] = {};
+      values[cate.name] = values[cate.name] || {};
       for (const cfg of cate.config || []) {
         const key = `${cate.name}.${cfg.name}`;
-        values[cate.name][cfg.name] = serializeValue(cfg, formState[key]);
+        const catValue = values[cate.name];
+        if (catValue) {
+          catValue[cfg.name] = serializeValue(cfg, formState[key]);
+        }
       }
     }
     await saveConfigEdit({ cateId: props.catId, data: JSON.stringify(values) });
