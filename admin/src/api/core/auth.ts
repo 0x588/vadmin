@@ -118,7 +118,7 @@ function transformBackendMenus(menus: any[]): RouteRecordStringComponent[] {
           keepAlive: menu.keepAlive ?? false,
           order: menu.sort,
           title: menu.name,
-          ...(menu.extraMeta || {}),
+          ...menu.extraMeta,
         },
         name: menu.componentName || `Menu_${menu.id}`,
         path: menu.path || '',

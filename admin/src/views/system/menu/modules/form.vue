@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface';
 
 import type { Recordable } from '@vben/types';
 
@@ -10,7 +9,6 @@ import { computed, h, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
-import { $te } from '@vben/locales';
 import { getPopupContainer } from '@vben/utils';
 
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
@@ -208,8 +206,8 @@ const schema: VbenFormSchema[] = [
   {
     component: 'InputNumber',
     componentProps: {
-        allowClear: true,
-        class: 'w-full',
+      allowClear: true,
+      class: 'w-full',
     },
     defaultValue: 10,
     fieldName: 'sort',
