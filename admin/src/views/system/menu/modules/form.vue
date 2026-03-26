@@ -16,7 +16,7 @@ import { getPopupContainer } from '@vben/utils';
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
 
 import { useVbenForm, z } from '#/adapter/form';
-import { createMenu, getMenuList, updateMenu } from '#/api/system/menu';
+import { createMenu, getMenuSimpleTree, updateMenu } from '#/api/system/menu';
 import { $t } from '#/locales';
 import { componentKeys } from '#/router/routes';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
@@ -38,6 +38,7 @@ const schema: VbenFormSchema[] = [
     fieldName: 'type',
     formItemClass: 'col-span-2 md:col-span-2',
     label: $t('system.menu.type'),
+    rules: 'required',
   },
   {
     component: 'Input',
@@ -51,18 +52,18 @@ const schema: VbenFormSchema[] = [
   {
     component: 'ApiTreeSelect',
     componentProps: {
-      api: getMenuList,
+      api: getMenuSimpleTree,
       class: 'w-full',
       filterTreeNode(input: string, node: Recordable<any>) {
         if (!input || input.length === 0) {
           return true;
         }
-        const title: string = node.meta?.title ?? '';
-        if (!title) return false;
-        return title.includes(input) || $t(title).includes(input);
+        const name: string = node.name ?? '';
+        if (!name) return false;
+        return name.includes(input);
       },
       getPopupContainer,
-      labelField: 'meta.title',
+      labelField: 'name',
       showSearch: true,
       treeDefaultExpandAll: true,
       valueField: 'id',
@@ -72,31 +73,17 @@ const schema: VbenFormSchema[] = [
     label: $t('system.menu.parent'),
     renderComponentContent() {
       return {
-        title({ label, meta }: { label: string; meta: Recordable<any> }) {
+        title({ label, data }: { data: Recordable<any>; label: string }) {
           const coms = [];
           if (!label) return '';
-          if (meta?.icon) {
-            coms.push(h(IconifyIcon, { class: 'size-4', icon: meta.icon }));
+          if (data?.icon) {
+            coms.push(h(IconifyIcon, { class: 'size-4', icon: data.icon }));
           }
-          coms.push(h('span', { class: '' }, $t(label || '')));
+          coms.push(h('span', {}, label));
           return h('div', { class: 'flex items-center gap-1' }, coms);
         },
       };
     },
-  },
-  {
-    component: 'Input',
-    componentProps() {
-      // 不需要处理多语言时就无需这么做
-      return {
-        ...(titleSuffix.value && { addonAfter: titleSuffix.value }),
-        onChange({ target: { value } }: ChangeEvent) {
-          titleSuffix.value = value && $te(value) ? $t(value) : undefined;
-        },
-      };
-    },
-    fieldName: 'meta.title',
-    label: $t('system.menu.menuTitle'),
     rules: 'required',
   },
   {
@@ -131,22 +118,8 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.icon',
+    fieldName: 'icon',
     label: $t('system.menu.icon'),
-  },
-  {
-    component: 'IconPicker',
-    componentProps: {
-      prefix: 'carbon',
-    },
-    dependencies: {
-      show: (values) => {
-        return [1, 2].includes(values.type);
-      },
-      triggerFields: ['type'],
-    },
-    fieldName: 'meta.activeIcon',
-    label: $t('system.menu.activeIcon'),
   },
   {
     component: 'AutoComplete',
@@ -211,7 +184,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.badgeType',
+    fieldName: 'extraMeta.badgeType',
     label: $t('system.menu.badgeType.title'),
   },
   {
@@ -220,7 +193,7 @@ const schema: VbenFormSchema[] = [
       return {
         allowClear: true,
         class: 'w-full',
-        disabled: values.meta?.badgeType !== 'normal',
+        disabled: values.extraMeta?.badgeType !== 'normal',
       };
     },
     dependencies: {
@@ -229,8 +202,18 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.badge',
+    fieldName: 'extraMeta.badge',
     label: $t('system.menu.badge'),
+  },
+  {
+    component: 'InputNumber',
+    componentProps: {
+        allowClear: true,
+        class: 'w-full',
+    },
+    defaultValue: 10,
+    fieldName: 'sort',
+    label: $t('system.menu.sort'),
   },
   {
     component: 'Select',
@@ -250,7 +233,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.badgeVariants',
+    fieldName: 'extraMeta.badgeVariants',
     label: $t('system.menu.badgeVariants'),
   },
   {
@@ -278,7 +261,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.keepAlive',
+    fieldName: 'keepAlive',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.keepAlive'),
@@ -293,7 +276,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.affixTab',
+    fieldName: 'extraMeta.affixTab',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.affixTab'),
@@ -308,7 +291,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.hideInMenu',
+    fieldName: 'extraMeta.hideInMenu',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.hideInMenu'),
@@ -323,7 +306,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.hideChildrenInMenu',
+    fieldName: 'meta.hidepathForChildren',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.hideChildrenInMenu'),
@@ -338,7 +321,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.hideInBreadcrumb',
+    fieldName: 'extraMeta.hideInBreadcrumb',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.hideInBreadcrumb'),
@@ -353,7 +336,7 @@ const schema: VbenFormSchema[] = [
       },
       triggerFields: ['type'],
     },
-    fieldName: 'meta.hideInTab',
+    fieldName: 'extraMeta.hideInTab',
     renderComponentContent() {
       return {
         default: () => $t('system.menu.hideInTab'),
