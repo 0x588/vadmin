@@ -203,6 +203,21 @@ const schema: VbenFormSchema[] = [
     label: $t('system.menu.badge'),
   },
   {
+    component: 'Input',
+    componentProps: {
+      allowClear: true,
+      class: 'w-full',
+    },
+    dependencies: {
+      show: (values) => {
+        return values.type === 2;
+      },
+      triggerFields: ['type'],
+    },
+    fieldName: 'extraMeta.query',
+    label: $t('system.menu.query'),
+  },
+  {
     component: 'InputNumber',
     componentProps: {
       allowClear: true,

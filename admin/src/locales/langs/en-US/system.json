@@ -109,7 +109,8 @@
       "none": "None"
     },
     "badgeVariants": "Badge Style",
-    "sort": "Sort"
+    "sort": "Sort",
+    "query": "Query Parameters"
   },
   "notice": {
     "title": "Notices",

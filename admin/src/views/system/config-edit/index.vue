@@ -10,16 +10,19 @@ import { Spin, Tabs } from 'ant-design-vue';
 import { getConfigEditAll } from '#/api/system/config';
 
 import BaseSetting from './BaseSetting.vue';
+import { useRoute } from 'vue-router';
 
 defineOptions({ name: 'ConfigEdit' });
 
 const TabPane = Tabs.TabPane;
 const settingList = ref<SystemConfigApi.ConfigEditAll[]>([]);
 const loading = ref(true);
+const route = useRoute();
 
 onMounted(async () => {
   try {
-    settingList.value = await getConfigEditAll();
+    const app = route.query?.app as string;
+    settingList.value = await getConfigEditAll(app);
   } finally {
     loading.value = false;
   }
@@ -44,11 +47,7 @@ const singlePanel = computed(() => {
     </template>
     <template v-else>
       <Tabs tab-position="left" :tab-bar-style="{ width: '220px' }">
-        <TabPane
-          v-for="item in settingList"
-          :key="item.id"
-          :tab="item.title"
-        >
+        <TabPane v-for="item in settingList" :key="item.id" :tab="item.title">
           <BaseSetting :cats="item.children || [item]" :cat-id="item.id" />
         </TabPane>
       </Tabs>

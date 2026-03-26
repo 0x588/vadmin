@@ -123,6 +123,11 @@ function transformBackendMenus(menus: any[]): RouteRecordStringComponent[] {
         name: menu.componentName || `Menu_${menu.id}`,
         path: menu.path || '',
       };
+      if (menu.extraMeta?.query) {
+        try {
+          route.meta.query = JSON.parse(menu.extraMeta.query);
+        } catch {}
+      }
 
       if (menu.children?.length) {
         route.children = transformBackendMenus(menu.children);

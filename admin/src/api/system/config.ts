@@ -147,9 +147,10 @@ async function deleteConfig(id: number) {
 }
 
 // --- Config Edit ---
-async function getConfigEditAll() {
+async function getConfigEditAll(app: string) {
   return requestClient.get<SystemConfigApi.ConfigEditAll[]>(
     '/system/config-edit/all',
+    { params: { app } },
   );
 }
 

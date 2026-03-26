@@ -111,7 +111,8 @@
     "typeEmbedded": "内嵌",
     "typeLink": "外链",
     "typeMenu": "菜单",
-    "sort": "排序"
+    "sort": "排序",
+    "query": "菜单查询参数"
   },
   "notice": {
     "title": "通知公告",
