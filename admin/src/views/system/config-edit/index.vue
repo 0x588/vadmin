@@ -2,6 +2,7 @@
 import type { SystemConfigApi } from '#/api/system/config';
 
 import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
@@ -10,7 +11,6 @@ import { Spin, Tabs } from 'ant-design-vue';
 import { getConfigEditAll } from '#/api/system/config';
 
 import BaseSetting from './BaseSetting.vue';
-import { useRoute } from 'vue-router';
 
 defineOptions({ name: 'ConfigEdit' });
 
