@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import type { Recordable } from '@vben/types';
 
 import type { VbenFormSchema } from '#/adapter/form';
