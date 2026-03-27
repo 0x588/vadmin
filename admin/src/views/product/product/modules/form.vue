@@ -10,7 +10,7 @@ import { Button, Tabs } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import { getCommonAttribute } from '#/api/product/attribute';
-import { treeSimpleCate } from '#/api/product/cate';
+import { listSimpleCate } from '#/api/product/cate';
 import {
   createProduct,
   getProduct,
@@ -71,10 +71,9 @@ const [BasicForm, basicFormApi] = useVbenForm({
       label: $t('product.product.sketch'),
     },
     {
-      component: 'ApiTreeSelect',
+      component: 'ApiCascader',
       componentProps: {
-        allowClear: true,
-        api: treeSimpleCate,
+        api: listSimpleCate,
         childrenField: 'children',
         class: 'w-full',
         labelField: 'title',
