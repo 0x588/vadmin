@@ -144,7 +144,7 @@ function deleteSpecValue(spec: ProductApi.ProductSpecVo, valueIndex: number) {
     <div
       v-for="(spec, sIndex) in specs"
       :key="spec.id"
-      class="mb-3 rounded bg-gray-50 p-3"
+      class="mb-3 rounded border border-gray-200 bg-gray-50 p-3 dark:border-gray-600 dark:bg-gray-800"
     >
       <div class="mb-2 flex items-center justify-between">
         <span class="font-medium">{{ spec.title }}</span>
