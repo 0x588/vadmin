@@ -117,11 +117,6 @@ const [BasicForm, basicFormApi] = useVbenForm({
   schema: [
     {
       component: 'Input',
-      dependencies: { show: () => false, triggerFields: [] },
-      fieldName: 'id',
-    },
-    {
-      component: 'Input',
       fieldName: 'name',
       label: $t('product.product.name'),
       rules: 'required',
@@ -379,6 +374,9 @@ const [Drawer, drawerApi] = useVbenDrawer({
       video_url: fileListToUrls(videoFileList.value)[0] || '',
       intro: introContent.value,
     };
+
+    // Remove id from submit data — edit uses id.value ref directly
+    delete submitData.id;
 
     // Spec data
     if (submitData.is_spec) {
