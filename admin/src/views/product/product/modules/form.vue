@@ -258,6 +258,14 @@ const [SpecForm, specFormApi] = useVbenForm({
         api: listSimpleSpecTemplate,
         class: 'w-full',
         labelField: 'title',
+        onChange: async (val: any) => {
+          if (val) {
+            const specs = await getCommonSpecsByTemplateId(val);
+            specTempList.value =
+              (specs as ProductApi.ProductSpecVo[]) || [];
+            onSpecChanged(specTempList.value);
+          }
+        },
         valueField: 'id',
       },
       dependencies: {
@@ -406,6 +414,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
         }
         if (detail.spec_list) {
           specTempList.value = detail.spec_list;
+          // Regenerate SKUs to add pid/pname and merge with existing data
+          if (isSpec.value) {
+            onSpecChanged(specTempList.value);
+          }
         }
       } else {
         id.value = undefined;
@@ -459,6 +471,10 @@ function recalculateSkus(selectedSpecs: ProductApi.ProductSpecVo[]) {
   });
 }
 
+function onSkuChanged(skus: ProductApi.ProductSkuVo[]) {
+  skuList.value = skus;
+}
+
 async function onSpecTemplateLoad() {
   const specValues = await specFormApi.getValues();
   if (specValues.spec_template_id) {
@@ -499,7 +515,7 @@ async function onAttributeTemplateChange(attrId: number) {
           </Button>
           <SpecList :spec-list="specTempList" @change="onSpecChanged" />
         </template>
-        <SkuList :data-list="skuList" />
+        <SkuList :data-list="skuList" @change="onSkuChanged" />
       </Tabs.TabPane>
       <Tabs.TabPane
         key="image"

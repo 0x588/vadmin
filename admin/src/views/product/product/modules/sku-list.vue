@@ -9,6 +9,10 @@ const props = defineProps<{
   dataList: ProductApi.ProductSkuVo[];
 }>();
 
+const emit = defineEmits<{
+  change: [skus: ProductApi.ProductSkuVo[]];
+}>();
+
 const columns = ref<any[]>([]);
 const tableData = ref<ProductApi.ProductSkuVo[]>([]);
 
@@ -37,10 +41,12 @@ function rebuildColumns(data: ProductApi.ProductSkuVo[]) {
   if (data.length > 0 && data[0]?.items?.length) {
     const firstItems = data[0]?.items ?? [];
     firstItems.forEach((item: any) => {
+      const colId = item.pid ?? item.spec_id;
+      const colTitle = item.pname ?? item.title;
       specCols.push({
-        title: item.pname,
-        dataIndex: item.pid,
-        key: `spec_${item.pid}`,
+        title: colTitle,
+        dataIndex: colId,
+        key: `spec_${colId}`,
       });
     });
   }
@@ -69,8 +75,14 @@ function rebuildColumns(data: ProductApi.ProductSkuVo[]) {
 
 function getSpecValue(items: any, pid: any) {
   if (!items) return '';
-  const found = items.find((item: any) => item.pid === pid);
+  const found = items.find(
+    (item: any) => item.pid === pid || item.spec_id === pid,
+  );
   return found?.title || '';
+}
+
+function emitChange() {
+  emit('change', tableData.value);
 }
 
 function setBatch() {
@@ -81,6 +93,7 @@ function setBatch() {
       }
     });
   });
+  emitChange();
 }
 
 function clearBatch() {
@@ -173,6 +186,7 @@ function clearBatch() {
             :precision="2"
             size="small"
             class="w-full"
+            @change="emitChange"
           />
         </template>
         <template v-else-if="column.key === 'stock'">
@@ -182,6 +196,7 @@ function clearBatch() {
             :precision="0"
             size="small"
             class="w-full"
+            @change="emitChange"
           />
         </template>
         <template
@@ -194,6 +209,7 @@ function clearBatch() {
               ]
             "
             size="small"
+            @change="emitChange"
           />
         </template>
       </template>
