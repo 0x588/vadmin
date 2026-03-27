@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:account-group',
           title: $t('system.role.title'),
         },
-        component: () => import('#/views/system/role/list.vue'),
+        component: () => import('#/views/system/role/index.vue'),
       },
       {
         path: '/system/menu',
@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:menu',
           title: $t('system.menu.title'),
         },
-        component: () => import('#/views/system/menu/list.vue'),
+        component: () => import('#/views/system/menu/index.vue'),
       },
       {
         path: '/system/dept',
@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'charm:organisation',
           title: $t('system.dept.title'),
         },
-        component: () => import('#/views/system/dept/list.vue'),
+        component: () => import('#/views/system/dept/index.vue'),
       },
       {
         path: '/system/user',
@@ -46,7 +46,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:account',
           title: $t('system.user.title'),
         },
-        component: () => import('#/views/system/user/list.vue'),
+        component: () => import('#/views/system/user/index.vue'),
       },
       {
         path: '/system/notice',
@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:bell-outline',
           title: $t('system.notice.title'),
         },
-        component: () => import('#/views/system/notice/list.vue'),
+        component: () => import('#/views/system/notice/index.vue'),
       },
       {
         path: '/system/login-log',
@@ -64,7 +64,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:file-document-outline',
           title: $t('system.loginLog.title'),
         },
-        component: () => import('#/views/system/login-log/list.vue'),
+        component: () => import('#/views/system/loginlog/index.vue'),
       },
       {
         path: '/system/dict',
@@ -73,7 +73,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:book-alphabet',
           title: $t('system.dictType.title'),
         },
-        component: () => import('#/views/system/dict/list.vue'),
+        component: () => import('#/views/system/dict/index.vue'),
       },
       {
         path: '/system/notify-message',
@@ -82,7 +82,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:message-outline',
           title: $t('system.notifyMessage.title'),
         },
-        component: () => import('#/views/system/notify-message/list.vue'),
+        component: () => import('#/views/system/notify-message/index.vue'),
       },
       {
         path: '/system/config',
@@ -91,7 +91,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi:cog-outline',
           title: $t('system.config.title'),
         },
-        component: () => import('#/views/system/config/list.vue'),
+        component: () => import('#/views/system/common-config/index.vue'),
       },
       {
         path: '/system/config-edit',
