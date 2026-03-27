@@ -76,7 +76,7 @@ function onDelete(row: OrderApi.OrderVO) {
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteOrder(row.id)
+  deleteOrder(Number(row.id))
     .then(() => {
       message.success({
         content: $t('ui.actionMessage.deleteSuccess', [row.order_sn]),
@@ -89,8 +89,8 @@ function onDelete(row: OrderApi.OrderVO) {
     });
 }
 
-function onTabChange(key: string) {
-  activeStatus.value = key;
+function onTabChange(key: number | string) {
+  activeStatus.value = String(key);
   gridApi.query();
 }
 </script>

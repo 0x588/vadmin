@@ -20,7 +20,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Select',
       componentProps: {
-        options: getDictOptions(DICT_TYPE.PRODUCT_SPEC_TYPE, 'string'),
+        options: getDictOptions(DICT_TYPE.SPEC_TYPE, 'string'),
       },
       fieldName: 'type',
       label: $t('product.spec.type'),

@@ -56,7 +56,7 @@ async function onStatusChange(newStatus: number, row: MemberApi.MemberVO) {
         onOk: () => resolve(true),
       });
     });
-    await changeMemberStatus(row.id, newStatus);
+    await changeMemberStatus(Number(row.id), newStatus);
     return true;
   } catch {
     return false;

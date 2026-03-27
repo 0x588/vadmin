@@ -65,9 +65,7 @@ async function loadData() {
   }
 }
 
-function collectParentIds(
-  nodes: SystemMenuApi.MenuSimple[],
-): Set<number> {
+function collectParentIds(nodes: SystemMenuApi.MenuSimple[]): Set<number> {
   const parentIds = new Set<number>();
   for (const node of nodes) {
     if (node.children && node.children.length > 0) {

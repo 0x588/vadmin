@@ -1,17 +1,18 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace ProductCateApi {
   export interface CateVO {
     [key: string]: any;
-    id?: number;
-    pid?: number;
-    title?: string;
-    sub_title?: string;
     cover?: string;
+    id?: number;
     is_recommend?: boolean;
+    pid?: number;
     sort?: number;
     status?: number;
+    sub_title?: string;
+    title?: string;
   }
 
   export interface PageResult {
@@ -21,11 +22,15 @@ export namespace ProductCateApi {
 }
 
 async function getCatePage(params?: PageFetchParams) {
-  return requestClient.get<ProductCateApi.PageResult>('/product/cate/page', { params });
+  return requestClient.get<ProductCateApi.PageResult>('/product/cate/page', {
+    params,
+  });
 }
 
 async function getCate(id: number) {
-  return requestClient.get<ProductCateApi.CateVO>('/product/cate/get', { params: { id } });
+  return requestClient.get<ProductCateApi.CateVO>('/product/cate/get', {
+    params: { id },
+  });
 }
 
 async function createCate(data: Partial<ProductCateApi.CateVO>) {
@@ -48,4 +53,12 @@ async function listSimpleCate() {
   return requestClient.post('/product/cate/list-all-simple');
 }
 
-export { createCate, deleteCate, getCate, getCatePage, listSimpleCate, treeSimpleCate, updateCate };
+export {
+  createCate,
+  deleteCate,
+  getCate,
+  getCatePage,
+  listSimpleCate,
+  treeSimpleCate,
+  updateCate,
+};

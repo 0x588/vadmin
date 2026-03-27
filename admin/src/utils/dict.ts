@@ -17,7 +17,9 @@ export interface DictDataType {
 /**
  * 获取 dictType 对应的数据字典数组（原始数据）
  */
-export function getDictDatas(dictType: string): SystemDictDataApi.DictDataSimple[] {
+export function getDictDatas(
+  dictType: string,
+): SystemDictDataApi.DictDataSimple[] {
   const dictStore = useDictStore();
   return dictStore.getDictMap[dictType] || [];
 }
@@ -74,14 +76,23 @@ export function getDictLabel(dictType: string, value: any): string {
  * 字典类型枚举
  */
 export enum DICT_TYPE {
+  // ========== 业务模块 ==========
+  AUTH_TYPE = 'auth_type',
+  COMMON_CONFIG_TYPE = 'common_config_type',
   COMMON_STATUS = 'common_status',
-  OPEN_STATUS = 'open_status',
-  USER_TYPE = 'user_type',
-  YES_NO = 'yes_no',
+  COUPON_STATE = 'coupon_state',
 
+  DISCOUNT_TYPE = 'discount_type',
+  OPEN_STATUS = 'open_status',
+  ORDER_STATUS = 'order_status',
+  PAY_TYPE = 'pay_type',
+  PRODUCT_STATUS = 'product_status',
+  RANGE_TYPE = 'range_type',
+  SPEC_TYPE = 'spec_type',
   // ========== SYSTEM 模块 ==========
   SYSTEM_DATA_SCOPE = 'system_data_scope',
   SYSTEM_LOGIN_RESULT = 'system_login_result',
+
   SYSTEM_LOGIN_TYPE = 'system_login_type',
   SYSTEM_MENU_TYPE = 'system_menu_type',
   SYSTEM_NOTICE_TYPE = 'system_notice_type',
@@ -89,15 +100,6 @@ export enum DICT_TYPE {
   SYSTEM_OPERATE_TYPE = 'system_operate_type',
   SYSTEM_ROLE_TYPE = 'system_role_type',
   SYSTEM_USER_SEX = 'system_user_sex',
-
-  // ========== 业务模块 ==========
-  AUTH_TYPE = 'auth_type',
-  COMMON_CONFIG_TYPE = 'common_config_type',
-  COUPON_STATE = 'coupon_state',
-  DISCOUNT_TYPE = 'discount_type',
-  ORDER_STATUS = 'order_status',
-  PAY_TYPE = 'pay_type',
-  PRODUCT_STATUS = 'product_status',
-  RANGE_TYPE = 'range_type',
-  SPEC_TYPE = 'spec_type',
+  USER_TYPE = 'user_type',
+  YES_NO = 'yes_no',
 }

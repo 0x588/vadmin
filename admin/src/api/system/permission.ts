@@ -32,9 +32,4 @@ async function assignRoleDataScope(
   });
 }
 
-export {
-  assignRoleDataScope,
-  assignRoleMenu,
-  assignUserRole,
-  listRoleMenuIds,
-};
+export { assignRoleDataScope, assignRoleMenu, assignUserRole, listRoleMenuIds };

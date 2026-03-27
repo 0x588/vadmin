@@ -1,12 +1,13 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace ShopsExpressApi {
   export interface ExpressVO {
     [key: string]: any;
     id?: number;
-    name?: string;
     is_default?: boolean;
+    name?: string;
     sort?: number;
     status?: number;
   }
@@ -18,11 +19,15 @@ export namespace ShopsExpressApi {
 }
 
 async function getExpressPage(params?: PageFetchParams) {
-  return requestClient.get<ShopsExpressApi.PageResult>('/common/express/page', { params });
+  return requestClient.get<ShopsExpressApi.PageResult>('/common/express/page', {
+    params,
+  });
 }
 
 async function getExpress(id: number) {
-  return requestClient.get<ShopsExpressApi.ExpressVO>('/common/express/get', { params: { id } });
+  return requestClient.get<ShopsExpressApi.ExpressVO>('/common/express/get', {
+    params: { id },
+  });
 }
 
 async function createExpress(data: Partial<ShopsExpressApi.ExpressVO>) {
@@ -41,4 +46,11 @@ async function getExpressListAll() {
   return requestClient.get('/common/express/list-all-simple');
 }
 
-export { createExpress, deleteExpress, getExpress, getExpressListAll, getExpressPage, updateExpress };
+export {
+  createExpress,
+  deleteExpress,
+  getExpress,
+  getExpressListAll,
+  getExpressPage,
+  updateExpress,
+};

@@ -21,7 +21,7 @@ export function useGridFormSchema(): VbenFormSchema[] {
       component: 'Select',
       componentProps: {
         allowClear: true,
-        options: getDictOptions(DICT_TYPE.MEMBER_AUTH_TYPE, 'string'),
+        options: getDictOptions(DICT_TYPE.AUTH_TYPE, 'string'),
       },
       fieldName: 'client',
       label: $t('member.auth.client'),

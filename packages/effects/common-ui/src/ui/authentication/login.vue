@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
   qrCodeLoginPath: '/auth/qrcode-login',
   registerPath: '/auth/register',
-  showCodeLogin:  false,
+  showCodeLogin: false,
   showForgetPassword: true,
   showQrcodeLogin: false,
   showRegister: false,

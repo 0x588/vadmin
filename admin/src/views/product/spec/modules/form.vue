@@ -6,13 +6,7 @@ import { computed, nextTick, ref } from 'vue';
 import { useVbenDrawer } from '@vben/common-ui';
 
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons-vue';
-import {
-  Button,
-  Card,
-  Divider,
-  Input,
-  InputNumber,
-} from 'ant-design-vue';
+import { Button, Card, Divider, Input, InputNumber } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import {

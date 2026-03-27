@@ -1,32 +1,30 @@
 {
+  "auth": {
+    "title": "授权用户",
+    "id": "编号",
+    "avatar": "头像",
+    "nickname": "昵称",
+    "client": "授权类型",
+    "clientOpenId": "授权ID",
+    "memberId": "用户ID",
+    "memberNickname": "用户昵称",
+    "memberPhone": "手机号",
+    "status": "状态",
+    "createdAt": "创建时间",
+    "operation": "操作"
+  },
   "member": {
-    "auth": {
-      "title": "授权用户",
-      "id": "编号",
-      "avatar": "头像",
-      "nickname": "昵称",
-      "client": "授权类型",
-      "clientOpenId": "授权ID",
-      "memberId": "用户ID",
-      "memberNickname": "用户昵称",
-      "memberPhone": "手机号",
-      "status": "状态",
-      "createdAt": "创建时间",
-      "operation": "操作"
-    },
-    "member": {
-      "title": "会员列表",
-      "id": "编号",
-      "avatar": "头像",
-      "nickname": "昵称",
-      "phone": "手机号",
-      "pid": "推荐人",
-      "status": "状态",
-      "createdAt": "创建时间",
-      "lastIp": "最后登录IP",
-      "lastTime": "最后登录",
-      "visitCount": "访问次数",
-      "operation": "操作"
-    }
+    "title": "会员列表",
+    "id": "编号",
+    "avatar": "头像",
+    "nickname": "昵称",
+    "phone": "手机号",
+    "pid": "推荐人",
+    "status": "状态",
+    "createdAt": "创建时间",
+    "lastIp": "最后登录IP",
+    "lastTime": "最后登录",
+    "visitCount": "访问次数",
+    "operation": "操作"
   }
 }

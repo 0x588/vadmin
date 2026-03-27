@@ -3,10 +3,7 @@ import type {
   OnActionClickParams,
   VxeTableGridOptions,
 } from '#/adapter/vxe-table';
-import type { ShopsExpressFeeApi } from '#/api/shops/express-fee';
-
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import type { ProductApi } from '#/api/product/product';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
@@ -14,16 +11,11 @@ import { Plus } from '@vben/icons';
 import { Button, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteExpressFee, getExpressFeePage } from '#/api/shops/express-fee';
+import { deleteProduct, getProductPage } from '#/api/product/product';
 import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
-
-const route = useRoute();
-const expressId = computed(() =>
-  Number(route.params.id || route.query.express_id),
-);
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -43,16 +35,17 @@ const [Grid, gridApi] = useVbenVxeGrid({
     proxyConfig: {
       ajax: {
         query: async ({ page }, formValues) => {
-          return await getExpressFeePage({
+          return await getProductPage({
             pageNo: page.currentPage,
             pageSize: page.pageSize,
-            express_id: expressId.value,
             ...formValues,
           });
         },
       },
     },
-    rowConfig: { keyField: 'id' },
+    rowConfig: {
+      keyField: 'id',
+    },
     toolbarConfig: {
       custom: true,
       export: false,
@@ -60,12 +53,10 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions<ShopsExpressFeeApi.ExpressFeeVO>,
+  } as VxeTableGridOptions<ProductApi.ProductVO>,
 });
 
-function onActionClick(
-  e: OnActionClickParams<ShopsExpressFeeApi.ExpressFeeVO>,
-) {
+function onActionClick(e: OnActionClickParams<ProductApi.ProductVO>) {
   switch (e.code) {
     case 'delete': {
       onDelete(e.row);
@@ -78,16 +69,16 @@ function onActionClick(
   }
 }
 
-function onDelete(row: ShopsExpressFeeApi.ExpressFeeVO) {
+function onDelete(row: ProductApi.ProductVO) {
   const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', [row.title]),
+    content: $t('ui.actionMessage.deleting', [row.name]),
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteExpressFee(Number(row.id))
+  deleteProduct(Number(row.id))
     .then(() => {
       message.success({
-        content: $t('ui.actionMessage.deleteSuccess', [row.title]),
+        content: $t('ui.actionMessage.deleteSuccess', [row.name]),
         key: 'action_process_msg',
       });
       gridApi.query();
@@ -98,18 +89,18 @@ function onDelete(row: ShopsExpressFeeApi.ExpressFeeVO) {
 }
 
 function onCreate() {
-  formDrawerApi.setData({ express_id: expressId.value }).open();
+  formDrawerApi.setData({}).open();
 }
 </script>
 
 <template>
   <Page auto-content-height>
     <FormDrawer @success="gridApi.query()" />
-    <Grid :table-title="$t('shops.expressFee.title')">
+    <Grid :table-title="$t('product.product.title')">
       <template #toolbar-tools>
         <Button type="primary" @click="onCreate">
           <Plus class="size-5" />
-          {{ $t('ui.actionTitle.create', [$t('shops.expressFee.name')]) }}
+          {{ $t('ui.actionTitle.create', [$t('product.product.name')]) }}
         </Button>
       </template>
     </Grid>

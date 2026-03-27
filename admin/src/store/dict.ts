@@ -54,9 +54,7 @@ export const useDictStore = defineStore('app-dict', {
     },
   },
   getters: {
-    getDictMap(
-      state,
-    ): Record<string, SystemDictDataApi.DictDataSimple[]> {
+    getDictMap(state): Record<string, SystemDictDataApi.DictDataSimple[]> {
       return state.dictMap;
     },
   },

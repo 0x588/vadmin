@@ -1,32 +1,33 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace MarketCouponTypeApi {
   export interface CouponTypeVO {
     [key: string]: any;
-    id?: number;
-    title?: string;
-    remark?: string;
     at_least?: number;
-    discount_type?: number;
-    discount?: number;
+    cateIds?: number[];
     count?: number;
+    discount?: number;
+    discount_type?: number;
+    end_time?: number;
+    get_end_time?: number;
+    get_start_time?: number;
+    get_type?: number;
+    id?: number;
+    is_new_people?: number;
     max_fetch?: number;
     max_fetch_per_day?: number;
-    get_type?: number;
-    get_start_time?: number;
-    get_end_time?: number;
-    validity_type?: number;
-    start_time?: number;
-    end_time?: number;
-    validity_days?: number;
-    rang_type?: number;
-    cateIds?: number[];
     productIds?: number[];
-    is_new_people?: number;
+    rang_type?: number;
+    remark?: string;
     single_type?: number;
     sort?: number;
+    start_time?: number;
     status?: number;
+    title?: string;
+    validity_days?: number;
+    validity_type?: number;
   }
 
   export interface PageResult {
@@ -36,11 +37,17 @@ export namespace MarketCouponTypeApi {
 }
 
 async function getCouponTypePage(params?: PageFetchParams) {
-  return requestClient.get<MarketCouponTypeApi.PageResult>('/market/coupon-type/page', { params });
+  return requestClient.get<MarketCouponTypeApi.PageResult>(
+    '/market/coupon-type/page',
+    { params },
+  );
 }
 
 async function getCouponType(id: number) {
-  return requestClient.get<MarketCouponTypeApi.CouponTypeVO>('/market/coupon-type/get', { params: { id } });
+  return requestClient.get<MarketCouponTypeApi.CouponTypeVO>(
+    '/market/coupon-type/get',
+    { params: { id } },
+  );
 }
 
 async function createCouponType(data: MarketCouponTypeApi.CouponTypeVO) {
@@ -55,4 +62,10 @@ async function deleteCouponType(id: number) {
   return requestClient.delete('/market/coupon-type/delete', { params: { id } });
 }
 
-export { createCouponType, deleteCouponType, getCouponType, getCouponTypePage, updateCouponType };
+export {
+  createCouponType,
+  deleteCouponType,
+  getCouponType,
+  getCouponTypePage,
+  updateCouponType,
+};

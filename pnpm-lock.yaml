@@ -582,6 +582,9 @@ importers:
 
   admin:
     dependencies:
+      '@ant-design/icons-vue':
+        specifier: ^7.0.1
+        version: 7.0.1(vue@3.5.30(typescript@5.9.3))
       '@tanstack/vue-query':
         specifier: 'catalog:'
         version: 5.92.10(vue@3.5.30(typescript@5.9.3))

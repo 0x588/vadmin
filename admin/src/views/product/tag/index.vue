@@ -73,7 +73,7 @@ function onDelete(row: ProductTagApi.TagVO) {
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteTag(row.id)
+  deleteTag(Number(row.id))
     .then(() => {
       message.success({
         content: $t('ui.actionMessage.deleteSuccess', [row.title]),

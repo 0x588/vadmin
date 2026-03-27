@@ -28,7 +28,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     submitOnChange: false,
   },
   gridOptions: {
-    columns: [...useColumns(onActionClick)],
+    columns: [...(useColumns(onActionClick) || [])],
     height: 'auto',
     keepSource: true,
     pagerConfig: {},
@@ -73,7 +73,7 @@ function onDelete(row: ShopsExpressApi.ExpressVO) {
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteExpress(row.id)
+  deleteExpress(Number(row.id))
     .then(() => {
       message.success({
         content: $t('ui.actionMessage.deleteSuccess', [row.name]),

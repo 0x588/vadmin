@@ -1,32 +1,30 @@
 {
+  "auth": {
+    "title": "Auth Users",
+    "id": "ID",
+    "avatar": "Avatar",
+    "nickname": "Nickname",
+    "client": "Auth Type",
+    "clientOpenId": "Auth ID",
+    "memberId": "User ID",
+    "memberNickname": "User Nickname",
+    "memberPhone": "Phone",
+    "status": "Status",
+    "createdAt": "Created At",
+    "operation": "Actions"
+  },
   "member": {
-    "auth": {
-      "title": "Auth Users",
-      "id": "ID",
-      "avatar": "Avatar",
-      "nickname": "Nickname",
-      "client": "Auth Type",
-      "clientOpenId": "Auth ID",
-      "memberId": "User ID",
-      "memberNickname": "User Nickname",
-      "memberPhone": "Phone",
-      "status": "Status",
-      "createdAt": "Created At",
-      "operation": "Actions"
-    },
-    "member": {
-      "title": "Members",
-      "id": "ID",
-      "avatar": "Avatar",
-      "nickname": "Nickname",
-      "phone": "Phone",
-      "pid": "Referrer",
-      "status": "Status",
-      "createdAt": "Created At",
-      "lastIp": "Last IP",
-      "lastTime": "Last Login",
-      "visitCount": "Visits",
-      "operation": "Actions"
-    }
+    "title": "Members",
+    "id": "ID",
+    "avatar": "Avatar",
+    "nickname": "Nickname",
+    "phone": "Phone",
+    "pid": "Referrer",
+    "status": "Status",
+    "createdAt": "Created At",
+    "lastIp": "Last IP",
+    "lastTime": "Last Login",
+    "visitCount": "Visits",
+    "operation": "Actions"
   }
 }

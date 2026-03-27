@@ -1,22 +1,23 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace OrderApi {
   export interface OrderVO {
     [key: string]: any;
-    id?: number;
-    order_sn?: string;
-    out_trade_no?: string;
-    order_from?: string;
-    order_type?: string;
-    payment_type?: string;
     buyer_id?: number;
     buyer_nickname?: string;
-    pay_money?: number;
-    shipping_type?: number;
-    order_status?: number;
-    seller_memo?: string;
     created_at?: number;
+    id?: number;
+    order_from?: string;
+    order_sn?: string;
+    order_status?: number;
+    order_type?: string;
+    out_trade_no?: string;
+    pay_money?: number;
+    payment_type?: string;
+    seller_memo?: string;
+    shipping_type?: number;
   }
 
   export interface OrderStatusCount {
@@ -34,7 +35,9 @@ async function getOrderPage(params?: PageFetchParams) {
 }
 
 async function getOrderStatusCount(params?: Record<string, any>) {
-  return requestClient.get<OrderApi.OrderStatusCount>('/order/status-count', { params });
+  return requestClient.get<OrderApi.OrderStatusCount>('/order/status-count', {
+    params,
+  });
 }
 
 async function getOrder(id: number) {
@@ -49,4 +52,10 @@ async function deleteOrder(id: number) {
   return requestClient.delete('/order/delete', { params: { id } });
 }
 
-export { deleteOrder, getOrder, getOrderPage, getOrderStatusCount, updateOrder };
+export {
+  deleteOrder,
+  getOrder,
+  getOrderPage,
+  getOrderStatusCount,
+  updateOrder,
+};

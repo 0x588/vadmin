@@ -163,12 +163,10 @@ function handleConfirm() {
         v-if="hintImage"
         class="flex-center h-10 w-full gap-2 rounded-sm border border-border"
       >
-        <span class="shrink-0 text-sm">{{ $t('ui.captcha.clickInOrder') }}</span>
-        <img
-          :alt="$t('ui.captcha.alt')"
-          :src="hintImage"
-          class="h-8"
-        />
+        <span class="shrink-0 text-sm">{{
+          $t('ui.captcha.clickInOrder')
+        }}</span>
+        <img :alt="$t('ui.captcha.alt')" :src="hintImage" class="h-8" />
       </div>
       <div
         v-else-if="hintText"

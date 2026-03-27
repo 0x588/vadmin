@@ -72,18 +72,11 @@ async function onSubmit(params: Recordable<any>) {
   captchaVisible.value = true;
 }
 
-async function handleCaptchaConfirm(
-  points: CaptchaPoint[],
-  clear: () => void,
-) {
+async function handleCaptchaConfirm(points: CaptchaPoint[], clear: () => void) {
   try {
     const pointArr = points.map((p) => ({
-      x: Math.round(
-        (p.x * CAPTCHA_ORIGINAL_WIDTH) / CAPTCHA_DISPLAY_WIDTH,
-      ),
-      y: Math.round(
-        (p.y * CAPTCHA_ORIGINAL_HEIGHT) / CAPTCHA_DISPLAY_HEIGHT,
-      ),
+      x: Math.round((p.x * CAPTCHA_ORIGINAL_WIDTH) / CAPTCHA_DISPLAY_WIDTH),
+      y: Math.round((p.y * CAPTCHA_ORIGINAL_HEIGHT) / CAPTCHA_DISPLAY_HEIGHT),
     }));
     const pointJson = aesEcbEncrypt(
       JSON.stringify(pointArr),

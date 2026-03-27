@@ -1,13 +1,14 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace ProductTagApi {
   export interface TagVO {
     [key: string]: any;
     id?: number;
-    title?: string;
     sort?: number;
     status?: number;
+    title?: string;
   }
 
   export interface PageResult {
@@ -17,11 +18,15 @@ export namespace ProductTagApi {
 }
 
 async function getTagPage(params?: PageFetchParams) {
-  return requestClient.get<ProductTagApi.PageResult>('/product/tag/page', { params });
+  return requestClient.get<ProductTagApi.PageResult>('/product/tag/page', {
+    params,
+  });
 }
 
 async function getTag(id: number) {
-  return requestClient.get<ProductTagApi.TagVO>('/product/tag/get', { params: { id } });
+  return requestClient.get<ProductTagApi.TagVO>('/product/tag/get', {
+    params: { id },
+  });
 }
 
 async function createTag(data: Partial<ProductTagApi.TagVO>) {

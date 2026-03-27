@@ -2,19 +2,21 @@ import { requestClient } from '#/api/request';
 
 export namespace MarketPointConfigApi {
   export interface PointConfigVO {
-    id?: number;
     convert_rate?: number;
-    min_order_money?: number;
     deduction_type?: number;
-    max_rate?: number;
-    max_money?: number;
     explain?: string;
+    id?: number;
+    max_money?: number;
+    max_rate?: number;
+    min_order_money?: number;
     status?: number;
   }
 }
 
 async function getPointConfig() {
-  return requestClient.get<MarketPointConfigApi.PointConfigVO>('/market/point-config/get');
+  return requestClient.get<MarketPointConfigApi.PointConfigVO>(
+    '/market/point-config/get',
+  );
 }
 
 async function updatePointConfig(data: MarketPointConfigApi.PointConfigVO) {

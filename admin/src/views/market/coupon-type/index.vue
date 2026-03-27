@@ -79,7 +79,7 @@ function onDelete(row: MarketCouponTypeApi.CouponTypeVO) {
     duration: 0,
     key: 'action_process_msg',
   });
-  deleteCouponType(row.id)
+  deleteCouponType(Number(row.id))
     .then(() => {
       message.success({
         content: $t('ui.actionMessage.deleteSuccess', [row.title]),

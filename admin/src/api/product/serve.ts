@@ -1,13 +1,14 @@
 import type { PageFetchParams } from '#/api/request';
+
 import { requestClient } from '#/api/request';
 
 export namespace ProductServeApi {
   export interface ServeVO {
     [key: string]: any;
-    id?: number;
-    name?: string;
     cover?: string;
     explain?: string;
+    id?: number;
+    name?: string;
     sort?: number;
     status?: number;
   }
@@ -19,11 +20,15 @@ export namespace ProductServeApi {
 }
 
 async function getServePage(params?: PageFetchParams) {
-  return requestClient.get<ProductServeApi.PageResult>('/product/serve/page', { params });
+  return requestClient.get<ProductServeApi.PageResult>('/product/serve/page', {
+    params,
+  });
 }
 
 async function getServe(id: number) {
-  return requestClient.get<ProductServeApi.ServeVO>('/product/serve/get', { params: { id } });
+  return requestClient.get<ProductServeApi.ServeVO>('/product/serve/get', {
+    params: { id },
+  });
 }
 
 async function createServe(data: Partial<ProductServeApi.ServeVO>) {
