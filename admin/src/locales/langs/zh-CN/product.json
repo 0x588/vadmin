@@ -104,6 +104,7 @@
     "stockDeductionType": "库存扣减方式",
     "isStockVisible": "显示库存",
     "covers": "商品主图",
+    "coverImg": "商品主图",
     "videoUrl": "商品视频",
     "intro": "商品详情",
     "attributeId": "参数模版",

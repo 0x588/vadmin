@@ -5,8 +5,11 @@ import type { ProductApi } from '#/api/product/product';
 import { computed, nextTick, ref, toRaw, watch } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
+import { useAccessStore } from '@vben/stores';
 
-import { Button, Tabs } from 'ant-design-vue';
+import { Button, Tabs, Upload } from 'ant-design-vue';
+import type { UploadChangeParam, UploadFile } from 'ant-design-vue/es/upload';
+import { PlusOutlined } from '@ant-design/icons-vue';
 
 import { useVbenForm } from '#/adapter/form';
 import { getCommonAttribute } from '#/api/product/attribute';
@@ -36,6 +39,59 @@ const isSpec = ref(false);
 const specTempList = ref<ProductApi.ProductSpecVo[]>([]);
 const skuList = ref<ProductApi.ProductSkuVo[]>([]);
 const attributes = ref<ProductAttributeApi.AttributeValue[]>([]);
+const coverFileList = ref<UploadFile[]>([]);
+
+function urlToFileList(url: string): UploadFile[] {
+  if (!url) return [];
+  return [
+    {
+      uid: '-cover-0',
+      name: url.split('/').pop() || 'cover',
+      status: 'done' as const,
+      url,
+      thumbUrl: url,
+    },
+  ];
+}
+
+function extractUploadUrl(response: any): string {
+  if (!response) return '';
+  if (typeof response === 'string') return response;
+  return response.url || response.path || '';
+}
+
+async function handleCoverUpload({ file, onError, onProgress, onSuccess }: any) {
+  try {
+    onProgress?.({ percent: 0 });
+    const accessStore = useAccessStore();
+    const formData = new FormData();
+    formData.append('file', file);
+    const resp = await fetch('/admin-api/upload', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessStore.accessToken}` },
+      body: formData,
+    });
+    const result = await resp.json();
+    onProgress?.({ percent: 100 });
+    if (result.code === 200 && result.url) {
+      onSuccess?.(result, file);
+    } else {
+      onError?.(new Error(result.message || '上传失败'));
+    }
+  } catch (error: any) {
+    onError?.(error);
+  }
+}
+
+function handleCoverChange(info: UploadChangeParam) {
+  coverFileList.value = info.fileList;
+}
+
+function getCoverUrl(): string {
+  const list = coverFileList.value.filter((f) => f.status === 'done');
+  if (list.length === 0) return '';
+  return list[0]?.url || extractUploadUrl(list[0]?.response) || '';
+}
 
 function createDefaultSku(): ProductApi.ProductSkuVo {
   return {
@@ -342,6 +398,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       ...basicValues,
       ...specValues,
       ...imageValues,
+      cover_img: getCoverUrl(),
     };
 
     // Spec data
@@ -388,6 +445,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       specTempList.value = [];
       skuList.value = [createDefaultSku()];
       attributes.value = [];
+      coverFileList.value = [];
       isSpec.value = false;
 
       if (data && data.id) {
@@ -401,6 +459,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
           is_spec: detail.is_spec ? 1 : 0,
         });
         imageFormApi.setValues(detail);
+
+        if (detail.cover_img) {
+          coverFileList.value = urlToFileList(detail.cover_img);
+        }
 
         isSpec.value = !!detail.is_spec;
         if (detail.attributes) attributes.value = detail.attributes;
@@ -500,6 +562,26 @@ async function onAttributeTemplateChange(attrId: number) {
         force-render
       >
         <BasicForm />
+        <div class="ant-form-item mx-auto" style="max-width: 500px">
+          <div class="ant-form-item-label">
+            <label>{{ $t('product.product.coverImg') }}</label>
+          </div>
+          <div class="ant-form-item-control">
+            <Upload
+              v-model:file-list="coverFileList"
+              list-type="picture-card"
+              :custom-request="handleCoverUpload"
+              :max-count="1"
+              accept=".png,.jpg,.jpeg,.gif,.webp"
+              @change="handleCoverChange"
+            >
+              <div v-if="coverFileList.length === 0">
+                <PlusOutlined />
+                <div class="mt-1 text-xs">上传主图</div>
+              </div>
+            </Upload>
+          </div>
+        </div>
       </Tabs.TabPane>
       <Tabs.TabPane
         key="spec"

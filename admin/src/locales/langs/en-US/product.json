@@ -104,6 +104,7 @@
     "stockDeductionType": "Stock Deduction",
     "isStockVisible": "Show Stock",
     "covers": "Main Images",
+    "coverImg": "Cover Image",
     "videoUrl": "Video",
     "intro": "Description",
     "attributeId": "Attribute Template",
