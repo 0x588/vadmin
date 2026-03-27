@@ -38,7 +38,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
       ajax: {
         query: async (_params, formValues) => {
           const res = await getCatePage({ pageSize: 1000, ...formValues });
-          return { list: res.list || [], total: 0 };
+          const list = Array.isArray(res) ? res : res.list || [];
+          return { list, total: list.length };
         },
       },
     },

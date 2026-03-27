@@ -22,7 +22,7 @@ export namespace ProductCateApi {
 }
 
 async function getCatePage(params?: PageFetchParams) {
-  return requestClient.get<ProductCateApi.PageResult>('/product/cate/page', {
+  return requestClient.get<ProductCateApi.CateVO[]>('/product/cate/page', {
     params,
   });
 }
