@@ -42,6 +42,7 @@ export function useColumns(
     {
       field: 'name',
       minWidth: 200,
+      showOverflow: false,
       slots: {
         default: ({ row }) => {
           const tags: any[] = [];
