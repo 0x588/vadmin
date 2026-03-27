@@ -261,8 +261,7 @@ const [SpecForm, specFormApi] = useVbenForm({
         onChange: async (val: any) => {
           if (val) {
             const specs = await getCommonSpecsByTemplateId(val);
-            specTempList.value =
-              (specs as ProductApi.ProductSpecVo[]) || [];
+            specTempList.value = (specs as ProductApi.ProductSpecVo[]) || [];
             onSpecChanged(specTempList.value);
           }
         },

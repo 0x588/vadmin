@@ -67,10 +67,10 @@ function addSpecValue(spec: ProductApi.ProductSpecVo) {
       const newId = await createCommonSpecValue(data);
       if (!spec.values) spec.values = [];
       spec.values.push({
-        id: newId as unknown as number,
+        id: Number(newId),
         title: inputValue,
+        spec_id: spec.id,
         pitch_on: false,
-        data: '',
       });
       dataChanged();
     },
@@ -91,7 +91,7 @@ async function createNewSpec() {
   };
   const newId = await createCommonSpec(body);
   specs.value.push({
-    id: newId as unknown as number,
+    id: Number(newId),
     title: newSpecTitle.value,
     type: newSpecType.value,
     show_image: false,

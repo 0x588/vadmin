@@ -24,6 +24,7 @@ export namespace ProductApi {
     data?: string | string[];
     id?: number;
     pitch_on: boolean;
+    spec_id?: number;
     title: string;
   }
 
