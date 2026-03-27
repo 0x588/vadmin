@@ -1,0 +1,60 @@
+{
+  "market": {
+    "fullMail": {
+      "title": "Free Shipping",
+      "status": "Status",
+      "noMailProvinceIds": "Excluded Provinces",
+      "noMailCityIds": "Excluded Cities",
+      "minOrderMoney": "Min Order Amount"
+    },
+    "pointConfig": {
+      "title": "Points Config",
+      "status": "Status",
+      "convertRate": "Conversion Rate",
+      "minOrderMoney": "Min Order Amount",
+      "deductionType": "Deduction Type",
+      "maxMoney": "Max Deduction Amount",
+      "maxRate": "Max Deduction Rate",
+      "explain": "Description"
+    },
+    "coupon": {
+      "title": "Coupon Records",
+      "id": "ID",
+      "couponTitle": "Coupon Name",
+      "memberId": "Member",
+      "discountType": "Discount Type",
+      "endTime": "Expiry Date",
+      "singleType": "Single Product",
+      "state": "State",
+      "fetchTime": "Claimed At"
+    },
+    "couponType": {
+      "title": "Coupon Management",
+      "id": "ID",
+      "name": "Coupon Name",
+      "remark": "Remark",
+      "atLeast": "Min Amount",
+      "discountType": "Discount Type",
+      "discount": "Discount Value",
+      "count": "Issue Count",
+      "maxFetch": "Max Per User",
+      "maxFetchPerDay": "Max Per Day",
+      "getType": "Claim Method",
+      "getStartTime": "Claim Start",
+      "getEndTime": "Claim End",
+      "validityType": "Validity Type",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "validityDays": "Valid Days",
+      "rangType": "Product Range",
+      "cateIds": "Categories",
+      "productIds": "Products",
+      "isNewPeople": "New User Only",
+      "singleType": "Single Product",
+      "sort": "Sort",
+      "status": "Status",
+      "createdAt": "Created At",
+      "operation": "Actions"
+    }
+  }
+}

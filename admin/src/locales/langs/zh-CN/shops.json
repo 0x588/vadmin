@@ -1,0 +1,43 @@
+{
+  "shops": {
+    "express": {
+      "title": "物流公司",
+      "id": "编号",
+      "name": "公司名称",
+      "isDefault": "是否默认",
+      "sort": "排序",
+      "status": "状态",
+      "createdAt": "创建时间",
+      "operation": "操作",
+      "feeTemplate": "运费模版"
+    },
+    "expressFee": {
+      "title": "运费模版",
+      "id": "编号",
+      "name": "模版名称",
+      "isDefault": "配送区域",
+      "sort": "排序",
+      "status": "状态",
+      "createdAt": "创建时间",
+      "operation": "操作",
+      "allArea": "全国",
+      "specifiedArea": "指定区域",
+      "areas": "配送区域",
+      "pieceUsed": "按件计费",
+      "piece": "首件数量",
+      "piecePrice": "首件费用",
+      "pieceMore": "续件数量",
+      "pieceMorePrice": "续件费用",
+      "weightUsed": "按重计费",
+      "weight": "首重(kg)",
+      "weightPrice": "首重费用",
+      "weightMore": "续重(kg)",
+      "weightMorePrice": "续重费用",
+      "volumeUsed": "按体积计费",
+      "volume": "首体积(m³)",
+      "volumePrice": "首体积费用",
+      "volumeMore": "续体积(m³)",
+      "volumeMorePrice": "续体积费用"
+    }
+  }
+}

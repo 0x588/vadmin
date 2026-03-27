@@ -1,0 +1,42 @@
+{
+  "order": {
+    "order": {
+      "title": "订单管理",
+      "id": "编号",
+      "orderSn": "订单号",
+      "outTradeNo": "交易号",
+      "orderFrom": "订单来源",
+      "orderType": "订单类型",
+      "paymentType": "支付方式",
+      "buyerId": "买家ID",
+      "buyerNickname": "买家昵称",
+      "payMoney": "支付金额",
+      "shippingType": "配送方式",
+      "orderStatus": "订单状态",
+      "sellerMemo": "卖家备注",
+      "createdAt": "创建时间",
+      "operation": "操作",
+      "detail": "订单详情",
+      "orderInfo": "订单信息",
+      "productInfo": "商品信息",
+      "productPicture": "商品图片",
+      "productName": "商品名称",
+      "price": "单价",
+      "num": "数量",
+      "productMoney": "小计",
+      "buyerMessage": "买家留言",
+      "buyerName": "买家姓名",
+      "statusAll": "全部",
+      "statusPending": "待付款",
+      "statusPaid": "已付款",
+      "statusPartShipped": "部分发货",
+      "statusShipped": "已发货",
+      "statusReceived": "已签收",
+      "statusCompleted": "已完成",
+      "statusRefundApply": "申请退款",
+      "statusRefunding": "退款中",
+      "statusRefunded": "已退款",
+      "statusClosed": "已关闭"
+    }
+  }
+}
