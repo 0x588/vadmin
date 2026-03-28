@@ -47,6 +47,7 @@ function rebuildColumns(data: ProductApi.ProductSkuVo[]) {
         title: colTitle,
         dataIndex: colId,
         key: `spec_${colId}`,
+        width: 80,
       });
     });
   }
@@ -157,6 +158,7 @@ function clearBatch() {
       :columns="columns"
       :data-source="tableData"
       :pagination="false"
+      :scroll="{ x: 'max-content' }"
       size="small"
       row-key="data"
       bordered

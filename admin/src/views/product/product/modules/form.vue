@@ -537,7 +537,7 @@ async function onAttributeTemplateChange(attrId: number) {
 </script>
 
 <template>
-  <Drawer :title="getDrawerTitle" class="w-[800px]">
+  <Drawer :title="getDrawerTitle" class="w-[1050px]">
     <Tabs v-model:active-key="activeTab">
       <Tabs.TabPane
         key="basic"
