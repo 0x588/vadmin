@@ -79,7 +79,7 @@ export function useColumns(
     {
       cellRender: {
         name: 'CellTag',
-        options: getDictOptions(DICT_TYPE.SPEC_TYPE, 'string'),
+        options: getDictOptions(DICT_TYPE.SPEC_TYPE),
       },
       field: 'type',
       title: $t('product.spec.type'),
