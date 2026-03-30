@@ -25,6 +25,14 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
+    // Convert fileList to URL string
+    const fileList = values.cover;
+    if (Array.isArray(fileList) && fileList.length > 0) {
+      const file = fileList[0];
+      values.cover = file?.response?.url || file?.url || '';
+    } else {
+      values.cover = '';
+    }
     drawerApi.lock();
     (id.value ? updateServe({ id: id.value, ...values }) : createServe(values))
       .then(() => {
@@ -48,7 +56,13 @@ const [Drawer, drawerApi] = useVbenDrawer({
       }
       await nextTick();
       if (formData.value) {
-        formApi.setValues(formData.value);
+        const vals = { ...formData.value };
+        if (vals.cover && typeof vals.cover === 'string') {
+          vals.cover = [
+            { name: 'cover', status: 'done', uid: '-1', url: vals.cover },
+          ] as any;
+        }
+        formApi.setValues(vals);
       }
     }
   },

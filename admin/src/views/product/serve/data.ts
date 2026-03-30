@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ProductServeApi } from '#/api/product/serve';
 
+import { requestClient } from '#/api/request';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
@@ -14,7 +15,32 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'Input',
+      component: 'Upload',
+      componentProps: {
+        accept: '.png,.jpg,.jpeg,.gif,.webp',
+        customRequest: async ({
+          file,
+          onError,
+          onProgress,
+          onSuccess,
+        }: any) => {
+          try {
+            onProgress?.({ percent: 0 });
+            const data = await requestClient.upload(
+              '/upload',
+              { file },
+              { responseReturn: 'body' },
+            );
+            onProgress?.({ percent: 100 });
+            onSuccess?.(data, file);
+          } catch (error: any) {
+            onError?.(error);
+          }
+        },
+        listType: 'picture-card',
+        maxCount: 1,
+        maxSize: 5,
+      },
       fieldName: 'cover',
       label: $t('product.serve.cover'),
     },
