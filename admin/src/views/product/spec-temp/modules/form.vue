@@ -40,7 +40,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     drawerApi.lock();
     const data = {
       title: title.value,
-      specIds: selectedSpecIds.value.join(','),
+      specIds: JSON.stringify(selectedSpecIds.value.map(Number)),
       sort: sort.value,
       status: status.value,
     };
@@ -72,7 +72,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
         sort.value = detail.sort || 0;
         status.value = detail.status ?? 1;
         selectedSpecIds.value = detail.specIds
-          ? String(detail.specIds).split(',')
+          ? JSON.parse(detail.specIds).map(String)
           : [];
       } else {
         formData.value = undefined;
