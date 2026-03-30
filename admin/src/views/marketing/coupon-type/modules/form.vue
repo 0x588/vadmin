@@ -21,6 +21,7 @@ import { useFormSchema } from '../data';
 const emits = defineEmits(['success']);
 
 const formData = ref<MarketCouponTypeApi.CouponTypeVO>();
+const selectedProductIds = ref<number[]>([]);
 
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
@@ -29,6 +30,10 @@ const [Form, formApi] = useVbenForm({
 
 function tsToDay(ts: number) {
   return ts ? dayjs.unix(ts) : undefined;
+}
+
+function handleProductIdsChange(ids: number[]) {
+  selectedProductIds.value = ids;
 }
 
 const id = ref();
@@ -48,6 +53,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
       values.end_time = dayjs(values.validityTimeRange[1]).unix();
     }
     delete values.validityTimeRange;
+    // Merge productIds from separate ref
+    if (values.rang_type === 1) {
+      values.productIds = selectedProductIds.value;
+    }
+    delete values.productIds_placeholder;
 
     drawerApi.lock();
     (id.value
@@ -67,6 +77,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (isOpen) {
       const data = drawerApi.getData<MarketCouponTypeApi.CouponTypeVO>();
       await formApi.resetForm();
+      selectedProductIds.value = [];
 
       if (data && data.id) {
         const detail = await getCouponType(data.id);
@@ -80,7 +91,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
       await nextTick();
       if (formData.value) {
         const d = formData.value;
-        // First pass: set all values including rang_type
         formApi.setValues({
           ...d,
           getTimeRange:
@@ -92,13 +102,12 @@ const [Drawer, drawerApi] = useVbenDrawer({
               ? [tsToDay(d.start_time), tsToDay(d.end_time)]
               : undefined,
         });
-        // Second pass: after rang_type triggers conditional fields visibility
         await nextTick();
-        if (d.rang_type === 1 && d.productIds) {
-          formApi.setFieldValue('productIds', d.productIds);
-        }
         if (d.rang_type === 2 && d.cateIds) {
           formApi.setFieldValue('cateIds', d.cateIds);
+        }
+        if (d.rang_type === 1 && d.productIds) {
+          selectedProductIds.value = d.productIds;
         }
       }
     }
@@ -115,10 +124,10 @@ const getDrawerTitle = computed(() => {
 <template>
   <Drawer class="w-[1000px]" :title="getDrawerTitle">
     <Form>
-      <template #productIds="slotProps">
+      <template #productIds>
         <ProductSelect
-          :values="slotProps.modelValue || []"
-          @update:values="slotProps.onChange"
+          :values="selectedProductIds"
+          @update:values="handleProductIdsChange"
         />
       </template>
     </Form>
