@@ -25,6 +25,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
+    // Convert fileList to URL string for cover
+    if (Array.isArray(values.cover)) {
+      const file = values.cover[0];
+      values.cover = file?.response?.url || file?.url || '';
+    }
     drawerApi.lock();
     (id.value ? updateCate({ id: id.value, ...values }) : createCate(values))
       .then(() => {
@@ -48,7 +53,14 @@ const [Drawer, drawerApi] = useVbenDrawer({
       }
       await nextTick();
       if (formData.value) {
-        formApi.setValues(formData.value);
+        const vals = { ...formData.value };
+        // Convert cover URL to fileList for Upload component
+        if (vals.cover && typeof vals.cover === 'string') {
+          vals.cover = [
+            { name: 'cover', status: 'done', uid: '-1', url: vals.cover },
+          ] as any;
+        }
+        formApi.setValues(vals);
       }
     }
   },

@@ -2,6 +2,7 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ProductCateApi } from '#/api/product/cate';
 
+import { upload_file } from '#/api/examples/upload';
 import { treeSimpleCate } from '#/api/product/cate';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
@@ -33,7 +34,14 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('product.cate.subTitle'),
     },
     {
-      component: 'Input',
+      component: 'Upload',
+      componentProps: {
+        accept: '.png,.jpg,.jpeg,.gif,.webp',
+        customRequest: upload_file,
+        listType: 'picture-card',
+        maxCount: 1,
+        maxSize: 5,
+      },
       fieldName: 'cover',
       label: $t('product.cate.cover'),
     },
