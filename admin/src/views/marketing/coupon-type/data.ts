@@ -25,15 +25,17 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'InputNumber',
       componentProps: { min: 0, precision: 2, class: 'w-full' },
+      defaultValue: 0,
       fieldName: 'at_least',
       label: $t('market.couponType.atLeast'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
         options: [
-          { label: '金额', value: 1 },
+          { label: '优惠金额', value: 1 },
           { label: '折扣', value: 2 },
         ],
         optionType: 'button',
@@ -41,10 +43,13 @@ export function useFormSchema(): VbenFormSchema[] {
       defaultValue: 1,
       fieldName: 'discount_type',
       label: $t('market.couponType.discountType'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 2, class: 'w-full' },
+      componentProps: { min: 0.01, precision: 2, class: 'w-full' },
+      description:
+        '金额类型填减免金额；折扣类型范围0-9.9，0为全部抵扣，9.9为优惠百分之一',
       fieldName: 'discount',
       label: $t('market.couponType.discount'),
       rules: 'required',
@@ -54,18 +59,25 @@ export function useFormSchema(): VbenFormSchema[] {
       componentProps: { min: 0, precision: 0, class: 'w-full' },
       fieldName: 'count',
       label: $t('market.couponType.count'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: { min: 0, precision: 0, class: 'w-full' },
+      defaultValue: 0,
+      description: '输入0表示无限制',
       fieldName: 'max_fetch',
       label: $t('market.couponType.maxFetch'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: { min: 0, precision: 0, class: 'w-full' },
+      defaultValue: 0,
+      description: '输入0表示无限制',
       fieldName: 'max_fetch_per_day',
       label: $t('market.couponType.maxFetchPerDay'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
@@ -80,10 +92,15 @@ export function useFormSchema(): VbenFormSchema[] {
       defaultValue: 0,
       fieldName: 'get_type',
       label: $t('market.couponType.getType'),
+      rules: 'required',
     },
     {
       component: 'RangePicker',
-      componentProps: { class: 'w-full', showTime: true },
+      componentProps: {
+        class: 'w-full',
+        showTime: true,
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
       dependencies: {
         show: (values) => values.get_type === 1,
         triggerFields: ['get_type'],
@@ -104,10 +121,15 @@ export function useFormSchema(): VbenFormSchema[] {
       defaultValue: 0,
       fieldName: 'validity_type',
       label: $t('market.couponType.validityType'),
+      rules: 'required',
     },
     {
       component: 'RangePicker',
-      componentProps: { class: 'w-full', showTime: true },
+      componentProps: {
+        class: 'w-full',
+        showTime: true,
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
       dependencies: {
         show: (values) => values.validity_type === 0,
         triggerFields: ['validity_type'],
@@ -117,13 +139,14 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 0, class: 'w-full' },
+      componentProps: { min: 1, precision: 0, class: 'w-full' },
       dependencies: {
         show: (values) => values.validity_type === 1,
         triggerFields: ['validity_type'],
       },
       fieldName: 'validity_days',
       label: $t('market.couponType.validityDays'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
@@ -139,6 +162,7 @@ export function useFormSchema(): VbenFormSchema[] {
       defaultValue: 0,
       fieldName: 'rang_type',
       label: $t('market.couponType.rangType'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
@@ -151,8 +175,10 @@ export function useFormSchema(): VbenFormSchema[] {
         optionType: 'button',
       },
       defaultValue: 0,
+      description: '未下单支付用户可领',
       fieldName: 'is_new_people',
       label: $t('market.couponType.isNewPeople'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
@@ -165,15 +191,19 @@ export function useFormSchema(): VbenFormSchema[] {
         optionType: 'button',
       },
       defaultValue: 0,
+      description:
+        '"是"取符合商品中最高价的一个进行抵扣，"否"则是符合的商品累加价格进行抵扣',
       fieldName: 'single_type',
       label: $t('market.couponType.singleType'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: { min: 0, precision: 0, class: 'w-full' },
-      defaultValue: 0,
+      defaultValue: 6,
       fieldName: 'sort',
       label: $t('market.couponType.sort'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
