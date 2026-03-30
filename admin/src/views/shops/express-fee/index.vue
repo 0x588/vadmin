@@ -11,11 +11,12 @@ import { useRoute } from 'vue-router';
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
-import { Button, message } from 'ant-design-vue';
+import { Button, message, Tag } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteExpressFee, getExpressFeePage } from '#/api/shops/express-fee';
 import { $t } from '#/locales';
+import { showAreasWithJson } from '#/utils/areas';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
@@ -101,6 +102,10 @@ function onDelete(row: ShopsExpressFeeApi.ExpressFeeVO) {
 function onCreate() {
   formDrawerApi.setData({ express_id: expressId.value }).open();
 }
+
+function getAreaNames(row: ShopsExpressFeeApi.ExpressFeeVO): string[] {
+  return showAreasWithJson(row.areas) as string[];
+}
 </script>
 
 <template>
@@ -112,6 +117,21 @@ function onCreate() {
           <Plus class="size-5" />
           {{ $t('ui.actionTitle.create', [$t('shops.expressFee.name')]) }}
         </Button>
+      </template>
+      <template #is_default_slot="{ row }">
+        <div>
+          <Tag v-if="row.is_default" color="green">
+            {{ $t('shops.expressFee.allArea') }}
+          </Tag>
+          <Tag v-else color="red">
+            {{ $t('shops.expressFee.specifiedArea') }}
+          </Tag>
+        </div>
+        <div v-if="!row.is_default" class="mt-1 flex flex-wrap gap-1">
+          <Tag v-for="name in getAreaNames(row)" :key="name" class="my-0.5">
+            {{ name }}
+          </Tag>
+        </div>
       </template>
     </Grid>
   </Page>

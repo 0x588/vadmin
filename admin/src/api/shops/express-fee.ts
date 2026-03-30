@@ -6,9 +6,10 @@ export namespace ShopsExpressFeeApi {
   export interface ExpressFeeVO {
     [key: string]: any;
     area?: string;
+    areas?: any;
     express_id?: number;
     id?: number;
-    is_default?: boolean;
+    is_default?: boolean | number;
     piece?: number;
     piece_more?: number;
     piece_more_price?: number;

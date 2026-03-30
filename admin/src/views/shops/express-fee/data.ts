@@ -3,10 +3,29 @@ import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ShopsExpressFeeApi } from '#/api/shops/express-fee';
 
 import { $t } from '#/locales';
+import { areaOption } from '#/utils/areas';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
+    {
+      component: 'Input',
+      fieldName: 'id',
+      dependencies: { show: () => false, triggerFields: ['id'] },
+      label: 'id',
+    },
+    {
+      component: 'Input',
+      fieldName: 'express_id',
+      dependencies: { show: () => false, triggerFields: ['express_id'] },
+      label: 'express_id',
+    },
+    {
+      component: 'Input',
+      fieldName: 'hasDefault',
+      dependencies: { show: () => false, triggerFields: ['hasDefault'] },
+      label: 'hasDefault',
+    },
     {
       component: 'Input',
       fieldName: 'title',
@@ -18,26 +37,39 @@ export function useFormSchema(): VbenFormSchema[] {
       componentProps: {
         buttonStyle: 'solid',
         options: [
-          { label: $t('shops.expressFee.allArea'), value: true },
-          { label: $t('shops.expressFee.specifiedArea'), value: false },
+          { label: $t('shops.expressFee.allArea'), value: 1 },
+          { label: $t('shops.expressFee.specifiedArea'), value: 0 },
         ],
         optionType: 'button',
       },
-      defaultValue: true,
+      defaultValue: 0,
+      dependencies: {
+        show: (values) => !values.hasDefault,
+        triggerFields: ['hasDefault'],
+      },
       fieldName: 'is_default',
       label: $t('shops.expressFee.isDefault'),
+      rules: 'required',
     },
     {
-      component: 'Input',
+      component: 'Cascader',
+      componentProps: {
+        class: 'w-full',
+        maxTagCount: 'responsive',
+        multiple: true,
+        options: areaOption,
+      },
       dependencies: {
-        show: (values) => !values.is_default,
+        show: (values) => values.is_default === 0 || values.is_default === false,
         triggerFields: ['is_default'],
       },
-      fieldName: 'area',
+      fieldName: 'areas',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.areas'),
+      rules: 'required',
     },
     {
-      component: 'Switch',
+      component: 'Checkbox',
       defaultValue: false,
       fieldName: 'piece_used',
       label: $t('shops.expressFee.pieceUsed'),
@@ -83,14 +115,14 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('shops.expressFee.pieceMorePrice'),
     },
     {
-      component: 'Switch',
+      component: 'Checkbox',
       defaultValue: false,
       fieldName: 'weight_used',
       label: $t('shops.expressFee.weightUsed'),
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 2, class: 'w-full' },
+      componentProps: { min: 0.01, precision: 2, class: 'w-full' },
       dependencies: {
         show: (values) => values.weight_used,
         triggerFields: ['weight_used'],
@@ -110,7 +142,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 2, class: 'w-full' },
+      componentProps: { min: 0.01, precision: 2, class: 'w-full' },
       dependencies: {
         show: (values) => values.weight_used,
         triggerFields: ['weight_used'],
@@ -129,14 +161,14 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('shops.expressFee.weightMorePrice'),
     },
     {
-      component: 'Switch',
+      component: 'Checkbox',
       defaultValue: false,
       fieldName: 'volume_used',
       label: $t('shops.expressFee.volumeUsed'),
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 2, class: 'w-full' },
+      componentProps: { min: 0.01, precision: 2, class: 'w-full' },
       dependencies: {
         show: (values) => values.volume_used,
         triggerFields: ['volume_used'],
@@ -156,7 +188,7 @@ export function useFormSchema(): VbenFormSchema[] {
     },
     {
       component: 'InputNumber',
-      componentProps: { min: 0, precision: 2, class: 'w-full' },
+      componentProps: { min: 0.01, precision: 2, class: 'w-full' },
       dependencies: {
         show: (values) => values.volume_used,
         triggerFields: ['volume_used'],
@@ -221,10 +253,10 @@ export function useColumns(
     { field: 'id', title: $t('shops.expressFee.id'), width: 80 },
     { field: 'title', title: $t('shops.expressFee.name'), minWidth: 150 },
     {
-      cellRender: { name: 'CellTag' },
       field: 'is_default',
+      minWidth: 200,
+      slots: { default: 'is_default_slot' },
       title: $t('shops.expressFee.isDefault'),
-      width: 120,
     },
     { field: 'sort', title: $t('shops.expressFee.sort'), width: 80 },
     {

@@ -9,6 +9,7 @@ import { useVbenForm } from '#/adapter/form';
 import {
   createExpressFee,
   getExpressFee,
+  getExpressFeeHasDefault,
   updateExpressFee,
 } from '#/api/shops/express-fee';
 import { $t } from '#/locales';
@@ -33,6 +34,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const values = await formApi.getValues();
     drawerApi.lock();
     const submitData = { ...values, express_id: expressId.value };
+    delete submitData.hasDefault;
     (id.value
       ? updateExpressFee({ id: id.value, ...submitData })
       : createExpressFee(submitData)
@@ -48,19 +50,49 @@ const [Drawer, drawerApi] = useVbenDrawer({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData<ShopsExpressFeeApi.ExpressFeeVO>();
-      formApi.resetForm();
+      await formApi.resetForm();
+
+      expressId.value = data?.express_id;
+      let hasDefault = false;
+      try {
+        hasDefault = await getExpressFeeHasDefault(expressId.value!);
+      } catch {}
 
       if (data && data.id) {
         const detail = await getExpressFee(data.id);
         formData.value = detail;
         id.value = detail.id;
         expressId.value = detail.express_id;
+        // If editing the default template itself, allow changing is_default
+        if (detail.is_default === 1 || detail.is_default === true) {
+          hasDefault = false;
+        }
+        // Parse areas from JSON string if needed
+        if (typeof detail.areas === 'string') {
+          try {
+            detail.areas = JSON.parse(detail.areas);
+          } catch {
+            detail.areas = [];
+          }
+        }
         await nextTick();
-        formApi.setValues(detail);
+        formApi.setValues({ ...detail, hasDefault });
+        // Set areas after nextTick for conditional field
+        if (
+          (detail.is_default === 0 || detail.is_default === false) &&
+          detail.areas
+        ) {
+          await nextTick();
+          formApi.setFieldValue('areas', detail.areas);
+        }
       } else {
         formData.value = undefined;
         id.value = undefined;
-        expressId.value = data?.express_id;
+        formApi.setValues({
+          express_id: expressId.value,
+          hasDefault,
+          is_default: hasDefault ? 0 : 0,
+        });
       }
     }
   },
