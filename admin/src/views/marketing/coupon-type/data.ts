@@ -180,6 +180,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['rang_type'],
       },
       fieldName: 'cateIds',
+      formItemClass: 'col-span-full',
       label: '选择指定分类',
       rules: 'required',
     },
