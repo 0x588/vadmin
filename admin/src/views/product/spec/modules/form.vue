@@ -50,7 +50,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData<ProductSpecApi.CommonSpecVO>();
-      formApi.resetForm();
+      await formApi.resetForm();
       specValues.value = [];
 
       if (data && data.id) {
@@ -58,11 +58,14 @@ const [Drawer, drawerApi] = useVbenDrawer({
         formData.value = detail;
         id.value = detail.id;
         specValues.value = detail.values || [];
-        await nextTick();
-        formApi.setValues(detail);
       } else {
         formData.value = undefined;
         id.value = undefined;
+      }
+
+      await nextTick();
+      if (formData.value) {
+        formApi.setValues(formData.value);
       }
     }
   },

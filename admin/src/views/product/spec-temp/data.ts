@@ -1,8 +1,8 @@
+import type { Ref } from 'vue';
+
 import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ProductSpecTempApi } from '#/api/product/spec-temp';
-
-import type { Ref } from 'vue';
 
 import { h } from 'vue';
 
