@@ -154,8 +154,8 @@ export function useFormSchema(): VbenFormSchema[] {
         buttonStyle: 'solid',
         options: [
           { label: '全部商品', value: 0 },
-          { label: '指定分类', value: 1 },
-          { label: '指定商品', value: 2 },
+          { label: '指定商品', value: 1 },
+          { label: '指定分类', value: 2 },
         ],
         optionType: 'button',
       },
