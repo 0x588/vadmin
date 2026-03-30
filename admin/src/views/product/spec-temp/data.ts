@@ -2,6 +2,8 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { ProductSpecTempApi } from '#/api/product/spec-temp';
 
+import type { Ref } from 'vue';
+
 import { h } from 'vue';
 
 import { Tag } from 'ant-design-vue';
@@ -30,9 +32,9 @@ export function useGridFormSchema(): VbenFormSchema[] {
 
 export function useColumns(
   onActionClick: OnActionClickFn<ProductSpecTempApi.CommonSpecTemplateVO>,
+  specMap: Ref<Record<number, string>>,
 ): VxeTableGridOptions<ProductSpecTempApi.CommonSpecTemplateVO>['columns'] {
   return [
-    { field: 'id', title: $t('product.specTemp.id'), width: 80 },
     { field: 'title', title: $t('product.specTemp.name'), minWidth: 150 },
     {
       field: 'specIds',
@@ -40,8 +42,10 @@ export function useColumns(
       minWidth: 200,
       slots: {
         default: ({ row }) => {
-          const ids = row.specIds ? String(row.specIds).split(',') : [];
-          return ids.map((id: string) => h(Tag, { color: 'blue' }, () => id));
+          const ids = row.specIds ? JSON.parse(row.specIds) : [];
+          return ids.map((id: number) =>
+            h(Tag, { color: 'red' }, () => specMap.value[id] || id),
+          );
         },
       },
     },

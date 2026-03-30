@@ -5,12 +5,15 @@ import type {
 } from '#/adapter/vxe-table';
 import type { ProductSpecTempApi } from '#/api/product/spec-temp';
 
+import { onMounted, ref } from 'vue';
+
 import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
 import { Button, message } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { listSimpleSpec } from '#/api/product/spec';
 import {
   deleteCommonSpecTemp,
   getCommonSpecTempPage,
@@ -19,6 +22,17 @@ import { $t } from '#/locales';
 
 import { useColumns, useGridFormSchema } from './data';
 import Form from './modules/form.vue';
+
+const specMap = ref<Record<number, string>>({});
+
+onMounted(async () => {
+  const list = await listSimpleSpec();
+  const map: Record<number, string> = {};
+  for (const item of list) {
+    map[item.id] = item.title;
+  }
+  specMap.value = map;
+});
 
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
@@ -32,7 +46,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
     wrapperClass: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
   },
   gridOptions: {
-    columns: useColumns(onActionClick),
+    columns: useColumns(onActionClick, specMap),
     height: 'auto',
     keepSource: true,
     pagerConfig: {},
