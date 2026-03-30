@@ -60,7 +60,7 @@ export function useColumns(
     },
     {
       field: 'client_open_id',
-      title: $t('member.auth.clientOpenId')
+      title: $t('member.auth.clientOpenId'),
     },
     {
       field: 'member',
@@ -79,7 +79,7 @@ export function useColumns(
           ]);
         },
       },
-      title: $t('member.auth.linkedMember')
+      title: $t('member.auth.linkedMember'),
     },
     {
       cellRender: {
