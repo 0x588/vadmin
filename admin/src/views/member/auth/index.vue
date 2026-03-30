@@ -18,6 +18,7 @@ const [Grid] = useVbenVxeGrid({
   formOptions: {
     schema: useGridFormSchema(),
     submitOnChange: false,
+    wrapperClass: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-5',
   },
   gridOptions: {
     columns: useColumns(onStatusChange),
