@@ -104,7 +104,7 @@ const getDrawerTitle = computed(() => {
 </script>
 
 <template>
-  <Drawer :title="getDrawerTitle">
+  <Drawer class="w-[1000px]" :title="getDrawerTitle">
     <Form>
       <template #productIds="slotProps">
         <ProductSelect

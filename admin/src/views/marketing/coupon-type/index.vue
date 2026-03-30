@@ -20,7 +20,7 @@ import Form from './modules/form.vue';
 const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
-  drawerProps: { class: 'w-[1000px]' },
+  drawerProps: {},
 });
 
 const [Grid, gridApi] = useVbenVxeGrid({
