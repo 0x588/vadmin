@@ -58,7 +58,7 @@ async function onSave() {
           <Form />
           <div class="flex justify-end mt-4">
             <Button type="primary" :loading="saving" @click="onSave">
-              {{ $t('common.save') }}
+              {{ $t('system.configEdit.save') }}
             </Button>
           </div>
         </div>
