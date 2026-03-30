@@ -5,14 +5,14 @@ import type {
 } from '#/adapter/vxe-table';
 import type { OrderApi } from '#/api/order/order';
 
-import { ref } from 'vue';
+import { h, ref } from 'vue';
 
 import { Page, useVbenDrawer } from '@vben/common-ui';
 
-import { message, TabPane, Tabs } from 'ant-design-vue';
+import { Input, message, Modal, TabPane, Tabs } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { deleteOrder, getOrderPage } from '#/api/order/order';
+import { getOrderPage, updateOrder } from '#/api/order/order';
 import { $t } from '#/locales';
 
 import { ORDER_STATUS_TABS, useColumns, useGridFormSchema } from './data';
@@ -60,34 +60,35 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 function onActionClick(e: OnActionClickParams<OrderApi.OrderVO>) {
   switch (e.code) {
-    case 'delete': {
-      onDelete(e.row);
+    case 'detail': {
+      detailDrawerApi.setData(e.row).open();
       break;
     }
-    case 'edit': {
-      detailDrawerApi.setData(e.row).open();
+    case 'memo': {
+      onMemo(e.row);
       break;
     }
   }
 }
 
-function onDelete(row: OrderApi.OrderVO) {
-  const hideLoading = message.loading({
-    content: $t('ui.actionMessage.deleting', [row.order_sn]),
-    duration: 0,
-    key: 'action_process_msg',
-  });
-  deleteOrder(Number(row.id))
-    .then(() => {
-      message.success({
-        content: $t('ui.actionMessage.deleteSuccess', [row.order_sn]),
-        key: 'action_process_msg',
-      });
+function onMemo(row: OrderApi.OrderVO) {
+  const memoValue = ref(row.seller_memo || '');
+  Modal.confirm({
+    title: $t('order.order.sellerMemo'),
+    content: () =>
+      h(Input.TextArea, {
+        value: memoValue.value,
+        rows: 4,
+        'onUpdate:value': (val: string) => {
+          memoValue.value = val;
+        },
+      }),
+    onOk: async () => {
+      await updateOrder(Number(row.id), { seller_memo: memoValue.value });
+      message.success($t('ui.actionMessage.operationSuccess'));
       gridApi.query();
-    })
-    .catch(() => {
-      hideLoading();
-    });
+    },
+  });
 }
 
 function onTabChange(key: number | string) {

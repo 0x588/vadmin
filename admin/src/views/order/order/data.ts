@@ -111,11 +111,13 @@ export function useColumns(
       align: 'center',
       cellRender: {
         attrs: {
-          nameField: 'order_sn',
-          nameTitle: $t('order.order.orderSn'),
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          { code: 'detail', text: $t('order.order.detail') },
+          { code: 'memo', text: $t('order.order.sellerMemo') },
+        ],
       },
       field: 'operation',
       fixed: 'right',
