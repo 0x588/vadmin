@@ -6,7 +6,7 @@ import { h } from 'vue';
 
 import { Tag } from 'ant-design-vue';
 
-import { treeSimpleCate } from '#/api/product/cate';
+import { listSimpleCate } from '#/api/product/cate';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
@@ -166,15 +166,13 @@ export function useFormSchema(): VbenFormSchema[] {
       rules: 'required',
     },
     {
-      component: 'ApiTreeSelect',
+      component: 'ApiCascader',
       componentProps: {
-        allowClear: true,
-        api: treeSimpleCate,
+        api: listSimpleCate,
         childrenField: 'children',
         class: 'w-full',
         labelField: 'title',
         multiple: true,
-        treeCheckable: true,
         valueField: 'id',
       },
       dependencies: {
