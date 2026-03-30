@@ -38,9 +38,7 @@ export function useColumns(): VxeTableGridOptions<MarketCouponApi.CouponVO>['col
         default: ({ row }) => {
           const member = row.member || {};
           return [
-            h('div', [
-              `${member.nickname || ''} ID:${row.member_id || ''}`,
-            ]),
+            h('div', [`${member.nickname || ''} ID:${row.member_id || ''}`]),
             h('div', member.phone || ''),
           ];
         },
