@@ -75,7 +75,10 @@ export function useColumns(
     { field: 'id', title: $t('shops.express.id'), width: 80 },
     { field: 'name', title: $t('shops.express.name'), minWidth: 150 },
     {
-      cellRender: { name: 'CellTag' },
+      cellRender: {
+        name: 'CellTag',
+        options: getDictOptions(DICT_TYPE.YES_NO),
+      },
       field: 'is_default',
       title: $t('shops.express.isDefault'),
       width: 100,
@@ -105,11 +108,19 @@ export function useColumns(
           onClick: onActionClick,
         },
         name: 'CellOperation',
+        options: [
+          {
+            code: 'feeTemplate',
+            text: $t('shops.express.feeTemplate'),
+          },
+          'edit',
+          'delete',
+        ],
       },
       field: 'operation',
       fixed: 'right',
       title: $t('shops.express.operation'),
-      width: 180,
+      width: 230,
     },
   ];
 }

@@ -9,6 +9,7 @@ import { Page, useVbenDrawer } from '@vben/common-ui';
 import { Plus } from '@vben/icons';
 
 import { Button, message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { deleteExpress, getExpressPage } from '#/api/shops/express';
@@ -21,6 +22,8 @@ const [FormDrawer, formDrawerApi] = useVbenDrawer({
   connectedComponent: Form,
   destroyOnClose: true,
 });
+
+const router = useRouter();
 
 const [Grid, gridApi] = useVbenVxeGrid({
   formOptions: {
@@ -63,6 +66,10 @@ function onActionClick(e: OnActionClickParams<ShopsExpressApi.ExpressVO>) {
     }
     case 'edit': {
       formDrawerApi.setData(e.row).open();
+      break;
+    }
+    case 'feeTemplate': {
+      router.push({ path: `/shops/express-fee/${e.row.id}` });
       break;
     }
   }
