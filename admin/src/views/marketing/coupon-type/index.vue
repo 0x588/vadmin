@@ -44,7 +44,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
         },
       },
     },
-    rowConfig: { isAutoHeight: true, keyField: 'id' },
+    rowConfig: { keyField: 'id' },
+    showOverflow: false,
     toolbarConfig: {
       custom: true,
       export: false,
