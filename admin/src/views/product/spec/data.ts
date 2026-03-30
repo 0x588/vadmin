@@ -75,9 +75,16 @@ export function useColumns(
   onActionClick: OnActionClickFn<ProductSpecApi.CommonSpecVO>,
 ): VxeTableGridOptions<ProductSpecApi.CommonSpecVO>['columns'] {
   return [
-    { field: 'id', title: $t('product.spec.id'), width: 80 },
     { field: 'title', title: $t('product.spec.name'), minWidth: 150 },
-    { field: 'type', title: $t('product.spec.type'), width: 100 },
+    {
+      cellRender: {
+        name: 'CellTag',
+        options: getDictOptions(DICT_TYPE.SPEC_TYPE, 'string'),
+      },
+      field: 'type',
+      title: $t('product.spec.type'),
+      width: 100,
+    },
     {
       field: 'values',
       title: $t('product.spec.values'),
