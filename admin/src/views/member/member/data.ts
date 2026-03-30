@@ -50,7 +50,7 @@ export function useColumns(
   return [
     { field: 'id', title: $t('member.member.id'), width: 60 },
     {
-      cellRender: { name: 'CellImage' },
+      cellRender: { name: 'CellImage', props: { height: 40, width: 40 } },
       field: 'avatar',
       title: $t('member.member.avatar'),
       width: 60,

@@ -79,7 +79,7 @@ export function useColumns(
   return [
     { field: 'id', title: $t('product.product.id'), width: 60 },
     {
-      cellRender: { name: 'CellImage' },
+      cellRender: { name: 'CellImage', props: { height: 40, width: 40 } },
       field: 'picture',
       title: $t('product.product.picture'),
       width: 80,
