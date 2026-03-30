@@ -31,7 +31,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
         if (data?.id) {
           const detail = await getOrder(data.id);
           orderData.value = detail;
-          products.value = detail.products || [];
+          products.value = detail.order_product || [];
         }
       } finally {
         loading.value = false;
