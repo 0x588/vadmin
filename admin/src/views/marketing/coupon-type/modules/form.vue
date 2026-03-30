@@ -14,6 +14,7 @@ import {
   updateCouponType,
 } from '#/api/market/coupon-type';
 import { $t } from '#/locales';
+import ProductSelect from '#/views/product/product/ProductSelect.vue';
 
 import { useFormSchema } from '../data';
 
@@ -104,6 +105,13 @@ const getDrawerTitle = computed(() => {
 
 <template>
   <Drawer :title="getDrawerTitle">
-    <Form />
+    <Form>
+      <template #productIds="slotProps">
+        <ProductSelect
+          :values="slotProps.modelValue || []"
+          @update:values="slotProps.onChange"
+        />
+      </template>
+    </Form>
   </Drawer>
 </template>

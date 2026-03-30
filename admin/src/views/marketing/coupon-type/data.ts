@@ -6,6 +6,7 @@ import { h } from 'vue';
 
 import { Tag } from 'ant-design-vue';
 
+import { treeSimpleCate } from '#/api/product/cate';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
@@ -163,6 +164,35 @@ export function useFormSchema(): VbenFormSchema[] {
       fieldName: 'rang_type',
       label: $t('market.couponType.rangType'),
       rules: 'required',
+    },
+    {
+      component: 'ApiTreeSelect',
+      componentProps: {
+        allowClear: true,
+        api: treeSimpleCate,
+        childrenField: 'children',
+        class: 'w-full',
+        labelField: 'title',
+        multiple: true,
+        treeCheckable: true,
+        valueField: 'id',
+      },
+      dependencies: {
+        show: (values) => values.rang_type === 2,
+        triggerFields: ['rang_type'],
+      },
+      fieldName: 'cateIds',
+      label: '选择指定分类',
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      dependencies: {
+        show: (values) => values.rang_type === 1,
+        triggerFields: ['rang_type'],
+      },
+      fieldName: 'productIds',
+      label: '选择指定商品',
     },
     {
       component: 'RadioGroup',
