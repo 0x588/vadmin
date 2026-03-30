@@ -6,6 +6,7 @@ import { h } from 'vue';
 
 import { Tag } from 'ant-design-vue';
 
+import { listSimpleCate } from '#/api/product/cate';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
@@ -17,6 +18,45 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('product.product.name'),
     },
     {
+      component: 'ApiCascader',
+      componentProps: {
+        api: listSimpleCate,
+        childrenField: 'children',
+        class: 'w-full',
+        labelField: 'title',
+        valueField: 'id',
+      },
+      fieldName: 'cateIds',
+      label: $t('product.product.cateIds'),
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.YES_NO),
+      },
+      fieldName: 'is_new',
+      label: $t('product.product.isNew'),
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.YES_NO),
+      },
+      fieldName: 'is_hot',
+      label: $t('product.product.isHot'),
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.YES_NO),
+      },
+      fieldName: 'is_recommend',
+      label: $t('product.product.isRecommend'),
+    },
+    {
       component: 'Select',
       componentProps: {
         allowClear: true,
@@ -24,6 +64,11 @@ export function useGridFormSchema(): VbenFormSchema[] {
       },
       fieldName: 'status',
       label: $t('product.product.status'),
+    },
+    {
+      component: 'RangePicker',
+      fieldName: 'createdTime',
+      label: $t('product.product.createdAt'),
     },
   ];
 }
@@ -66,6 +111,12 @@ export function useColumns(
                 $t('product.product.multiSpec'),
               ),
             );
+          if (row.shipping_type === 1)
+            tags.push(
+              h(Tag, { color: 'cyan' }, () =>
+                $t('product.product.freeShipping'),
+              ),
+            );
           return h('div', [
             h('div', { class: 'text-left' }, row.name),
             tags.length > 0
@@ -83,6 +134,14 @@ export function useColumns(
       width: 80,
     },
     { field: 'stock', title: $t('product.product.stock'), width: 80 },
+    {
+      field: 'cate_id',
+      slots: {
+        default: ({ row }) => row.cate?.title || '-',
+      },
+      title: $t('product.product.cateIds'),
+      width: 100,
+    },
     { field: 'sort', title: $t('product.product.sort'), width: 80 },
     {
       cellRender: { name: 'CellTag' },

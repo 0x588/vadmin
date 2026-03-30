@@ -60,8 +60,7 @@ export function useColumns(
     },
     {
       field: 'client_open_id',
-      title: $t('member.auth.clientOpenId'),
-      width: 180,
+      title: $t('member.auth.clientOpenId')
     },
     {
       field: 'member',
@@ -72,13 +71,15 @@ export function useColumns(
           if (!m) return '---';
           return h('div', { class: 'flex flex-col text-xs leading-5' }, [
             h('div', `ID: ${m.id ?? '-'}`),
-            h('div', `${$t('member.auth.memberNickname')}: ${m.nickname || '-'}`),
+            h(
+              'div',
+              `${$t('member.auth.memberNickname')}: ${m.nickname || '-'}`,
+            ),
             h('div', `${$t('member.auth.memberPhone')}: ${m.phone || '-'}`),
           ]);
         },
       },
-      title: $t('member.auth.linkedMember'),
-      width: 150,
+      title: $t('member.auth.linkedMember')
     },
     {
       cellRender: {
