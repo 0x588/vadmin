@@ -3,6 +3,7 @@ import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { OrderApi } from '#/api/order/order';
 
 import { $t } from '#/locales';
+import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export const ORDER_STATUS_TABS = [
   { label: 'statusAll', value: '' },
@@ -36,6 +37,21 @@ export function useGridFormSchema(): VbenFormSchema[] {
       label: $t('order.order.buyerId'),
     },
     {
+      component: 'Input',
+      fieldName: 'order_type',
+      label: $t('order.order.orderType'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'order_from',
+      label: $t('order.order.orderFrom'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'payment_type',
+      label: $t('order.order.paymentType'),
+    },
+    {
       component: 'RangePicker',
       fieldName: 'createdTime',
       label: $t('order.order.createdAt'),
@@ -60,6 +76,10 @@ export function useColumns(
       width: 180,
     },
     {
+      cellRender: {
+        name: 'CellTag',
+        options: getDictOptions(DICT_TYPE.PAY_TYPE),
+      },
       field: 'payment_type',
       title: $t('order.order.paymentType'),
       width: 100,
@@ -70,7 +90,10 @@ export function useColumns(
       width: 100,
     },
     {
-      cellRender: { name: 'CellTag' },
+      cellRender: {
+        name: 'CellTag',
+        options: getDictOptions(DICT_TYPE.ORDER_STATUS),
+      },
       field: 'order_status',
       title: $t('order.order.orderStatus'),
       width: 100,
