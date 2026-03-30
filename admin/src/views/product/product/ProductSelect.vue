@@ -22,11 +22,7 @@ const [Modal, modalApi] = useVbenModal({
 });
 
 async function loadProducts(ids?: number[]) {
-  if (ids && ids.length > 0) {
-    products.value = await getProductByIds(ids);
-  } else {
-    products.value = [];
-  }
+  products.value = ids && ids.length > 0 ? (await getProductByIds(ids)) : [];
 }
 
 let lastIds: string = '';

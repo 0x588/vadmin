@@ -90,7 +90,7 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal class="w-[800px]" title="选择商品">
+  <Modal class="w-[1000px]" title="选择商品">
     <div class="mb-4 flex items-center gap-2">
       <Input
         v-model:value="searchName"
