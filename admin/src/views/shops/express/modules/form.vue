@@ -41,7 +41,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
   async onOpenChange(isOpen) {
     if (isOpen) {
       const data = drawerApi.getData<ShopsExpressApi.ExpressVO>();
-      formApi.resetForm();
+      await formApi.resetForm();
       if (data && data.id) {
         formData.value = data;
         id.value = data.id;
@@ -51,7 +51,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
       }
       await nextTick();
       if (formData.value) {
-        formApi.setValues(formData.value);
+        formApi.setValues({
+          ...formData.value,
+          is_default: !!formData.value.is_default,
+        });
       }
     }
   },
