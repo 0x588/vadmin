@@ -1,7 +1,7 @@
 import type { VbenFormSchema } from '#/adapter/form';
 
 import { $t } from '#/locales';
-import { DICT_TYPE, getDictOptions } from '#/utils/dict';
+import { areaOption } from '#/utils/areas';
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -18,32 +18,39 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
+        options: [
+          { label: '关闭', value: 0 },
+          { label: '开启', value: 1 },
+        ],
         optionType: 'button',
       },
       defaultValue: 0,
+      description: $t('market.fullMail.statusDesc'),
       fieldName: 'status',
       label: $t('market.fullMail.status'),
+      rules: 'required',
     },
     {
-      component: 'InputNumber',
+      component: 'Cascader',
       componentProps: {
-        min: 0,
-        precision: 2,
         class: 'w-full',
+        multiple: true,
+        options: areaOption,
       },
-      fieldName: 'min_order_money',
-      label: $t('market.fullMail.minOrderMoney'),
-    },
-    {
-      component: 'Input',
       fieldName: 'no_mail_province_ids',
       label: $t('market.fullMail.noMailProvinceIds'),
     },
     {
-      component: 'Input',
-      fieldName: 'no_mail_city_ids',
-      label: $t('market.fullMail.noMailCityIds'),
+      component: 'InputNumber',
+      componentProps: {
+        min: 0.01,
+        precision: 2,
+        class: 'w-full',
+      },
+      description: $t('market.fullMail.minOrderMoneyDesc'),
+      fieldName: 'min_order_money',
+      label: $t('market.fullMail.minOrderMoney'),
+      rules: 'required',
     },
   ];
 }

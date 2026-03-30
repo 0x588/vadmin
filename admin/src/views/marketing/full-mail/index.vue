@@ -22,12 +22,20 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
   },
+  wrapperClass: 'grid-cols-1',
 });
 
 onMounted(async () => {
   try {
     const data = await getFullMail();
     if (data) {
+      if (typeof data.no_mail_province_ids === 'string') {
+        try {
+          data.no_mail_province_ids = JSON.parse(data.no_mail_province_ids);
+        } catch {
+          data.no_mail_province_ids = [];
+        }
+      }
       formApi.setValues(data);
     }
   } finally {
@@ -53,11 +61,13 @@ async function onSave() {
   <Page auto-content-height>
     <Card :title="$t('market.fullMail.title')">
       <Spin :spinning="loading">
-        <Form />
-        <div class="flex justify-end mt-4">
-          <Button type="primary" :loading="saving" @click="onSave">
-            {{ $t('common.save') }}
-          </Button>
+        <div class="mx-auto mt-4 max-w-200">
+          <Form />
+          <div class="flex justify-end mt-4">
+            <Button type="primary" :loading="saving" @click="onSave">
+              {{ $t('system.configEdit.save') }}
+            </Button>
+          </div>
         </div>
       </Spin>
     </Card>

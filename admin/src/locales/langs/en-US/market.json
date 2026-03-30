@@ -1,10 +1,11 @@
 {
   "fullMail": {
     "title": "Free Shipping",
-    "status": "Status",
-    "noMailProvinceIds": "Excluded Provinces",
-    "noMailCityIds": "Excluded Cities",
-    "minOrderMoney": "Min Order Amount"
+    "status": "Enable Free Shipping",
+    "statusDesc": "Free shipping is only available when this option is enabled",
+    "noMailProvinceIds": "Excluded Regions",
+    "minOrderMoney": "Order Amount Threshold",
+    "minOrderMoneyDesc": "Free shipping when order amount exceeds this value"
   },
   "pointConfig": {
     "title": "Points Config",
