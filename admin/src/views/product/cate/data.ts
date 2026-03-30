@@ -93,7 +93,25 @@ export function useColumns(
       minWidth: 200,
       treeNode: true,
     },
-    { field: 'sub_title', title: $t('product.cate.subTitle'), width: 150 },
+    { field: 'sub_title', title: $t('product.cate.subTitle'), width: 120 },
+    {
+      cellRender: { name: 'CellImage' },
+      field: 'cover',
+      title: $t('product.cate.cover'),
+      width: 150,
+    },
+    {
+      cellRender: {
+        name: 'CellTag',
+        options: [
+          { color: 'success', label: $t('common.yes'), value: true },
+          { color: 'error', label: $t('common.no'), value: false },
+        ],
+      },
+      field: 'is_recommend',
+      title: $t('product.cate.isRecommend'),
+      width: 100,
+    },
     { field: 'sort', title: $t('product.cate.sort'), width: 80 },
     {
       cellRender: { name: 'CellTag' },
