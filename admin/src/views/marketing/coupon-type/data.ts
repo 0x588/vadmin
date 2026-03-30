@@ -262,9 +262,7 @@ export function useColumns(
             h('div', [
               h('div', `开始: ${formatDate(row.get_start_time)}`),
               h('div', `结束: ${formatDate(row.get_end_time)}`),
-              h(Tag, () =>
-                timeStatus(row.get_start_time, row.get_end_time),
-              ),
+              h(Tag, () => timeStatus(row.get_start_time, row.get_end_time)),
             ]),
           ];
         },
