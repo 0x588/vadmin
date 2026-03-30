@@ -191,6 +191,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['rang_type'],
       },
       fieldName: 'productIds',
+      formItemClass: 'col-span-full',
       label: '选择指定商品',
     },
     {

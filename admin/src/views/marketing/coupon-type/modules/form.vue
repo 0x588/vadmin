@@ -26,6 +26,7 @@ const selectedProductIds = ref<number[]>([]);
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
   showDefaultActions: false,
+  wrapperClass: 'grid-cols-2',
 });
 
 function tsToDay(ts: number) {
