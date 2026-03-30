@@ -204,6 +204,23 @@ const [BasicForm, basicFormApi] = useVbenForm({
       label: $t('product.product.shippingFeeId'),
     },
     {
+      component: 'RadioGroup',
+      componentProps: {
+        options: [
+          { label: $t('product.product.byPiece'), value: 1 },
+          { label: $t('product.product.byVolume'), value: 2 },
+          { label: $t('product.product.byWeight'), value: 3 },
+        ],
+      },
+      defaultValue: 1,
+      dependencies: {
+        show: (values) => values.shipping_type === 2,
+        triggerFields: ['shipping_type'],
+      },
+      fieldName: 'shipping_fee_type',
+      label: $t('product.product.shippingFeeType'),
+    },
+    {
       component: 'Input',
       fieldName: 'unit',
       label: $t('product.product.unit'),
@@ -227,8 +244,40 @@ const [BasicForm, basicFormApi] = useVbenForm({
       component: 'InputNumber',
       componentProps: { class: 'w-full', min: 0, precision: 0 },
       defaultValue: 0,
+      fieldName: 'order_max_buy_num',
+      label: $t('product.product.orderMaxBuyNum'),
+    },
+    {
+      component: 'InputNumber',
+      componentProps: { class: 'w-full', min: 0, precision: 0 },
+      defaultValue: 0,
       fieldName: 'sales',
       label: $t('product.product.sales'),
+    },
+    {
+      component: 'InputNumber',
+      componentProps: { class: 'w-full', min: 0, precision: 0 },
+      defaultValue: 0,
+      fieldName: 'view',
+      label: $t('product.product.viewCount'),
+    },
+    {
+      component: 'InputNumber',
+      componentProps: { class: 'w-full', min: 0, precision: 0 },
+      defaultValue: 0,
+      fieldName: 'transmit_num',
+      label: $t('product.product.transmitNum'),
+    },
+    {
+      component: 'DatePicker',
+      componentProps: { class: 'w-full' },
+      fieldName: 'production_date',
+      label: $t('product.product.productionDate'),
+    },
+    {
+      component: 'Input',
+      fieldName: 'shelf_life',
+      label: $t('product.product.shelfLife'),
     },
     {
       component: 'Checkbox',
