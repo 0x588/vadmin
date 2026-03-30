@@ -80,6 +80,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       await nextTick();
       if (formData.value) {
         const d = formData.value;
+        // First pass: set all values including rang_type
         formApi.setValues({
           ...d,
           getTimeRange:
@@ -91,6 +92,14 @@ const [Drawer, drawerApi] = useVbenDrawer({
               ? [tsToDay(d.start_time), tsToDay(d.end_time)]
               : undefined,
         });
+        // Second pass: after rang_type triggers conditional fields visibility
+        await nextTick();
+        if (d.rang_type === 1 && d.productIds) {
+          formApi.setFieldValue('productIds', d.productIds);
+        }
+        if (d.rang_type === 2 && d.cateIds) {
+          formApi.setFieldValue('cateIds', d.cateIds);
+        }
       }
     }
   },
