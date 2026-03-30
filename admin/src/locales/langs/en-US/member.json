@@ -7,6 +7,7 @@
     "client": "Auth Type",
     "clientOpenId": "Auth ID",
     "memberId": "User ID",
+    "linkedMember": "Linked Member",
     "memberNickname": "User Nickname",
     "memberPhone": "Phone",
     "status": "Status",

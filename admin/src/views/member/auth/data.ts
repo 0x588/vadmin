@@ -2,8 +2,10 @@ import type { VbenFormSchema } from '#/adapter/form';
 import type { VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { MemberAuthApi } from '#/api/member/auth';
 
+import { h } from 'vue';
+
 import { $t } from '#/locales';
-import { DICT_TYPE, getDictOptions } from '#/utils/dict';
+import { DICT_TYPE, getDictLabel, getDictOptions } from '#/utils/dict';
 
 export function useGridFormSchema(): VbenFormSchema[] {
   return [
@@ -41,15 +43,43 @@ export function useColumns(
   ) => PromiseLike<boolean | undefined>,
 ): VxeTableGridOptions<MemberAuthApi.MemberAuthVO>['columns'] {
   return [
-    { field: 'id', title: $t('member.auth.id'), width: 80 },
-    { field: 'nickname', title: $t('member.auth.nickname'), width: 120 },
-    { field: 'client', title: $t('member.auth.client'), width: 100 },
+    { field: 'id', title: $t('member.auth.id'), width: 40 },
+    {
+      cellRender: { name: 'CellImage' },
+      field: 'avatar',
+      title: $t('member.auth.avatar'),
+      width: 60,
+    },
+    { field: 'nickname', title: $t('member.auth.nickname'), width: 100 },
+    {
+      field: 'client',
+      formatter: ({ cellValue }) =>
+        getDictLabel(DICT_TYPE.AUTH_TYPE, cellValue),
+      title: $t('member.auth.client'),
+      width: 100,
+    },
     {
       field: 'client_open_id',
       title: $t('member.auth.clientOpenId'),
-      width: 200,
+      width: 180,
     },
-    { field: 'member_id', title: $t('member.auth.memberId'), width: 100 },
+    {
+      field: 'member',
+      showOverflow: false,
+      slots: {
+        default: ({ row }) => {
+          const m = row.member;
+          if (!m) return '---';
+          return h('div', { class: 'flex flex-col text-xs leading-5' }, [
+            h('div', `ID: ${m.id ?? '-'}`),
+            h('div', `${$t('member.auth.memberNickname')}: ${m.nickname || '-'}`),
+            h('div', `${$t('member.auth.memberPhone')}: ${m.phone || '-'}`),
+          ]);
+        },
+      },
+      title: $t('member.auth.linkedMember'),
+      width: 150,
+    },
     {
       cellRender: {
         attrs: { beforeChange: onStatusChange },
@@ -57,7 +87,7 @@ export function useColumns(
       },
       field: 'status',
       title: $t('member.auth.status'),
-      width: 100,
+      width: 80,
     },
     {
       field: 'created_at',
@@ -66,7 +96,7 @@ export function useColumns(
         return new Date(cellValue * 1000).toLocaleString('zh-CN');
       },
       title: $t('member.auth.createdAt'),
-      width: 180,
+      width: 160,
     },
   ];
 }

@@ -7,6 +7,7 @@
     "client": "授权类型",
     "clientOpenId": "授权ID",
     "memberId": "用户ID",
+    "linkedMember": "关联用户",
     "memberNickname": "用户昵称",
     "memberPhone": "手机号",
     "status": "状态",

@@ -55,14 +55,13 @@ export function useColumns(
       title: $t('member.member.avatar'),
       width: 60,
     },
-    { field: 'nickname', title: $t('member.member.nickname'), width: 120 },
+    { field: 'nickname', title: $t('member.member.nickname')},
     { field: 'phone', title: $t('member.member.phone'), width: 130 },
     {
       field: 'pid',
       formatter: ({ cellValue }) =>
         cellValue === 0 || !cellValue ? '---' : String(cellValue),
-      title: $t('member.member.pid'),
-      width: 80,
+      title: $t('member.member.pid')
     },
     {
       cellRender: {
