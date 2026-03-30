@@ -8,13 +8,20 @@
   },
   "pointConfig": {
     "title": "Points Config",
-    "status": "Status",
-    "convertRate": "Conversion Rate",
-    "minOrderMoney": "Min Order Amount",
-    "deductionType": "Deduction Type",
-    "maxMoney": "Max Deduction Amount",
-    "maxRate": "Max Deduction Rate",
-    "explain": "Description"
+    "status": "Enable Points Redemption",
+    "statusDesc": "Points redemption is only available when this option is enabled",
+    "convertRate": "Points Conversion Rate",
+    "convertRateDesc": "How much cash 1 point can offset",
+    "convertRateUnit": "Unit (CNY)",
+    "minOrderMoney": "Order Amount Threshold",
+    "minOrderMoneyDesc": "Points can be used when order amount exceeds this value",
+    "deductionType": "Deduction Limit",
+    "maxMoney": "Max Deduction Per Order",
+    "maxMoneyDesc": "Max amount that can be offset by points per order",
+    "maxRate": "Max Deduction Rate Per Order",
+    "maxRateDesc": "Between 0 - 100",
+    "maxRateUnit": "Unit (%)",
+    "explain": "Remark"
   },
   "coupon": {
     "title": "Coupon Records",

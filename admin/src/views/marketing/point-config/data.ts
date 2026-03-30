@@ -1,7 +1,6 @@
 import type { VbenFormSchema } from '#/adapter/form';
 
 import { $t } from '#/locales';
-import { DICT_TYPE, getDictOptions } from '#/utils/dict';
 
 export function useFormSchema(): VbenFormSchema[] {
   return [
@@ -18,32 +17,42 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
-        options: getDictOptions(DICT_TYPE.COMMON_STATUS),
+        options: [
+          { label: '关闭', value: 0 },
+          { label: '开启', value: 1 },
+        ],
         optionType: 'button',
       },
       defaultValue: 0,
+      description: $t('market.pointConfig.statusDesc'),
       fieldName: 'status',
       label: $t('market.pointConfig.status'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: {
-        min: 0,
+        min: 0.0001,
         precision: 4,
         class: 'w-full',
+        addonAfter: $t('market.pointConfig.convertRateUnit'),
       },
+      description: $t('market.pointConfig.convertRateDesc'),
       fieldName: 'convert_rate',
       label: $t('market.pointConfig.convertRate'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: {
-        min: 0,
+        min: 0.01,
         precision: 2,
         class: 'w-full',
       },
+      description: $t('market.pointConfig.minOrderMoneyDesc'),
       fieldName: 'min_order_money',
       label: $t('market.pointConfig.minOrderMoney'),
+      rules: 'required',
     },
     {
       component: 'RadioGroup',
@@ -63,7 +72,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'InputNumber',
       componentProps: {
-        min: 0,
+        min: 0.01,
         precision: 2,
         class: 'w-full',
       },
@@ -71,23 +80,28 @@ export function useFormSchema(): VbenFormSchema[] {
         show: (values) => values.deduction_type === 1,
         triggerFields: ['deduction_type'],
       },
+      description: $t('market.pointConfig.maxMoneyDesc'),
       fieldName: 'max_money',
       label: $t('market.pointConfig.maxMoney'),
+      rules: 'required',
     },
     {
       component: 'InputNumber',
       componentProps: {
-        min: 0,
+        min: 0.01,
         max: 100,
-        precision: 0,
+        precision: 2,
         class: 'w-full',
+        addonAfter: $t('market.pointConfig.maxRateUnit'),
       },
       dependencies: {
         show: (values) => values.deduction_type === 2,
         triggerFields: ['deduction_type'],
       },
+      description: $t('market.pointConfig.maxRateDesc'),
       fieldName: 'max_rate',
       label: $t('market.pointConfig.maxRate'),
+      rules: 'required',
     },
     {
       component: 'Input',

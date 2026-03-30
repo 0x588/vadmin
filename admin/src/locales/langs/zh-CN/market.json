@@ -8,13 +8,20 @@
   },
   "pointConfig": {
     "title": "积分抵现",
-    "status": "状态",
-    "convertRate": "积分抵现比例",
-    "minOrderMoney": "最低订单金额",
-    "deductionType": "抵扣类型",
-    "maxMoney": "最大抵扣金额",
-    "maxRate": "最大抵扣比例",
-    "explain": "说明"
+    "status": "开启积分抵现",
+    "statusDesc": "只有启用该选项，才可以使用积分抵现功能",
+    "convertRate": "积分抵现比率",
+    "convertRateDesc": "1积分可抵多少元现金",
+    "convertRateUnit": "单位(元)",
+    "minOrderMoney": "订单金额门槛",
+    "minOrderMoneyDesc": "订单金额超出该金额可使用积分抵现",
+    "deductionType": "抵现金额上限",
+    "maxMoney": "每笔订单最多抵扣金额",
+    "maxMoneyDesc": "每笔订单最多可使用积分抵扣的金额",
+    "maxRate": "每笔订单最多抵扣比率",
+    "maxRateDesc": "0 - 100之间",
+    "maxRateUnit": "单位(%)",
+    "explain": "备注"
   },
   "coupon": {
     "title": "优惠券领取",

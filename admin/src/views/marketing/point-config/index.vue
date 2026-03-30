@@ -22,6 +22,7 @@ const [Form, formApi] = useVbenForm({
       class: 'w-full',
     },
   },
+  wrapperClass: 'grid-cols-1',
 });
 
 onMounted(async () => {
@@ -53,11 +54,13 @@ async function onSave() {
   <Page auto-content-height>
     <Card :title="$t('market.pointConfig.title')">
       <Spin :spinning="loading">
-        <Form />
-        <div class="flex justify-end mt-4">
-          <Button type="primary" :loading="saving" @click="onSave">
-            {{ $t('common.save') }}
-          </Button>
+        <div class="mx-auto mt-4 max-w-200">
+          <Form />
+          <div class="flex justify-end mt-4">
+            <Button type="primary" :loading="saving" @click="onSave">
+              {{ $t('common.save') }}
+            </Button>
+          </div>
         </div>
       </Spin>
     </Card>
