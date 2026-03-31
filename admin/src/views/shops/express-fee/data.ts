@@ -21,7 +21,7 @@ export function useFormSchema(): VbenFormSchema[] {
       label: 'express_id',
     },
     {
-      component: 'Input',
+      component: 'Checkbox',
       fieldName: 'hasDefault',
       dependencies: { show: () => false, triggerFields: ['hasDefault'] },
       label: 'hasDefault',
@@ -57,7 +57,6 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Cascader',
       componentProps: {
         class: 'w-full',
-        maxTagCount: 'responsive',
         multiple: true,
         options: areaOption,
       },
