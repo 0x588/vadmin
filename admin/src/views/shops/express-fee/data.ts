@@ -29,6 +29,7 @@ export function useFormSchema(): VbenFormSchema[] {
     {
       component: 'Input',
       fieldName: 'title',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.name'),
       rules: 'required',
     },
@@ -48,6 +49,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['hasDefault'],
       },
       fieldName: 'is_default',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.isDefault'),
       rules: 'required',
     },
@@ -60,7 +62,8 @@ export function useFormSchema(): VbenFormSchema[] {
         options: areaOption,
       },
       dependencies: {
-        show: (values) => values.is_default === 0 || values.is_default === false,
+        show: (values) =>
+          values.is_default === 0 || values.is_default === false,
         triggerFields: ['is_default'],
       },
       fieldName: 'areas',
@@ -68,10 +71,12 @@ export function useFormSchema(): VbenFormSchema[] {
       label: $t('shops.expressFee.areas'),
       rules: 'required',
     },
+    // ---- 按件计费 ----
     {
       component: 'Checkbox',
       defaultValue: false,
       fieldName: 'piece_used',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.pieceUsed'),
     },
     {
@@ -82,6 +87,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['piece_used'],
       },
       fieldName: 'piece',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.piece'),
     },
     {
@@ -92,6 +98,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['piece_used'],
       },
       fieldName: 'piece_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.piecePrice'),
     },
     {
@@ -102,6 +109,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['piece_used'],
       },
       fieldName: 'piece_more',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.pieceMore'),
     },
     {
@@ -112,12 +120,15 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['piece_used'],
       },
       fieldName: 'piece_more_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.pieceMorePrice'),
     },
+    // ---- 按重计费 ----
     {
       component: 'Checkbox',
       defaultValue: false,
       fieldName: 'weight_used',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.weightUsed'),
     },
     {
@@ -128,6 +139,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['weight_used'],
       },
       fieldName: 'weight',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.weight'),
     },
     {
@@ -138,6 +150,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['weight_used'],
       },
       fieldName: 'weight_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.weightPrice'),
     },
     {
@@ -148,6 +161,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['weight_used'],
       },
       fieldName: 'weight_more',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.weightMore'),
     },
     {
@@ -158,12 +172,15 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['weight_used'],
       },
       fieldName: 'weight_more_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.weightMorePrice'),
     },
+    // ---- 按体积计费 ----
     {
       component: 'Checkbox',
       defaultValue: false,
       fieldName: 'volume_used',
+      formItemClass: 'col-span-full',
       label: $t('shops.expressFee.volumeUsed'),
     },
     {
@@ -174,6 +191,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['volume_used'],
       },
       fieldName: 'volume',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.volume'),
     },
     {
@@ -184,6 +202,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['volume_used'],
       },
       fieldName: 'volume_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.volumePrice'),
     },
     {
@@ -194,6 +213,7 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['volume_used'],
       },
       fieldName: 'volume_more',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.volumeMore'),
     },
     {
@@ -204,13 +224,16 @@ export function useFormSchema(): VbenFormSchema[] {
         triggerFields: ['volume_used'],
       },
       fieldName: 'volume_more_price',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.volumeMorePrice'),
     },
+    // ---- 排序和状态 ----
     {
       component: 'InputNumber',
       componentProps: { min: 0, class: 'w-full' },
-      defaultValue: 0,
+      defaultValue: 6,
       fieldName: 'sort',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.sort'),
     },
     {
@@ -222,6 +245,7 @@ export function useFormSchema(): VbenFormSchema[] {
       },
       defaultValue: 1,
       fieldName: 'status',
+      formItemClass: 'col-span-2',
       label: $t('shops.expressFee.status'),
     },
   ];

@@ -22,6 +22,7 @@ const formData = ref<ShopsExpressFeeApi.ExpressFeeVO>();
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
   showDefaultActions: false,
+  wrapperClass: 'grid-cols-4',
 });
 
 const id = ref();
@@ -55,7 +56,9 @@ const [Drawer, drawerApi] = useVbenDrawer({
       expressId.value = data?.express_id;
       let hasDefault = false;
       try {
-        hasDefault = await getExpressFeeHasDefault(expressId.value!);
+        if (expressId.value) {
+          hasDefault = await getExpressFeeHasDefault(expressId.value);
+        }
       } catch {}
 
       if (data && data.id) {
@@ -106,7 +109,7 @@ const getDrawerTitle = computed(() => {
 </script>
 
 <template>
-  <Drawer :title="getDrawerTitle">
+  <Drawer class="w-[800px]" :title="getDrawerTitle">
     <Form />
   </Drawer>
 </template>

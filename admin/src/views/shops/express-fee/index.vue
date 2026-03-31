@@ -55,6 +55,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
       },
     },
     rowConfig: { keyField: 'id' },
+    showOverflow: false,
     toolbarConfig: {
       custom: true,
       export: false,
