@@ -3,6 +3,7 @@ import type { OnActionClickFn, VxeTableGridOptions } from '#/adapter/vxe-table';
 import type { SystemUserApi } from '#/api/system/user';
 
 import { z } from '#/adapter/form';
+import { requestClient } from '#/api/request';
 import { getDeptSimpleTree } from '#/api/system/dept';
 import { $t } from '#/locales';
 import { DICT_TYPE, getDictOptions } from '#/utils/dict';
@@ -11,6 +12,20 @@ export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
+      formItemClass: 'hidden',
+      fieldName: 'id',
+      label: 'id',
+    },
+    {
+      component: 'Input',
+      componentProps: {},
+      dependencies: {
+        componentProps: (_values, form) => {
+          const id = form.values?.id;
+          return { disabled: !!id };
+        },
+        triggerFields: ['id'],
+      },
       fieldName: 'username',
       label: $t('system.user.username'),
       rules: z
@@ -27,7 +42,7 @@ export function useFormSchema(): VbenFormSchema[] {
         type: 'password',
       },
       dependencies: {
-        show: (values) => !values.id,
+        show: (values) => !values?.id,
         triggerFields: ['id'],
       },
       fieldName: 'password',
@@ -38,29 +53,72 @@ export function useFormSchema(): VbenFormSchema[] {
       component: 'Input',
       fieldName: 'nickname',
       label: $t('system.user.nickname'),
+      rules: 'required',
     },
     {
-      component: 'Input',
-      fieldName: 'mobile',
-      label: $t('system.user.mobile'),
-    },
-    {
-      component: 'Input',
-      fieldName: 'email',
-      label: $t('system.user.email'),
+      component: 'Upload',
+      componentProps: {
+        accept: '.png,.jpg,.jpeg,.gif,.webp',
+        customRequest: async ({
+          file,
+          onError,
+          onProgress,
+          onSuccess,
+        }: any) => {
+          try {
+            onProgress?.({ percent: 0 });
+            const data = await requestClient.upload(
+              '/upload',
+              { file },
+              { responseReturn: 'body' },
+            );
+            onProgress?.({ percent: 100 });
+            onSuccess?.(data, file);
+          } catch (error: any) {
+            onError?.(error);
+          }
+        },
+        listType: 'picture-card',
+        maxCount: 1,
+        maxSize: 5,
+      },
+      fieldName: 'avatar',
+      label: $t('system.user.avatar'),
     },
     {
       component: 'ApiTreeSelect',
       componentProps: {
         allowClear: true,
         api: getDeptSimpleTree,
+        childrenField: 'children',
         class: 'w-full',
         labelField: 'name',
         valueField: 'id',
-        childrenField: 'children',
       },
       fieldName: 'deptId',
       label: $t('system.user.deptId'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'mobile',
+      label: $t('system.user.mobile'),
+      rules: 'required',
+    },
+    {
+      component: 'Input',
+      fieldName: 'email',
+      label: $t('system.user.email'),
+      rules: 'required',
+    },
+    {
+      component: 'Select',
+      componentProps: {
+        allowClear: true,
+        options: getDictOptions(DICT_TYPE.SYSTEM_USER_SEX),
+      },
+      fieldName: 'sex',
+      label: $t('system.user.sex'),
     },
     {
       component: 'RadioGroup',
@@ -123,6 +181,11 @@ export function useColumns<T = SystemUserApi.User>(
 ): VxeTableGridOptions['columns'] {
   return [
     {
+      field: 'id',
+      title: $t('system.user.id'),
+      width: 80,
+    },
+    {
       field: 'username',
       title: $t('system.user.username'),
       width: 120,
@@ -133,14 +196,14 @@ export function useColumns<T = SystemUserApi.User>(
       width: 120,
     },
     {
-      field: 'mobile',
-      title: $t('system.user.mobile'),
-      width: 130,
-    },
-    {
       field: 'deptName',
       title: $t('system.user.deptName'),
       width: 120,
+    },
+    {
+      field: 'mobile',
+      title: $t('system.user.mobile'),
+      width: 130,
     },
     {
       cellRender: {

@@ -13,4 +13,28 @@ export const overridesPreferences = defineOverridesPreferences({
     defaultHomePath: '/dashboard',
     name: import.meta.env.VITE_APP_TITLE,
   },
+  "breadcrumb": {
+    "styleType": "background"
+  },
+  "sidebar": {
+    "draggable": false,
+    "width": 189
+  },
+  "tabbar": {
+    "maxCount": 10,
+    "styleType": "brisk",
+    "visitHistory": false
+  },
+  "theme": {
+    "mode": "light",
+    "radius": "0.25",
+    "semiDarkSidebar": true
+  },
+  "widget": {
+    "globalSearch": false,
+    "languageToggle": false,
+    "lockScreen": false,
+    "notification": false
+  }
 });
+

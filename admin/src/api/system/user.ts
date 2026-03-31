@@ -17,6 +17,7 @@ export namespace SystemUserApi {
     nickname?: string;
     remark?: string;
     roleId?: number;
+    sex?: number;
     status: number;
     username: string;
   }

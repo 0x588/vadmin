@@ -26,6 +26,11 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const { valid } = await formApi.validate();
     if (!valid) return;
     const values = await formApi.getValues();
+    // Convert fileList to URL string for avatar
+    if (Array.isArray(values.avatar)) {
+      const file = values.avatar[0];
+      values.avatar = file?.response?.url || file?.url || '';
+    }
     drawerApi.lock();
     (id.value ? updateUser({ id: id.value, ...values }) : createUser(values))
       .then(() => {
@@ -41,18 +46,23 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (isOpen) {
       const data = drawerApi.getData<SystemUserApi.User>();
       formApi.resetForm();
-
-      if (data) {
+      if (data && data.id) {
         formData.value = data;
         id.value = data.id;
       } else {
+        formData.value = undefined;
         id.value = undefined;
       }
-
-      // Wait for Vue to flush DOM updates (form fields mounted)
       await nextTick();
-      if (data) {
-        formApi.setValues(data);
+      if (formData.value) {
+        const vals = { ...formData.value };
+        // Convert avatar URL to fileList for Upload component
+        if (vals.avatar && typeof vals.avatar === 'string') {
+          vals.avatar = [
+            { name: 'avatar', status: 'done', uid: '-1', url: vals.avatar },
+          ] as any;
+        }
+        formApi.setValues(vals);
       }
     }
   },
@@ -60,8 +70,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
 
 const getDrawerTitle = computed(() => {
   return formData.value?.id
-    ? $t('common.edit', $t('system.user.name'))
-    : $t('common.create', $t('system.user.name'));
+    ? $t('ui.actionTitle.edit', [$t('system.user.name')])
+    : $t('ui.actionTitle.create', [$t('system.user.name')]);
 });
 </script>
 <template>
