@@ -36,7 +36,7 @@ export const overridesPreferences = defineOverridesPreferences({
     lockScreen: false,
     notification: false,
   },
-    logo: {
+  logo: {
     enable: true,
     fit: 'contain',
     source: 'https://shop.sjgc6.cn/admin/assets/logo-BT3inz40.png',
