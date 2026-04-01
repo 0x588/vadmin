@@ -5,14 +5,20 @@ import { computed, nextTick, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from '@ant-design/icons-vue';
 import {
   Button,
   Card,
   Divider,
   Input,
   InputNumber,
+  Modal,
   Select,
+  Textarea,
 } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
@@ -30,10 +36,29 @@ const formData = ref<ProductAttributeApi.CommonAttributeVO>();
 const attrValues = ref<ProductAttributeApi.AttributeValue[]>([]);
 
 const typeOptions = [
-  { label: $t('product.attribute.typeInput'), value: 0 },
-  { label: $t('product.attribute.typeSingle'), value: 1 },
-  { label: $t('product.attribute.typeMultiple'), value: 2 },
+  { label: $t('product.attribute.typeInput'), value: 1 },
+  { label: $t('product.attribute.typeSingle'), value: 2 },
+  { label: $t('product.attribute.typeMultiple'), value: 3 },
 ];
+
+// Value editing modal state
+const valueModalOpen = ref(false);
+const editingIndex = ref(-1);
+const editingValue = ref('');
+
+function openValueModal(index: number) {
+  editingIndex.value = index;
+  editingValue.value = attrValues.value[index]?.value || '';
+  valueModalOpen.value = true;
+}
+
+function handleValueModalOk() {
+  const item = attrValues.value[editingIndex.value];
+  if (item) {
+    item.value = editingValue.value;
+  }
+  valueModalOpen.value = false;
+}
 
 const [Form, formApi] = useVbenForm({
   schema: useFormSchema(),
@@ -47,7 +72,8 @@ const [Drawer, drawerApi] = useVbenDrawer({
     if (!valid) return;
     const values = await formApi.getValues();
     drawerApi.lock();
-    const submitData = { ...values, values: attrValues.value };
+    const filteredValues = attrValues.value.filter((v) => v.title);
+    const submitData = { ...values, values: filteredValues };
     (id.value
       ? updateCommonAttribute({ id: id.value, ...submitData })
       : createCommonAttribute(submitData)
@@ -82,7 +108,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 function addAttrValue() {
-  attrValues.value.push({ title: '', type: 0, sort: 0 });
+  attrValues.value.push({ title: '', type: 1, sort: 10, value: '' });
 }
 
 function removeAttrValue(index: number) {
@@ -104,7 +130,7 @@ const getDrawerTitle = computed(() => {
       <div
         v-for="(item, index) in attrValues"
         :key="index"
-        class="flex items-center gap-2 mb-2"
+        class="mb-2 flex items-center gap-2"
       >
         <Input
           v-model:value="item.title"
@@ -117,11 +143,19 @@ const getDrawerTitle = computed(() => {
           :placeholder="$t('product.attribute.valueType')"
           class="w-28"
         />
-        <Input
-          v-model:value="item.value"
-          :placeholder="$t('product.attribute.valueData')"
-          class="w-32"
-        />
+        <!-- type=1 输入框: show "用户输入" text -->
+        <span v-if="item.type === 1" class="w-32 text-center text-gray-400">
+          {{ $t('product.attribute.typeInput') }}
+        </span>
+        <!-- type=2/3 单选/多选: show value + edit button -->
+        <template v-else>
+          <span class="w-24 truncate text-sm" :title="item.value">
+            {{ item.value || '-' }}
+          </span>
+          <Button type="link" size="small" @click="openValueModal(index)">
+            <EditOutlined />
+          </Button>
+        </template>
         <InputNumber v-model:value="item.sort" :min="0" class="w-20" />
         <Button type="text" danger @click="removeAttrValue(index)">
           <DeleteOutlined />
@@ -133,4 +167,21 @@ const getDrawerTitle = computed(() => {
       </Button>
     </Card>
   </Drawer>
+
+  <!-- Value editing modal -->
+  <Modal
+    v-model:open="valueModalOpen"
+    :centered="true"
+    :title="$t('product.attribute.valueData')"
+    @ok="handleValueModalOk"
+  >
+    <Textarea
+      v-model:value="editingValue"
+      :rows="8"
+      :placeholder="$t('product.attribute.valueEditHint')"
+    />
+    <p class="mt-2 text-sm text-gray-400">
+      {{ $t('product.attribute.valueEditHint') }}
+    </p>
+  </Modal>
 </template>

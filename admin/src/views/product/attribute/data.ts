@@ -13,6 +13,12 @@ export function useFormSchema(): VbenFormSchema[] {
   return [
     {
       component: 'Input',
+      fieldName: 'id',
+      formItemClass: 'hidden',
+      label: 'id',
+    },
+    {
+      component: 'Input',
       fieldName: 'title',
       label: $t('product.attribute.name'),
       rules: 'required',

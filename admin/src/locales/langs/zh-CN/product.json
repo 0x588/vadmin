@@ -63,7 +63,8 @@
     "addValue": "添加参数值",
     "typeInput": "输入框",
     "typeSingle": "单选",
-    "typeMultiple": "多选"
+    "typeMultiple": "多选",
+    "valueEditHint": "一行为一个属性值，多个属性值用换行输入"
   },
   "specTemp": {
     "title": "规格模版",

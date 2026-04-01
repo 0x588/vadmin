@@ -63,7 +63,8 @@
     "addValue": "Add Value",
     "typeInput": "Input",
     "typeSingle": "Single Select",
-    "typeMultiple": "Multi Select"
+    "typeMultiple": "Multi Select",
+    "valueEditHint": "One value per line, separate multiple values with line breaks"
   },
   "specTemp": {
     "title": "Spec Templates",
