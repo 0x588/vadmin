@@ -69,6 +69,7 @@ async function initEditor() {
     initialFrameWidth: '100%',
     initialFrameHeight: props.height,
     autoHeightEnabled: false,
+    zIndex: 2100,
   });
 
   inst.addListener('ready', () => {
