@@ -11,6 +11,7 @@ import { useAccessStore } from '@vben/stores';
 
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { Button, Tabs, Upload } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 import { useVbenForm } from '#/adapter/form';
 import { getCommonAttribute } from '#/api/product/attribute';
@@ -275,7 +276,8 @@ const [BasicForm, basicFormApi] = useVbenForm({
       label: $t('product.product.productionDate'),
     },
     {
-      component: 'Input',
+      component: 'InputNumber',
+      componentProps: { class: 'w-full', min: 0, precision: 0 },
       fieldName: 'shelf_life',
       label: $t('product.product.shelfLife'),
     },
@@ -485,6 +487,9 @@ const [Drawer, drawerApi] = useVbenDrawer({
           delivery_type: Array.isArray(detail.delivery_type)
             ? detail.delivery_type
             : [],
+          production_date: detail.production_date
+            ? dayjs(detail.production_date)
+            : undefined,
         });
         specFormApi.setValues({
           ...detail,
