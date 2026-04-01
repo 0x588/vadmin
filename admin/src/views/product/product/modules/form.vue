@@ -480,7 +480,12 @@ const [Drawer, drawerApi] = useVbenDrawer({
         const detail = await getProduct(data.id);
         await nextTick();
 
-        basicFormApi.setValues(detail);
+        basicFormApi.setValues({
+          ...detail,
+          delivery_type: Array.isArray(detail.delivery_type)
+            ? detail.delivery_type
+            : [],
+        });
         specFormApi.setValues({
           ...detail,
           is_spec: detail.is_spec ? 1 : 0,
