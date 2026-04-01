@@ -43,9 +43,10 @@ const batch = ref<Record<string, any>>({
 function buildFileLists(data: ProductApi.ProductSkuVo[]) {
   const result: Record<number, UploadFile[]> = {};
   data.forEach((item, i) => {
-    result[i] = item.picture && item.picture.length > 0 && item.picture[0] ? [
-        { uid: `-${i}`, name: 'sku', status: 'done', url: item.picture[0] },
-      ] : [];
+    result[i] =
+      item.picture && item.picture.length > 0 && item.picture[0]
+        ? [{ uid: `-${i}`, name: 'sku', status: 'done', url: item.picture[0] }]
+        : [];
   });
   fileLists.value = result;
 }
