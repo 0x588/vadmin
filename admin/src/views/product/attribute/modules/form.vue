@@ -123,7 +123,7 @@ const getDrawerTitle = computed(() => {
 </script>
 
 <template>
-  <Drawer :title="getDrawerTitle">
+  <Drawer class="w-[800px]" :title="getDrawerTitle">
     <Form />
     <Divider />
     <Card :title="$t('product.attribute.values')" size="small">
