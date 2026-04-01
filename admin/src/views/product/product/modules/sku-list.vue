@@ -1,9 +1,21 @@
 <script lang="ts" setup>
+import type { UploadFile } from 'ant-design-vue';
+
 import type { ProductApi } from '#/api/product/product';
 
 import { ref, watch } from 'vue';
 
-import { Button, Card, Input, InputNumber, Table } from 'ant-design-vue';
+import { useAccessStore } from '@vben/stores';
+
+import { PlusOutlined } from '@ant-design/icons-vue';
+import {
+  Button,
+  Card,
+  Input,
+  InputNumber,
+  Table,
+  Upload,
+} from 'ant-design-vue';
 
 const props = defineProps<{
   dataList: ProductApi.ProductSkuVo[];
@@ -15,6 +27,7 @@ const emit = defineEmits<{
 
 const columns = ref<any[]>([]);
 const tableData = ref<ProductApi.ProductSkuVo[]>([]);
+const fileLists = ref<Record<number, UploadFile[]>>({});
 
 const batch = ref<Record<string, any>>({
   price: undefined,
@@ -27,10 +40,21 @@ const batch = ref<Record<string, any>>({
   bar_code: undefined,
 });
 
+function buildFileLists(data: ProductApi.ProductSkuVo[]) {
+  const result: Record<number, UploadFile[]> = {};
+  data.forEach((item, i) => {
+    result[i] = item.picture && item.picture.length > 0 && item.picture[0] ? [
+        { uid: `-${i}`, name: 'sku', status: 'done', url: item.picture[0] },
+      ] : [];
+  });
+  fileLists.value = result;
+}
+
 watch(
   () => props.dataList,
   (val) => {
     tableData.value = val.map((item) => ({ ...item }));
+    buildFileLists(tableData.value);
     rebuildColumns(val);
   },
   { immediate: true, deep: true },
@@ -53,6 +77,7 @@ function rebuildColumns(data: ProductApi.ProductSkuVo[]) {
   }
   columns.value = [
     ...specCols,
+    { title: '图片', dataIndex: 'picture', key: 'picture', width: 100 },
     { title: '销售价(元)', dataIndex: 'price', key: 'price', width: 100 },
     {
       title: '市场价(元)',
@@ -84,6 +109,42 @@ function getSpecValue(items: any, pid: any) {
 
 function emitChange() {
   emit('change', tableData.value);
+}
+
+async function handleSkuUpload({ file, onError, onProgress, onSuccess }: any) {
+  try {
+    onProgress?.({ percent: 0 });
+    const accessStore = useAccessStore();
+    const formData = new FormData();
+    formData.append('file', file);
+    const resp = await fetch('/admin-api/upload', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessStore.accessToken}` },
+      body: formData,
+    });
+    const result = await resp.json();
+    onProgress?.({ percent: 100 });
+    if (result.code === 200 && result.url) {
+      onSuccess?.(result, file);
+    } else {
+      onError?.(new Error(result.message || '上传失败'));
+    }
+  } catch (error: any) {
+    onError?.(error);
+  }
+}
+
+function onPictureChange(index: number, info: any) {
+  fileLists.value[index] = [...info.fileList];
+  const item = tableData.value[index];
+  if (!item) return;
+  if (info.file.status === 'done' && info.file.response?.url) {
+    item.picture = [info.file.response.url];
+    emitChange();
+  } else if (info.file.status === 'removed') {
+    item.picture = [];
+    emitChange();
+  }
 }
 
 function setBatch() {
@@ -167,6 +228,21 @@ function clearBatch() {
         <template v-if="String(column.key).startsWith('spec_')">
           {{ getSpecValue(record.items, column.dataIndex) }}
         </template>
+        <template v-else-if="column.key === 'picture'">
+          <Upload
+            :file-list="fileLists[index] || []"
+            :custom-request="handleSkuUpload"
+            :max-count="1"
+            list-type="picture-card"
+            accept="image/*"
+            class="sku-pic-upload"
+            @change="(info: any) => onPictureChange(index, info)"
+          >
+            <div v-if="(fileLists[index] || []).length === 0">
+              <PlusOutlined />
+            </div>
+          </Upload>
+        </template>
         <template
           v-else-if="
             [
@@ -218,3 +294,11 @@ function clearBatch() {
     </Table>
   </Card>
 </template>
+
+<style scoped>
+.sku-pic-upload :deep(.ant-upload-list-item-container),
+.sku-pic-upload :deep(.ant-upload.ant-upload-select) {
+  width: 60px !important;
+  height: 60px !important;
+}
+</style>
