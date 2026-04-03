@@ -86,6 +86,7 @@ export function useColumns(
       field: 'picture',
       title: $t('product.product.picture'),
       width: 80,
+      showOverflow: false,
     },
     {
       field: 'name',
