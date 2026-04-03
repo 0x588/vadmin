@@ -54,16 +54,10 @@ const columns = [
     width: 120,
   },
   {
-    title: $t('product.attribute.valueType'),
-    dataIndex: 'type',
-    key: 'type',
-    width: 100,
-  },
-  {
     title: $t('product.attribute.valueData'),
     dataIndex: 'data',
     key: 'data',
-    width: 200,
+    width: 220,
   },
   {
     title: $t('product.attribute.valueSort'),
@@ -143,24 +137,6 @@ function onTemplateChange(val: any) {
             @change="emitUpdate"
           />
           <span v-else>{{ record.title }}</span>
-        </template>
-        <template v-else-if="column.key === 'type'">
-          <Select
-            v-model:value="localValues[index]!.type"
-            size="small"
-            class="w-full"
-            @change="emitUpdate"
-          >
-            <Select.Option :value="1">
-              {{ $t('product.attribute.typeInput') }}
-            </Select.Option>
-            <Select.Option :value="2">
-              {{ $t('product.attribute.typeSingle') }}
-            </Select.Option>
-            <Select.Option :value="3">
-              {{ $t('product.attribute.typeMultiple') }}
-            </Select.Option>
-          </Select>
         </template>
         <template v-else-if="column.key === 'data'">
           <Input
