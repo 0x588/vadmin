@@ -74,6 +74,16 @@ export function useCateFormSchema(): VbenFormSchema[] {
       label: $t('system.config.title'),
     },
     {
+      component: 'Input',
+      fieldName: 'app',
+      label: $t('system.config.app'),
+      defaultValue: 'web',
+      dependencies: {
+        show: (values) => values.pid === 0,
+        triggerFields: ['pid'],
+      },
+    },
+    {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
