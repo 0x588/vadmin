@@ -121,7 +121,10 @@ export function useColumns(
     },
     { field: 'sub_title', title: $t('product.cate.subTitle'), width: 120 },
     {
-      cellRender: { name: 'CellImage', props: { height: 40, style: { margin: '4px 0' }, width: 40 }, },
+      cellRender: {
+        name: 'CellImage',
+        props: { height: 40, style: { margin: '4px 0' }, width: 40 },
+      },
       field: 'cover',
       title: $t('product.cate.cover'),
       width: 80,
