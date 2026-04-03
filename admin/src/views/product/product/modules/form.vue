@@ -300,6 +300,13 @@ const [BasicForm, basicFormApi] = useVbenForm({
       label: $t('product.product.isRecommend'),
     },
     {
+      component: 'InputNumber',
+      componentProps: { class: 'w-full', min: 0, precision: 0 },
+      defaultValue: 0,
+      fieldName: 'sort',
+      label: $t('product.product.sort'),
+    },
+    {
       component: 'RadioGroup',
       componentProps: {
         buttonStyle: 'solid',
